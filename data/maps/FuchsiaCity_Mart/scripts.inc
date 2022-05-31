@@ -15,7 +15,7 @@ FuchsiaCity_Mart_EventScript_Clerk:: @ 816D4F3
 	faceplayer
 	message Text_MayIHelpYou
 	waitmessage
-	pokemart FuchsiaCity_Mart_Items
+	pokemart 0
 	msgbox Text_PleaseComeAgain
 	release
 	end

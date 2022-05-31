@@ -19,7 +19,7 @@ LavenderTown_Mart_EventScript_Clerk:: @ 816B36B
 	faceplayer
 	message Text_MayIHelpYou
 	waitmessage
-	pokemart LavenderTown_Mart_Items
+	pokemart 0
 	msgbox Text_PleaseComeAgain
 	release
 	end

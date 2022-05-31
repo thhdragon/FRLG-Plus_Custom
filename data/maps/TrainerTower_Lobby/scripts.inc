@@ -129,7 +129,7 @@ TrainerTower_Lobby_EventScript_MartClerk:: @ 8164992
 	faceplayer
 	message Text_MayIHelpYou
 	waitmessage
-	pokemart TrainerTower_Lobby_Mart_Items
+	pokemart 0
 	msgbox Text_PleaseComeAgain
 	release
 	end

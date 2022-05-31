@@ -7,7 +7,7 @@ SixIsland_Mart_EventScript_Clerk:: @ 8171E66
 	faceplayer
 	message Text_MayIHelpYou
 	waitmessage
-	pokemart SixIsland_Mart_Items
+	pokemart 0
 	msgbox Text_PleaseComeAgain
 	release
 	end
@@ -21,7 +21,6 @@ SixIsland_Mart_Items:: @ 8171E8C
 	.2byte ITEM_FULL_HEAL
 	.2byte ITEM_ESCAPE_ROPE
 	.2byte ITEM_MAX_REPEL
-	.2byte ITEM_DREAM_MAIL
 	.2byte ITEM_NONE
 	release
 	end

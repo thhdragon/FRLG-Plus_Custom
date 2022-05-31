@@ -34,7 +34,7 @@ CeladonCity_DepartmentStore_2F_EventScript_ClerkItems:: @ 816BB10
 	faceplayer
 	message Text_MayIHelpYou
 	waitmessage
-	pokemart CeladonCity_DepartmentStore_2F_Items
+	pokemart 0
 	msgbox Text_PleaseComeAgain
 	release
 	end

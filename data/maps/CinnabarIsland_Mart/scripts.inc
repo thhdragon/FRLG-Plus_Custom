@@ -15,7 +15,7 @@ CinnabarIsland_Mart_EventScript_Clerk:: @ 816EA22
 	faceplayer
 	message Text_MayIHelpYou
 	waitmessage
-	pokemart CinnabarIsland_Mart_Items
+	pokemart 0
 	msgbox Text_PleaseComeAgain
 	release
 	end

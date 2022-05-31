@@ -5,6 +5,7 @@
 #include "pokedex.h"
 #include "text.h"
 #include "strings.h"
+#include "constants/pokemon_size_record.h"
 
 #define DEFAULT_MAX_SIZE 0 // was 0x8100 in Ruby/Sapphire, 0x8000 in Emerald
 
@@ -41,6 +42,32 @@ static const u8 sGiftRibbonsMonDataIds[] =
     MON_DATA_COUNTRY_RIBBON, MON_DATA_NATIONAL_RIBBON, MON_DATA_EARTH_RIBBON,
     MON_DATA_WORLD_RIBBON
 };
+
+extern const u8 gText_DecimalPoint[];
+
+static const u8 gText_Centimeter[] = _("centimeter");
+static const u8 gText_CentimeterPlural[] = _("centimeters");
+static const u8 gText_CentimeterSymbol[] = _("cm");
+static const u8 gText_Meter[] = _("meter");
+static const u8 gText_MeterPlural[] = _("meters");
+static const u8 gText_MeterSymbol[] = _("m");
+static const u8 gText_Kilogram[] = _("kilogram");
+static const u8 gText_KilogramPlural[] = _("kilograms");
+static const u8 gText_KilogramSymbol[] = _("kg");
+
+static const u8* const sMetricText[] =
+{
+    [UNIT_TEXT_LENGTH_SMALL_SINGLE] = gText_Centimeter,
+    [UNIT_TEXT_LENGTH_SMALL_PLURAL] = gText_CentimeterPlural,
+    [UNIT_TEXT_LENGTH_SMALL_SYMBOL] = gText_CentimeterSymbol,
+    [UNIT_TEXT_LENGTH_MEDIUM_SINGLE] = gText_Meter,
+    [UNIT_TEXT_LENGTH_MEDIUM_PLURAL] = gText_MeterPlural,
+    [UNIT_TEXT_LENGTH_MEDIUM_SYMBOL] = gText_MeterSymbol,
+    [UNIT_TEXT_WEIGHT_SINGLE]        = gText_Kilogram,
+    [UNIT_TEXT_WEIGHT_PLURAL]        = gText_KilogramPlural,
+    [UNIT_TEXT_WEIGHT_SYMBOL]        = gText_KilogramSymbol
+};
+
 
 #define CM_PER_INCH 2.54
 
@@ -90,15 +117,9 @@ static u32 GetMonSize(u16 species, u16 b)
 
 static void FormatMonSizeRecord(u8 *string, u32 size)
 {
-#ifdef UNITS_IMPERIAL
-    //Convert size from centimeters to inches
-    //In the Hoenn games, this conversion was performed using floating point values
-    size = size * 100 / 254;
-#endif
-
-    string = ConvertIntToDecimalStringN(string, size / 10, STR_CONV_MODE_LEFT_ALIGN, 8);
+    string = ConvertIntToDecimalStringN(string, size / 1000, STR_CONV_MODE_LEFT_ALIGN, 8);
     string = StringAppend(string, gText_DecimalPoint);
-    ConvertIntToDecimalStringN(string, size % 10, STR_CONV_MODE_LEFT_ALIGN, 1);
+    ConvertIntToDecimalStringN(string, size % 1000, STR_CONV_MODE_LEFT_ALIGN, 3);
 }
 
 static u8 CompareMonSize(u16 species, u16 *sizeRecord)
@@ -150,6 +171,29 @@ static void GetMonSizeRecordInfo(u16 species, u16 *sizeRecord)
 
     FormatMonSizeRecord(gStringVar3, size);
     StringCopy(gStringVar1, gSpeciesNames[species]);
+}
+
+void BufferUnitSystemText(void)
+{
+    u8 *strvar, *text;
+    u8 textType = gSpecialVar_0x8000;
+    u8 stringVarNum = gSpecialVar_0x8001;
+
+    switch (stringVarNum)
+    {
+        case 1:
+        default:
+            strvar = gStringVar1;
+            break;
+        case 2:
+            strvar = gStringVar2;
+            break;
+        case 3:
+            strvar = gStringVar3;
+            break;
+    }
+
+    StringCopy(strvar, sMetricText[textType]);
 }
 
 void InitHeracrossSizeRecord(void)

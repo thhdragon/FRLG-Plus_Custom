@@ -46,7 +46,7 @@ Route12_FishingHouse_Text_OhMagikarpAllowMeToSee:: @ 819F2DB
 
 Route12_FishingHouse_Text_WhoaXInchesTakeThis:: @ 819F31B
     .string "… … …Whoa!\n"
-    .string "{STR_VAR_2} inches!\p"
+    .string "{STR_VAR_2} {STR_VAR_1}!\p"
     .string "You have a rare appreciation for\n"
     .string "the fine, poetic aspects of fishing!\p"
     .string "You must take this.\n"
@@ -58,15 +58,16 @@ Route12_FishingHouse_Text_LookForwardToGreaterRecords:: @ 819F395
 
 Route12_FishingHouse_Text_HuhXInchesSameSizeAsLast:: @ 819F3CB
     .string "Huh?\n"
-    .string "{STR_VAR_2} inches?\p"
+    .string "{STR_VAR_2} {STR_VAR_1}?\p"
     .string "This is the same size as the one\n"
     .string "I saw before.$"
 
 Route12_FishingHouse_Text_HmmXInchesDoesntMeasureUp:: @ 819F40A
     .string "Hmm…\n"
-    .string "This one is {STR_VAR_2} inches long.\p"
+    .string "This one is {STR_VAR_2} {STR_VAR_1} long.\p"
     .string "It doesn't measure up to the\n"
-    .string "{STR_VAR_3}-inch one you brought before.$"
+    .string "{STR_VAR_3}-{STR_VAR_1} one\l"
+    .string "you brought before.$"
 
 Route12_FishingHouse_Text_DoesntLookLikeMagikarp:: @ 819F468
     .string "Uh… That doesn't look much like\n"
@@ -80,7 +81,7 @@ Route12_FishingHouse_Text_NoRoomForGift:: @ 819F494
 Route12_FishingHouse_Text_MostGiganticMagikarpXInches:: @ 819F4CF
     .string "The most gigantic MAGIKARP\n"
     .string "I have ever witnessed…\p"
-    .string "{STR_VAR_3} inches!$"
+    .string "{STR_VAR_3} {STR_VAR_1}!$"
 
 Route12_FishingHouse_Text_BlankChartOfSomeSort:: @ 819F50C
     .string "It's a blank chart of some sort.\p"

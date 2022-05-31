@@ -71,18 +71,21 @@ Route12_FishingHouse_EventScript_NotMagikarp:: @ 8170001
 
 Route12_FishingHouse_EventScript_NotRecordMagikarp:: @ 817000B
 	goto_if_unset FLAG_GOT_RECORD_SETTING_MAGIKARP, Route12_FishingHouse_EventScript_NewRecordMagikarp
+	bufferunitsystemtext UNIT_TEXT_LENGTH_MEDIUM_PLURAL, 1
 	msgbox Route12_FishingHouse_Text_HmmXInchesDoesntMeasureUp
 	release
 	end
 
 Route12_FishingHouse_EventScript_TieRecordMagikarp:: @ 817001E
 	goto_if_unset FLAG_GOT_RECORD_SETTING_MAGIKARP, Route12_FishingHouse_EventScript_NewRecordMagikarp
+	bufferunitsystemtext UNIT_TEXT_LENGTH_MEDIUM_PLURAL, 1
 	msgbox Route12_FishingHouse_Text_HuhXInchesSameSizeAsLast
 	release
 	end
 
 Route12_FishingHouse_EventScript_NewRecordMagikarp:: @ 8170031
 	setflag FLAG_GOT_RECORD_SETTING_MAGIKARP
+	bufferunitsystemtext UNIT_TEXT_LENGTH_MEDIUM_PLURAL, 1
 	msgbox Route12_FishingHouse_Text_WhoaXInchesTakeThis
 	giveitem ITEM_NET_BALL
 	compare VAR_RESULT, FALSE
@@ -105,6 +108,7 @@ Route12_FishingHouse_EventScript_MagikarpRecordSign:: @ 8170067
 
 Route12_FishingHouse_EventScript_MagikarpRecordSignRecordSet:: @ 817007B
 	special GetMagikarpSizeRecordInfo
+	bufferunitsystemtext UNIT_TEXT_LENGTH_MEDIUM_PLURAL, 1
 	msgbox Route12_FishingHouse_Text_MostGiganticMagikarpXInches
 	releaseall
 	end

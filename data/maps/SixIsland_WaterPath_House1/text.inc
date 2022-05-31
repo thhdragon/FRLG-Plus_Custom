@@ -10,7 +10,7 @@ SixIsland_WaterPath_House1_Text_MayIMeasureHeracross:: @ 81A4A3F
     .string "big it is?$"
 
 SixIsland_WaterPath_House1_Text_ItsXInchesDeserveReward:: @ 81A4A88
-    .string "Eeeek, it's {STR_VAR_2} inches!\n"
+    .string "Eeeek, it's {STR_VAR_2} {STR_VAR_1}!\n"
     .string "I've never seen anything like this!\l"
     .string "You deserve a reward!$"
 
@@ -21,13 +21,13 @@ SixIsland_WaterPath_House1_Text_WantToSeeBiggerOne:: @ 81A4AD9
     .string "HERACROSS!$"
 
 SixIsland_WaterPath_House1_Text_ItsXInchesSameAsBefore:: @ 81A4B39
-    .string "Huh? This {STR_VAR_2}-inch measurement…\n"
+    .string "Eh? This {STR_VAR_2}-{STR_VAR_1} measurement…\n"
     .string "Oh, boo! It's the same as before.$"
 
 SixIsland_WaterPath_House1_Text_ItsXInchesYInchesWasBiggest:: @ 81A4B7A
-    .string "Oh, it's just {STR_VAR_2} inches.\n"
+    .string "Oh, it's just {STR_VAR_2} {STR_VAR_1}.\n"
     .string "The HERACROSS before was bigger.\p"
-    .string "It was {STR_VAR_3} inches, the biggest\n"
+    .string "It was {STR_VAR_3} {STR_VAR_1}, the biggest\n"
     .string "HERACROSS you've brought me.$"
 
 SixIsland_WaterPath_House1_Text_ThisWontDo:: @ 81A4BEF
@@ -42,7 +42,7 @@ SixIsland_WaterPath_House1_Text_YourBagIsFull:: @ 81A4C47
 SixIsland_WaterPath_House1_Text_BiggestHeracrossIsXInches:: @ 81A4C6E
     .string "The biggest HERACROSS that I have\n"
     .string "ever seen measured so far is:\p"
-    .string "{STR_VAR_3} inches!$"
+    .string "{STR_VAR_3} {STR_VAR_1}!$"
 
 SixIsland_WaterPath_House1_Text_BlankChartOfSomeSort:: @ 81A4CB9
     .string "It's a blank chart of some sort.\p"

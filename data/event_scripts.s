@@ -8,6 +8,7 @@
 #include "constants/maps.h"
 #include "constants/metatile_labels.h"
 #include "constants/pokemon.h"
+#include "constants/pokemon_size_record.h"
 #include "constants/moves.h"
 #include "constants/songs.h"
 #include "constants/species.h"

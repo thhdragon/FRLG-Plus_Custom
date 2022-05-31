@@ -5091,10 +5091,20 @@ void ItemUseCB_RareCandy(u8 taskId, TaskFunc func)
     PlaySE(SE_SELECT);
     if (noEffect)
     {
-        gPartyMenuUseExitCallback = FALSE;
-        DisplayPartyMenuMessage(gText_WontHaveEffect, TRUE);
-        ScheduleBgCopyTilemapToVram(2);
-        gTasks[taskId].func = func;
+        u16 targetSpecies = GetEvolutionTargetSpecies(mon, EVO_MODE_NORMAL, ITEM_NONE);
+
+        if (targetSpecies != SPECIES_NONE)
+        {
+            RemoveBagItem(gSpecialVar_ItemId, 1);
+            PartyMenuTryEvolution(taskId);
+        }
+        else
+        {
+            gPartyMenuUseExitCallback = FALSE;
+            DisplayPartyMenuMessage(gText_WontHaveEffect, TRUE);
+            ScheduleBgCopyTilemapToVram(2);
+            gTasks[taskId].func = func;
+        }
     }
     else
     {

@@ -3192,6 +3192,7 @@ static void atk23_getexp(void)
                 *(&gBattleStruct->sentInPokes) >>= 1;
                 gBattleScripting.atk23_state = 5;
                 gBattleMoveDamage = 0; // used for exp
+                MonGainEVs(&gPlayerParty[gBattleStruct->expGetterMonId], gBattleMons[gBattlerFainted].species);
             }
             else
             {

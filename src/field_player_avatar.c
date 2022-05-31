@@ -10,6 +10,7 @@
 #include "field_effect_helpers.h"
 #include "field_player_avatar.h"
 #include "help_system.h"
+#include "item.h"
 #include "metatile_behavior.h"
 #include "new_menu_helpers.h"
 #include "overworld.h"
@@ -26,6 +27,7 @@
 #include "constants/songs.h"
 #include "constants/metatile_behaviors.h"
 #include "constants/moves.h"
+#include "constants/items.h"
 
 static EWRAM_DATA struct ObjectEvent * sPlayerObjectPtr = NULL;
 static EWRAM_DATA u8 sTeleportSavedFacingDirection = DIR_NONE;
@@ -1252,7 +1254,7 @@ bool8 PartyHasMonWithSurf(void)
         {
             if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES) == SPECIES_NONE)
                 break;
-            if (MonKnowsMove(&gPlayerParty[i], MOVE_SURF))
+            if (CheckBagHasItem(ITEM_HM03, 1))
                 return TRUE;
         }
     }

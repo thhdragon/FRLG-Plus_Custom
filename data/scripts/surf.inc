@@ -1,6 +1,9 @@
 EventScript_UseSurf:: @ 81A6AC8
 	goto_if_questlog EventScript_UseSurfEnd
-	checkpartymove MOVE_SURF
+	checkitem ITEM_HM03, 1
+	compare VAR_RESULT, FALSE
+	goto_if_eq EventScript_UseSurfEnd
+	checkpartytmhm ITEM_HM03
 	compare VAR_RESULT, PARTY_SIZE
 	goto_if_eq EventScript_UseSurfEnd
 	getpartymonname 0, VAR_RESULT

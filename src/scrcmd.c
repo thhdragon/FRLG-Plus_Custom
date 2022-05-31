@@ -2307,3 +2307,20 @@ bool8 ScrCmd_resetobjectmovementtype(struct ScriptContext * ctx)
     Overworld_ResetObjEventTemplateMovementType(localId);
     return FALSE;
 }
+
+bool8 ScrCmd_checkpartytmhm(struct ScriptContext * ctx)
+{
+    u8 i;
+    u16 machineId = ScriptReadHalfword(ctx);
+
+    gSpecialVar_Result = PARTY_SIZE;
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        if (CanMonLearnTMHM(&gPlayerParty[i], machineId - ITEM_TM01))
+        {
+            gSpecialVar_Result = i;
+            break;
+        }
+    }
+    return FALSE;
+}

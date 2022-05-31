@@ -2,7 +2,10 @@ EventScript_CutTree:: @ 81BDF13
 	goto_if_questlog EventScript_ReleaseEnd
 	lockall
 	goto_if_unset FLAG_BADGE02_GET, EventScript_CantCutTree
-	checkpartymove MOVE_CUT
+	checkitem ITEM_HM01, 1
+	compare VAR_RESULT, FALSE
+	goto_if_eq EventScript_CantCutTree
+	checkpartytmhm ITEM_HM01
 	compare VAR_RESULT, PARTY_SIZE
 	goto_if_eq EventScript_CantCutTree
 	setfieldeffectarg 0, VAR_RESULT
@@ -12,7 +15,6 @@ EventScript_CutTree:: @ 81BDF13
 	compare VAR_RESULT, NO
 	goto_if_eq EventScript_DontCutTree
 	msgbox Text_MonUsedMove
-	closemessage
 	dofieldeffect FLDEFF_USE_CUT_ON_TREE
 	waitstate
 	goto EventScript_CutTreeDown
@@ -62,7 +64,10 @@ EventScript_RockSmash:: @ 81BE00C
 	goto_if_questlog EventScript_ReleaseEnd
 	lockall
 	goto_if_unset FLAG_BADGE06_GET, EventScript_CantSmashRock
-	checkpartymove MOVE_ROCK_SMASH
+	checkitem ITEM_HM06, 1
+	compare VAR_RESULT, FALSE
+	goto_if_eq EventScript_CantSmashRock
+	checkpartytmhm ITEM_HM06
 	compare VAR_RESULT, PARTY_SIZE
 	goto_if_eq EventScript_CantSmashRock
 	setfieldeffectarg 0, VAR_RESULT
@@ -72,7 +77,6 @@ EventScript_RockSmash:: @ 81BE00C
 	compare VAR_RESULT, NO
 	goto_if_eq EventScript_DontSmashRock
 	msgbox Text_MonUsedMove
-	closemessage
 	dofieldeffect FLDEFF_USE_ROCK_SMASH
 	waitstate
 	goto EventScript_UseRockSmash
@@ -125,15 +129,17 @@ EventScript_StrengthBoulder:: @ 81BE11D
 	goto_if_questlog EventScript_ReleaseEnd
 	lockall
 	goto_if_unset FLAG_BADGE04_GET, EventScript_CantMoveBoulder
+	checkitem ITEM_HM04, 1
+	compare VAR_RESULT, FALSE
+	goto_if_eq EventScript_CantMoveBoulder
 	goto_if_set FLAG_SYS_USE_STRENGTH, EventScript_AlreadyUsedStrength
-	checkpartymove MOVE_STRENGTH
+	checkpartytmhm ITEM_HM04
 	compare VAR_RESULT, PARTY_SIZE
 	goto_if_eq EventScript_CantMoveBoulder
 	setfieldeffectarg 0, VAR_RESULT
 	msgbox Text_UseStrength, MSGBOX_YESNO
 	compare VAR_RESULT, NO
 	goto_if_eq EventScript_DontUseStrength
-	closemessage
 	dofieldeffect FLDEFF_USE_STRENGTH
 	waitstate
 	goto EventScript_UseStrength
@@ -185,7 +191,10 @@ Text_StrengthMadeMovingBouldersPossible:: @ 81BE284
 EventScript_Waterfall:: @ 81BE2B7
 	goto_if_questlog EventScript_ReleaseEnd
 	lockall
-	checkpartymove MOVE_WATERFALL
+	checkitem ITEM_HM07, 1
+	compare VAR_RESULT, FALSE
+	goto_if_eq EventScript_WaterCrashingDown
+	checkpartytmhm ITEM_HM07
 	compare VAR_RESULT, PARTY_SIZE
 	goto_if_eq EventScript_WaterCrashingDown
 	getpartymonname 0, VAR_RESULT
@@ -219,7 +228,10 @@ Text_MonUsedWaterfall:: @ 81BE378
 
 EventScript_UseDive::
 	lockall
-	checkpartymove MOVE_DIVE
+	checkitem ITEM_HM08, 1
+	compare VAR_RESULT, FALSE
+	goto_if_eq EventScript_CantDive
+	checkpartytmhm ITEM_HM08
 	compare VAR_RESULT, PARTY_SIZE
 	goto_if_eq EventScript_CantDive
 	getpartymonname 0, VAR_RESULT
@@ -244,7 +256,10 @@ EventScript_EndDive::
 
 EventScript_UseDiveUnderwater:: @ 8290B5A
 	lockall
-	checkpartymove MOVE_DIVE
+	checkitem ITEM_HM08, 1
+	compare VAR_RESULT, FALSE
+	goto_if_eq EventScript_CantSurface
+	checkpartytmhm ITEM_HM08
 	compare VAR_RESULT, PARTY_SIZE
 	goto_if_eq EventScript_CantSurface
 	getpartymonname 0, VAR_RESULT

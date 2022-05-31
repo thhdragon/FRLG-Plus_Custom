@@ -830,7 +830,7 @@ static void ItemUse_SwitchToPartyMenuInBattle(u8 taskId)
 
 void BattleUseFunc_Medicine(u8 taskId)
 {
-    gItemUseCB = ItemUseCB_MedicineStep;
+    gItemUseCB = ItemUseCB_Medicine;
     ItemUse_SwitchToPartyMenuInBattle(taskId);
 }
 

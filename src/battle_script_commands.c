@@ -8887,6 +8887,14 @@ static void atkE5_pickup(void)
             pickupSuccess++;
             index = i;
         }
+        else if (species == SPECIES_SHUCKLE && heldItem >= FIRST_BERRY_INDEX && heldItem <= LAST_BERRY_INDEX)
+        {
+            if (!(Random() % 16))
+            {
+                heldItem = ITEM_BERRY_JUICE;
+                SetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM, &heldItem);
+            }
+        }
     }
     if(pickupSuccess == 1) // only one Pokemon has picked something up, print solo message
     {

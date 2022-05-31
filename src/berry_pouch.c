@@ -679,7 +679,7 @@ static void SetUpListMenuTemplate(void)
     gMultiuseListMenuTemplate.moveCursorFunc = BerryPouchMoveCursorFunc;
     gMultiuseListMenuTemplate.itemPrintFunc = BerryPouchItemPrintFunc;
     gMultiuseListMenuTemplate.cursorKind = 0;
-    gMultiuseListMenuTemplate.scrollMultiple = LIST_MULTIPLE_SCROLL_DPAD;
+    gMultiuseListMenuTemplate.scrollMultiple = LIST_MULTIPLE_SCROLL_L_R;
 }
 
 static void GetBerryNameAndIndexForMenu(u8 * dest, u16 itemId)

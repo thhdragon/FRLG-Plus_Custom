@@ -328,7 +328,7 @@ static const struct ListMenuTemplate sMoveRelearnerListMenuTemplate = {
     .cursorShadowPal = 3,
     .lettersSpacing = 1,
     .itemVerticalPadding = 0,
-    .scrollMultiple = 0,
+    .scrollMultiple = LIST_MULTIPLE_SCROLL_L_R,
     .fontId = 2,
     .cursorKind = 0,
 };

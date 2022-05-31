@@ -238,7 +238,7 @@ static const struct ListMenuTemplate sListMenuTemplate =
     .cursorShadowPal = 0x2,
     .lettersSpacing = 0x0,
     .itemVerticalPadding = 0x0,
-    .scrollMultiple = 0x1,
+    .scrollMultiple = LIST_MULTIPLE_SCROLL_L_R,
     .fontId = 0x2,
     .cursorKind = 0x0,
 };

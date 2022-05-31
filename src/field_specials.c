@@ -1418,7 +1418,7 @@ static void Task_CreateScriptListMenu(u8 taskId)
                 task->data[5]++;
         }
         CreateScriptListMenu();
-        sFieldSpecialsListMenuTemplate.scrollMultiple = 1;
+        sFieldSpecialsListMenuTemplate.scrollMultiple = LIST_MULTIPLE_SCROLL_L_R;
         mwidth = 0;
 
         for (i = 0; i < listSize; i++)
@@ -1502,7 +1502,7 @@ static void CreateScriptListMenu(void)
     sFieldSpecialsListMenuTemplate.cursorShadowPal = 3;
     sFieldSpecialsListMenuTemplate.lettersSpacing = 1;
     sFieldSpecialsListMenuTemplate.itemVerticalPadding = 0;
-    sFieldSpecialsListMenuTemplate.scrollMultiple = 0;
+    sFieldSpecialsListMenuTemplate.scrollMultiple = LIST_MULTIPLE_SCROLL_L_R;
     sFieldSpecialsListMenuTemplate.fontId = 2;
     sFieldSpecialsListMenuTemplate.cursorKind = 0;
 }

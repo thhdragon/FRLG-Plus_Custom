@@ -122,7 +122,7 @@ Route14_Text_MalikPostBattle:: @ 818636E
 
 Route14_Text_RouteSign:: @ 8186399
     .string "ROUTE 14\n"
-    .string "West to FUCHSIA CITY$"
+	.string "{LEFT_ARROW} FUCHSIA CITY$"
 
 Route14_Text_KiriIntro:: @ 81863B7
     .string "KIRI: JAN, let's try really,\n"

@@ -369,7 +369,8 @@
 #define METATILE_VermilionGym_Floor                              0x281
 
 // gTileset_ViridianCity
-#define METATILE_ViridianCity_Door  0x299
+#define METATILE_ViridianCity_Door              0x299
+#define METATILE_ViridianCity_Gym8_LockedDoors  0x2DF
 
 // gTileset_ViridianForest
 #define METATILE_ViridianForest_HugeTreeTopMiddle_Grass  0x284

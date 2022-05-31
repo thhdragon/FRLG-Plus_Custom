@@ -14,14 +14,14 @@ Route10_Text_ClarkIntro:: @ 8184C1D
     .string "Ha-hahah-ah-ha!$"
 
 Route10_Text_ClarkDefeat:: @ 8184C2D
-    .string "Ha-haha!\n"
-    .string "Not laughing!\l"
-    .string "Ha-hay fever! Haha-ha-choo!$"
+    .string "Haaa!! Haha!!\n"
+    .string "I actually… ate some\l"
+    .string "laughing mushrooms…$"
 
 Route10_Text_ClarkPostBattle:: @ 8184C60
-    .string "Haha-ha-choo!\n"
-    .string "Ha-choo!\l"
-    .string "Snort! Snivel!$"
+    .string "Ha-hahah-ah-ha!\n"
+    .string "Haaa!! Haha!!\l"
+    .string "Ha-hahah-ah-ha!$"
 
 Route10_Text_HermanIntro:: @ 8184C86
     .string "Hi, kid!\n"

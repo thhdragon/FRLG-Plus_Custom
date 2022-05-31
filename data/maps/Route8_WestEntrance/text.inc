@@ -22,5 +22,5 @@ Route8_WestEntrance_Text_ThanksIllShareTeaWithGuards:: @ 819E463
     .string "guards!$"
 
 Route8_WestEntrance_Text_HiHowsItGoing:: @ 819E50F
-    .string "Hi, how's it going?$"
-
+    .string "Have you been to LAVENDER TOWN?\n"
+    .string "The tower there is haunted, they say.$"

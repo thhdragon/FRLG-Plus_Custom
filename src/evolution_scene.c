@@ -543,7 +543,7 @@ static void CB2_TradeEvolutionSceneUpdate(void)
 static void CreateShedinja(u16 preEvoSpecies, struct Pokemon* mon)
 {
     u32 data = 0;
-    if (gEvolutionTable[preEvoSpecies][0].method == EVO_LEVEL_NINJASK && gPlayerPartyCount < 6)
+    if (gEvolutionTable[preEvoSpecies][0].method == EVO_LEVEL_NINJASK && gPlayerPartyCount < PARTY_SIZE)
     {
         s32 i;
         struct Pokemon* shedinja = &gPlayerParty[gPlayerPartyCount];
@@ -1083,7 +1083,7 @@ static void Task_TradeEvolutionScene(u8 taskId)
     case 11:
         if (!IsSEPlaying())
         {
-//            Free(sEvoMovingBgPtr);
+            Free(sEvoMovingBgPtr);
             PlayCry1(gTasks[taskId].tPostEvoSpecies, 0);
             memcpy(&gPlttBufferUnfaded[0x20], sEvoStructPtr->savedPalette, 0x60);
             gTasks[taskId].tState++;

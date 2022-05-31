@@ -151,10 +151,7 @@ UNUSED static void UnusedDoBattleSpriteAffineAnim(struct Sprite *sprite, bool8 a
 {
     sprite->animPaused = 1;
     sprite->callback = SpriteCallbackDummy;
-    if (!arg1)
-        StartSpriteAffineAnim(sprite, 1);
-    else
-        StartSpriteAffineAnim(sprite, 1);
+    StartSpriteAffineAnim(sprite, 1);
     AnimateSprite(sprite);
 }
 
@@ -297,10 +294,8 @@ bool8 IsBattleSEPlaying(u8 battlerId)
     if (IsSEPlaying())
     {
         ++gBattleSpritesDataPtr->healthBoxesData[battlerId].soundTimer;
-        // UB: Uses gActiveBattler instead of battlerId.
-        // In practice, this is never a problem, as this routine
-        // is only ever passed gActiveBattler.
-        if (gBattleSpritesDataPtr->healthBoxesData[gActiveBattler].soundTimer < 30)
+
+        if (gBattleSpritesDataPtr->healthBoxesData[battlerId].soundTimer < 30)
             return TRUE;
         m4aMPlayStop(&gMPlayInfo_SE1);
         m4aMPlayStop(&gMPlayInfo_SE2);

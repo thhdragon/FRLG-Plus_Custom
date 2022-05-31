@@ -1336,24 +1336,10 @@ static void Cmd_nullsub_33(void)
 static void Cmd_if_status_in_party(void)
 {
     struct Pokemon *party;
-    struct Pokemon *partyPtr;
     int i;
     u32 statusToCompareTo;
-    // u8 battlerId
+    u8 battlerId;
 
-    // for whatever reason, game freak put the party pointer into 2 variables instead of 1
-    // it's possible at some point the switch encompassed the whole function and used each respective variable creating largely duplicate code.
-    switch (sAIScriptPtr[1])
-    {
-    case 1:
-        party = partyPtr = gEnemyParty;
-        break;
-    default:
-        party = partyPtr = gPlayerParty;
-        break;
-    }
-
-    /* Emerald's fixed version below
     switch (sAIScriptPtr[1])
     {
     case AI_USER:
@@ -1365,7 +1351,6 @@ static void Cmd_if_status_in_party(void)
     }
 
     party = (GetBattlerSide(battlerId) == B_SIDE_PLAYER) ? gPlayerParty : gEnemyParty;
-    */
 
     statusToCompareTo = T1_READ_32(sAIScriptPtr + 2);
 
@@ -1385,7 +1370,6 @@ static void Cmd_if_status_in_party(void)
     sAIScriptPtr += 10;
 }
 
-// bugged, doesnt return properly. also unused
 static void Cmd_if_status_not_in_party(void)
 {
     struct Pokemon *party;
@@ -1412,9 +1396,11 @@ static void Cmd_if_status_not_in_party(void)
         u16 hp = GetMonData(&party[i], MON_DATA_HP);
         u32 status = GetMonData(&party[i], MON_DATA_STATUS);
 
-        // everytime the status is found, the AI's logic jumps further and further past its intended destination. this results in a broken AI macro and is probably why it is unused.
         if (species != SPECIES_NONE && species != SPECIES_EGG && hp != 0 && status == statusToCompareTo)
-            sAIScriptPtr += 10; // doesnt return?
+        {
+            sAIScriptPtr += 10;
+            return;
+        }
     }
     sAIScriptPtr = T1_READ_PTR(sAIScriptPtr + 6);
 }
@@ -1567,7 +1553,8 @@ static void Cmd_if_cant_faint(void)
 
     gBattleMoveDamage = gBattleMoveDamage * AI_THINKING_STRUCT->simulatedRNG[AI_THINKING_STRUCT->movesetIndex] / 100;
 
-    // This macro is missing the damage 0 = 1 assumption.
+    if (gBattleMoveDamage == 0)
+        gBattleMoveDamage = 1;
 
     if (gBattleMons[gBattlerTarget].hp > gBattleMoveDamage)
         sAIScriptPtr = T1_READ_PTR(sAIScriptPtr + 1);
@@ -1665,7 +1652,7 @@ static void Cmd_if_has_move_with_effect(void)
     case AI_TARGET_PARTNER:
         for (i = 0; i < 8; i++)
         {
-            if (gBattleMons[gBattlerAttacker].moves[i] != 0 && gBattleMoves[BATTLE_HISTORY->usedMoves[gBattlerTarget >> 1][i]].effect == sAIScriptPtr[2])
+            if (gBattleMons[gBattlerTarget].moves[i] != 0 && gBattleMoves[BATTLE_HISTORY->usedMoves[gBattlerTarget >> 1][i]].effect == sAIScriptPtr[2])
                 break;
         }
         sAIScriptPtr = T1_READ_PTR(sAIScriptPtr + 3);

@@ -31,6 +31,8 @@
 #define __(x) (x)
 #endif // __APPLE__
 
+#define ARRAY_COUNT(array) (size_t)(sizeof(array) / sizeof((array)[0]))
+
 #define NELEMS(array) (sizeof(array) / sizeof((array)[0]))
 
 #define SWAP(a, b, temp)    \
@@ -72,6 +74,10 @@
 #if MODERN
 #define abs(x) (((x) < 0) ? -(x) : (x))
 #endif
+
+// Used in cases where division by 0 can occur in the retail version.
+// Avoids invalid opcodes on some emulators, and the otherwise UB.
+#define SAFE_DIV(a, b) ((b) ? (a) / (b) : 0)
 
 // There are many quirks in the source code which have overarching behavioral differences from
 // a number of other files. For example, diploma.c seems to declare rodata before each use while

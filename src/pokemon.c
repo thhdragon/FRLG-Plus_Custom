@@ -3,6 +3,7 @@
 #include "global.h"
 #include "gflib.h"
 #include "random.h"
+#include "rtc.h"
 #include "text.h"
 #include "data.h"
 #include "battle.h"
@@ -2912,7 +2913,7 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, 
         {
             value = Random32();
             shinyValue = HIHALF(value) ^ LOHALF(value) ^ HIHALF(personality) ^ LOHALF(personality);
-        } while (shinyValue < 8);
+        } while (shinyValue < SHINY_ODDS);
     }
     else if (otIdType == OT_ID_PRESET) //Pokemon has a preset OT ID
     {
@@ -3771,8 +3772,7 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
                          | ((attacker->speedIV & 2) << 2)
                          | ((attacker->spAttackIV & 2) << 3)
                          | ((attacker->spDefenseIV & 2) << 4);
-			  
-			gBattleMovePower = (40 * powerBits) / 63 + 30;
+            gBattleMovePower = (40 * powerBits) / 63 + 30;
         }
     }
     else
@@ -5026,7 +5026,7 @@ void SetBoxMonData(struct BoxPokemon *boxMon, s32 field, const void *dataArg)
         break;
     case MON_DATA_IVS:
     {
-        u32 ivs = *data; // Bug: Only the HP IV and the lower 3 bits of the Attack IV are read. The rest become 0.
+        u32 ivs = data[0] | (data[1] << 8) | (data[2] << 16) | (data[3] << 24);
 
         substruct3->hpIV = ivs & 0x1F;
         substruct3->attackIV = (ivs >> 5) & 0x1F;
@@ -6383,7 +6383,7 @@ u8 GetNatureFromPersonality(u32 personality)
 u16 GetEvolutionTargetSpecies(struct Pokemon *mon, u8 type, u16 evolutionItem)
 {
     int i;
-    u16 targetSpecies = 0;
+    u16 targetSpecies = SPECIES_NONE;
     u16 species = GetMonData(mon, MON_DATA_SPECIES, NULL);
     u16 heldItem = GetMonData(mon, MON_DATA_HELD_ITEM, NULL);
     u32 personality = GetMonData(mon, MON_DATA_PERSONALITY, NULL);
@@ -6415,12 +6415,14 @@ u16 GetEvolutionTargetSpecies(struct Pokemon *mon, u8 type, u16 evolutionItem)
                 if (friendship >= 220)
                     targetSpecies = gEvolutionTable[species][i].targetSpecies;
                 break;
-            case EVO_FRIENDSHIP_DAY: //changed to evolve by friendship outdoors (Towns and routes)
-                if (gMapHeader.mapType < MAP_TYPE_UNDERGROUND && friendship >= 220)
+            case EVO_FRIENDSHIP_DAY:
+                RtcCalcLocalTime();
+                if (gLocalTime.hours >= 6 && gLocalTime.hours <= 18 && friendship >= 220)
                     targetSpecies = gEvolutionTable[species][i].targetSpecies;
                 break;
-            case EVO_FRIENDSHIP_NIGHT: //changed to evolve by friendship indoors (Caves and Indoors)
-                if (gMapHeader.mapType >= MAP_TYPE_UNDERGROUND && friendship >= 220)
+            case EVO_FRIENDSHIP_NIGHT:
+                RtcCalcLocalTime();
+                if (gLocalTime.hours > 18 && gLocalTime.hours < 6 && friendship >= 220)
                     targetSpecies = gEvolutionTable[species][i].targetSpecies;
                 break;
             case EVO_LEVEL:
@@ -6777,7 +6779,7 @@ static u16 ModifyStatByNature(u8 nature, u16 n, u8 statIndex)
     if (statIndex < 1 || statIndex > 5)
     {
         // should just be "return n", but it wouldn't match without this
-        u16 retVal = n;
+        u32 retVal = n;
         retVal++;
         retVal--;
         return retVal;
@@ -6969,17 +6971,47 @@ u16 GetMonEVCount(struct Pokemon *mon)
     return count;
 }
 
-// This function was stubbed from RS, but it is stubbed badly.
-// This variable is likely the u8 passed to SetMonData in RSE.
-// The pointer reference causes agbcc to reserve it on the stack before even checking
-// whether it's used.
 void RandomlyGivePartyPokerus(struct Pokemon *party)
 {
-    u8 foo;
-    &foo;
+    u16 rnd = Random();
+    if (rnd == 0x4000 || rnd == 0x8000 || rnd == 0xC000)
+    {
+        struct Pokemon *mon;
+
+        do
+        {
+            do
+            {
+                rnd = Random() % PARTY_SIZE;
+                mon = &party[rnd];
+            }
+            while (!GetMonData(mon, MON_DATA_SPECIES, 0));
+        }
+        while (GetMonData(mon, MON_DATA_IS_EGG, 0));
+
+        if (!(CheckPartyHasHadPokerus(party, gBitTable[rnd])))
+        {
+            u8 rnd2;
+
+            do
+            {
+                rnd2 = Random();
+            }
+            while ((rnd2 & 0x7) == 0);
+
+            if (rnd2 & 0xF0)
+                rnd2 &= 0x7;
+
+            rnd2 |= (rnd2 << 4);
+            rnd2 &= 0xF3;
+            rnd2++;
+
+            SetMonData(&party[rnd], MON_DATA_POKERUS, &rnd2);
+        }
+    }
 }
 
-u8 CheckPartyPokerus(struct Pokemon *party, u8 party_bm)
+u8 CheckPartyPokerus(struct Pokemon *party, u8 selection)
 {
     u8 retVal;
 
@@ -6987,25 +7019,23 @@ u8 CheckPartyPokerus(struct Pokemon *party, u8 party_bm)
     unsigned curBit = 1;
     retVal = 0;
 
-    if (party_bm != 0) // Check mons in party based on bitmask, LSB = first mon
+    if (selection)
     {
         do
         {
-            if ((party_bm & 1) && (GetMonData(&party[partyIndex], MON_DATA_POKERUS, NULL) & 0xF))
+            if ((selection & 1) && (GetMonData(&party[partyIndex], MON_DATA_POKERUS, 0) & 0xF))
                 retVal |= curBit;
             partyIndex++;
             curBit <<= 1;
-            party_bm >>= 1;
+            selection >>= 1;
         }
-        while (party_bm);
+        while (selection);
     }
-    else // Single Pokemon
+    else if (GetMonData(&party[0], MON_DATA_POKERUS, 0) & 0xF)
     {
-        if (GetMonData(&party[0], MON_DATA_POKERUS, NULL) & 0xF)
-        {
-            retVal = 1;
-        }
+        retVal = 1;
     }
+
     return retVal;
 }
 
@@ -7039,16 +7069,58 @@ u8 CheckPartyHasHadPokerus(struct Pokemon *party, u8 selection)
 
 // These two functions are stubbed from RS, but they're stubbed badly.
 // See note on RandomlyGivePartyPokerus above.
-static void UpdatePartyPokerusTime(void)
+void UpdatePartyPokerusTime(u16 days)
 {
-    u8 foo;
-    &foo;
+    int i;
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES, 0))
+        {
+            u8 pokerus = GetMonData(&gPlayerParty[i], MON_DATA_POKERUS, 0);
+            if (pokerus & 0xF)
+            {
+                if ((pokerus & 0xF) < days || days > 4)
+                    pokerus &= 0xF0;
+                else
+                    pokerus -= days;
+
+                if (pokerus == 0)
+                    pokerus = 0x10;
+
+                SetMonData(&gPlayerParty[i], MON_DATA_POKERUS, &pokerus);
+            }
+        }
+    }
 }
 
 void PartySpreadPokerus(struct Pokemon *party)
 {
-    u8 foo;
-    &foo;
+    if ((Random() % 3) == 0)
+    {
+        int i;
+        for (i = 0; i < PARTY_SIZE; i++)
+        {
+            if (GetMonData(&party[i], MON_DATA_SPECIES, 0))
+            {
+                u8 pokerus = GetMonData(&party[i], MON_DATA_POKERUS, 0);
+                u8 curPokerus = pokerus;
+                if (pokerus)
+                {
+                    if (pokerus & 0xF)
+                    {
+                        // Spread to adjacent party members.
+                        if (i != 0 && !(GetMonData(&party[i - 1], MON_DATA_POKERUS, 0) & 0xF0))
+                            SetMonData(&party[i - 1], MON_DATA_POKERUS, &curPokerus);
+                        if (i != (PARTY_SIZE - 1) && !(GetMonData(&party[i + 1], MON_DATA_POKERUS, 0) & 0xF0))
+                        {
+                            SetMonData(&party[i + 1], MON_DATA_POKERUS, &curPokerus);
+                            i++;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 static void SetMonExpWithMaxLevelCheck(struct Pokemon *mon, int species, u8 unused, u32 data)
@@ -7504,13 +7576,17 @@ static u16 GetBattleBGM(void)
             case CLASS_CHAMPION_2:
                 return MUS_VS_CHAMPION;
             case CLASS_LEADER_2:
+                return MUS_VS_GYM_LEADER;
             case CLASS_ELITE_FOUR_2:
                 return MUS_VS_GYM_LEADER;
             case CLASS_BOSS:
             case CLASS_TEAM_ROCKET:
             case CLASS_COOLTRAINER_2:
             case CLASS_GENTLEMAN_2:
+                return MUS_VS_TRAINER;
+            case CLASS_RIVAL:
             case CLASS_RIVAL_2:
+                return MUS_VS_RIVAL;
             default:
                 return MUS_VS_TRAINER;
         }
@@ -7554,7 +7630,7 @@ const u32 *GetMonSpritePalFromSpeciesAndPersonality(u16 species, u32 otId, u32 p
 
     if (species >= 65530 && species <= 65533) //Deoxys
     {
-        if(shinyValue < 8)
+        if(shinyValue < SHINY_ODDS)
             return gMonShinyPaletteTable[SPECIES_DEOXYS].data;
         else
             return gMonPaletteTable[SPECIES_DEOXYS].data;
@@ -7563,7 +7639,7 @@ const u32 *GetMonSpritePalFromSpeciesAndPersonality(u16 species, u32 otId, u32 p
     if (species > SPECIES_EGG)
         return gMonPaletteTable[0].data;
 
-    if (shinyValue < 8)
+    if (shinyValue < SHINY_ODDS)
         return gMonShinyPaletteTable[species].data;
     else
         return gMonPaletteTable[species].data;
@@ -7584,12 +7660,12 @@ const struct CompressedSpritePalette *GetMonSpritePalStructFromOtIdPersonality(u
     shinyValue = HIHALF(otId) ^ LOHALF(otId) ^ HIHALF(personality) ^ LOHALF(personality);
     if (species >= 65530 && species <= 65533) //Deoxys
     {
-        if(shinyValue < 8)
+        if(shinyValue < SHINY_ODDS)
             return &gMonShinyPaletteTable[SPECIES_DEOXYS];
         else
             return &gMonPaletteTable[SPECIES_DEOXYS];
     }
-    if (shinyValue < 8)
+    if (shinyValue < SHINY_ODDS)
         return &gMonShinyPaletteTable[species];
     else
         return &gMonPaletteTable[species];
@@ -7762,7 +7838,7 @@ static bool8 IsShinyOtIdPersonality(u32 otId, u32 personality)
 {
     bool8 retVal = FALSE;
     u32 shinyValue = HIHALF(otId) ^ LOHALF(otId) ^ HIHALF(personality) ^ LOHALF(personality);
-    if (shinyValue < 8)
+    if (shinyValue < SHINY_ODDS)
         retVal = TRUE;
     return retVal;
 }

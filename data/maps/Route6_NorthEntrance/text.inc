@@ -22,5 +22,5 @@ Route6_NorthEntrance_Text_ThanksIllShareTeaWithGuards:: @ 819E1F7
     .string "guards!$"
 
 Route6_NorthEntrance_Text_HiHowsItGoing:: @ 819E2A3
-    .string "Hi, how's it going?$"
-
+    .string "SILPH CO. is the most famous\n"
+    .string "thing about SAFFRON.$"

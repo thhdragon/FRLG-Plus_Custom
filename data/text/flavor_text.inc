@@ -1,15 +1,14 @@
 @ Flavor text for interacting with various background objects
 
 Text_Bookshelf:: @ 81C0DB0
-	.string "It's crammed full of POKéMON\n"
-	.string "books.$"
+	.string "It's filled with all sorts of books.$"
 
 Text_ATownMap:: @ 81C0DF1
 	.string "A TOWN MAP.$"
 
 Text_PokeMartShelf:: @ 81C0DFD
-	.string "Wow!\n"
-	.string "Tons of POKéMON stuff!$"
+	.string "The shelves brim with all sorts of\n"
+	.string "POKéMON merchandise.$"
 
 Text_DishesPlatesNeatlyLinedUp:: @ 81C0E19
 	.string "Dishes and plates are neatly\n"
@@ -27,11 +26,11 @@ Text_Snacks:: @ 81C0EAC
 	.string "There's a pile of snacks here.$"
 
 Text_PokemartSign:: @ 81C0ECB
-	.string "All your item needs fulfilled!\n"
+	.string "“All your item needs fulfilled!”\n"
 	.string "POKéMON MART$"
 
 Text_PokecenterSign:: @ 81C0EF7
-	.string "Heal Your POKéMON!\n"
+	.string "“Rejuvenate your tired partners!”\n"
 	.string "POKéMON CENTER$"
 
 Text_Indigo_UltimateGoal:: @ 81C0F19
@@ -77,9 +76,7 @@ Text_TastyFood:: @ 81C1134
 	.string "It might get the stomach growling!$"
 
 Text_TrashBin:: @ 81C116E
-	.string "Inside this…\n"
-	.string "……\p"
-	.string "There's nothing here!$"
+	.string "It's empty.$"
 
 Text_Cup:: @ 81C1194
 	.string "It's a cup with a POKéMON mark\n"
@@ -114,5 +111,6 @@ Text_Burglary:: @ 81C12D6
 	.string "here…$"
 
 Text_PlayerFacingTVScreen:: @ 81C1300
-	.string "There's a POKéMON on TV!\n"
-	.string "It looks like it's having fun.$"
+	.string "MOM might like this program.\n"
+	.string "… … … … … … … … … … … … … … … …\p"
+	.string "Better get going!$"

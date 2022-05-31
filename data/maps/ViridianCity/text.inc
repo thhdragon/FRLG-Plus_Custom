@@ -25,10 +25,10 @@ ViridianCity_Text_ExplainCaterpieWeedle:: @ 817DBE4
     .string "stabbed by WEEDLE's POISON STING.$"
 
 ViridianCity_Text_GrandpaHasntHadCoffeeYet:: @ 817DC4E
-    .string "Oh, Grandpa!\n"
-    .string "Don't be so mean!\p"
-    .string "I'm so sorry.\n"
-    .string "He hasn't had his coffee yet.$"
+    .string "Good grief, Grandpa!\n"
+    .string "Sleeping here of all places!\p"
+    .string "It can't be helped…\n"
+    .string "We have to wait until he sobers up…$"
 
 ViridianCity_Text_GoShoppingInPewterOccasionally:: @ 817DC99
     .string "I go shopping in PEWTER CITY\n"
@@ -37,13 +37,16 @@ ViridianCity_Text_GoShoppingInPewterOccasionally:: @ 817DC99
     .string "VIRIDIAN FOREST when I go.$"
 
 ViridianCity_Text_ThisIsPrivateProperty:: @ 817DD03
-    .string "I absolutely forbid you from\n"
-    .string "going through here!\p"
-    .string "This is private property!$"
+    .string "Uugh…! Hic…hold it right there!\n"
+    .string "Lissen to what I hafta say!\p"
+    .string "…hey!\n"
+    .string "Don't go, I said!$"
 
 ViridianCity_Text_ShowYouHowToCatchMons:: @ 817DD4E
-    .string "Well, now, I've had my coffee, and\n"
-    .string "that's what I need to get going!\p"
+    .string "Mmn…\n"
+    .string "Looks like I was pretty drunk!\p"
+    .string "My head hurts…\n"
+    .string "Are you in a hurry…?\p"
     .string "Hm?\n"
     .string "What is that red box you have?\p"
     .string "Ah, so you're working on your\n"
@@ -59,8 +62,10 @@ ViridianCity_Text_ShowYouHowToCatchMons:: @ 817DD4E
     .string "then!$"
 
 ViridianCity_Text_SkipTutorial::
-    .string "Well, now, I've had my coffee, and\n"
-    .string "that's what I need to get going!\p"
+    .string "Mmn…\n"
+    .string "Looks like I was pretty drunk!\p"
+    .string "My head hurts…\n"
+    .string "Are you in a hurry…?\p"
     .string "Hm?\n"
     .string "What is that red box you have?\p"
     .string "Ah, so you're working on your\n"
@@ -87,20 +92,20 @@ ViridianCity_Text_WatchThatToLearnBasics:: @ 817DEEB
     .string "of being a POKéMON TRAINER.$"
 
 ViridianCity_Text_WeakenMonsFirstToCatch:: @ 817DF61
-    .string "Well, now, I've had my coffee, and\n"
-    .string "that's what I need to get going!\p"
-    .string "But I made it too strong.\n"
-    .string "It gave me a headache…\p"
+    .string "Mmn…\n"
+    .string "Looks like I was pretty drunk!\p"
+    .string "My head hurts…\n"
+    .string "Are you in a hurry…?\p"
     .string "Incidentally, are you filling your\n"
     .string "POKéDEX?\p"
     .string "At first, focus on weakening the\n"
     .string "POKéMON before trying to catch it.$"
 
 ViridianCity_Text_HowsTeachyTVHelping:: @ 817E046
-    .string "Well, now, I've had my coffee, and\n"
-    .string "that's what I need to get going!\p"
-    .string "But I made it too strong.\n"
-    .string "It gave me a headache…\p"
+    .string "Mmn…\n"
+    .string "Looks like I was pretty drunk!\p"
+    .string "My head hurts…\n"
+    .string "Are you in a hurry…?\p"
     .string "Incidentally, is my old TEACHY TV\n"
     .string "helping you?$"
 

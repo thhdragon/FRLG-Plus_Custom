@@ -1,5 +1,8 @@
 CinnabarIsland_Text_DoorIsLocked:: @ 8180B20
-    .string "The door is locked…$"
+    .string "CINNABAR GYM's doors are locked…$"
+
+CinnabarIsland_Text_DoorIsUnlocked:: @ 818AC62
+    .string "CINNABAR GYM's doors are unlocked.$"
 
 CinnabarIsland_Text_BlaineLivedHereSinceBeforeLab:: @ 8180B34
     .string "CINNABAR GYM's BLAINE is quite the\n"

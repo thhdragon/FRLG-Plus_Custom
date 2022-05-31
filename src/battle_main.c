@@ -2227,10 +2227,8 @@ static void SpriteCB_BounceEffect(struct Sprite *sprite)
     u8 bouncerSpriteId = sprite->sBouncerSpriteId;
     s32 index;
 
-    if (sprite->sWhich == BOUNCE_HEALTHBOX)
-        index = sprite->sSinIndex;
-    else
-        index = sprite->sSinIndex;
+    index = sprite->sSinIndex;
+
     gSprites[bouncerSpriteId].pos2.y = Sin(index, sprite->sAmplitude) + sprite->sAmplitude;
     sprite->sSinIndex = (sprite->sSinIndex + sprite->sDelta) & 0xFF;
 }
@@ -2998,7 +2996,7 @@ void BattleTurnPassed(void)
     gHitMarker &= ~(HITMARKER_NO_ATTACKSTRING);
     gHitMarker &= ~(HITMARKER_UNABLE_TO_USE_MOVE);
     gHitMarker &= ~(HITMARKER_PLAYER_FAINTED);
-    gHitMarker &= ~(HITMARKER_x100000);
+    gHitMarker &= ~(HITMARKER_PASSIVE_DAMAGE);
     gBattleScripting.animTurn = 0;
     gBattleScripting.animTargetsHit = 0;
     gBattleScripting.atk49_state = 0;
@@ -3735,7 +3733,7 @@ static void RunTurnActionsFunctions(void)
 
     if (gCurrentTurnActionNumber >= gBattlersCount) // everyone did their actions, turn finished
     {
-        gHitMarker &= ~(HITMARKER_x100000);
+        gHitMarker &= ~(HITMARKER_PASSIVE_DAMAGE);
         gBattleMainFunc = sEndTurnFuncsTable[gBattleOutcome & 0x7F];
     }
     else
@@ -3785,10 +3783,12 @@ static void HandleEndTurn_BattleWon(void)
         case CLASS_PKMN_PROF:
             PlayBGM(MUS_VICTORY_GYM_LEADER);
             break;
+        case CLASS_ELITE_FOUR_2:
+            PlayBGM(MUS_VICTORY_LEAGUE);
+            break;
         case CLASS_BOSS:
         case CLASS_TEAM_ROCKET:
         case CLASS_COOLTRAINER_2:
-        case CLASS_ELITE_FOUR_2:
         case CLASS_GENTLEMAN_2:
         default:
             PlayBGM(MUS_VICTORY_TRAINER);
@@ -4497,7 +4497,7 @@ static void HandleAction_NothingIsFainted(void)
     gCurrentActionFuncId = gActionsByTurnOrder[gCurrentTurnActionNumber];
     gHitMarker &= ~(HITMARKER_DESTINYBOND | HITMARKER_IGNORE_SUBSTITUTE | HITMARKER_ATTACKSTRING_PRINTED
                     | HITMARKER_NO_PPDEDUCT | HITMARKER_IGNORE_SAFEGUARD | HITMARKER_IGNORE_ON_AIR
-                    | HITMARKER_IGNORE_UNDERGROUND | HITMARKER_IGNORE_UNDERWATER | HITMARKER_x100000
+                    | HITMARKER_IGNORE_UNDERGROUND | HITMARKER_IGNORE_UNDERWATER | HITMARKER_PASSIVE_DAMAGE
                     | HITMARKER_OBEYS | HITMARKER_x10 | HITMARKER_SYNCHRONISE_EFFECT
                     | HITMARKER_CHARGING | HITMARKER_x4000000);
 }
@@ -4509,7 +4509,7 @@ static void HandleAction_ActionFinished(void)
     SpecialStatusesClear();
     gHitMarker &= ~(HITMARKER_DESTINYBOND | HITMARKER_IGNORE_SUBSTITUTE | HITMARKER_ATTACKSTRING_PRINTED
                     | HITMARKER_NO_PPDEDUCT | HITMARKER_IGNORE_SAFEGUARD | HITMARKER_IGNORE_ON_AIR
-                    | HITMARKER_IGNORE_UNDERGROUND | HITMARKER_IGNORE_UNDERWATER | HITMARKER_x100000
+                    | HITMARKER_IGNORE_UNDERGROUND | HITMARKER_IGNORE_UNDERWATER | HITMARKER_PASSIVE_DAMAGE
                     | HITMARKER_OBEYS | HITMARKER_x10 | HITMARKER_SYNCHRONISE_EFFECT
                     | HITMARKER_CHARGING | HITMARKER_x4000000);
     gCurrentMove = MOVE_NONE;

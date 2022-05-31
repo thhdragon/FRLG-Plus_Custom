@@ -100,5 +100,5 @@ Route3_Text_RobinPostBattle:: @ 818389C
 
 Route3_Text_RouteSign:: @ 81838C0
     .string "ROUTE 3\n"
-    .string "MT. MOON AHEAD$"
+	.string "{UP_ARROW} MT. MOON$"
 

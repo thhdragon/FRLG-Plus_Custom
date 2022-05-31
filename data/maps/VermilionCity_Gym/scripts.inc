@@ -247,6 +247,13 @@ VermilionCity_Gym_EventScript_DefeatedLtSurge:: @ 816B97C
 	setflag FLAG_DEFEATED_LT_SURGE
 	setflag FLAG_BADGE03_GET
 	set_gym_trainers 3
+	msgbox VermilionCity_Gym_Text_LtSurgeAfterDefeat
+	textcolor 0x2
+	message VermilionCity_Gym_Text_ReceivedBadge
+	waitmessage
+	call Common_EventScript_PlayGymBadgeFanfare
+	textcolor 0xFF
+	msgbox VermilionCity_Gym_Text_ExplainThunderBadge
 	goto VermilionCity_Gym_EventScript_GiveTM34
 	end
 
@@ -255,11 +262,11 @@ VermilionCity_Gym_EventScript_ShowOaksAide:: @ 816B9AB
 	return
 
 VermilionCity_Gym_EventScript_GiveTM34:: @ 816B9AF
-	msgbox VermilionCity_Gym_Text_ExplainThunderBadgeTakeThis
+	msgbox VermilionCity_Gym_Text_TakeThis
 	checkitemspace ITEM_TM34, 1
 	compare VAR_RESULT, FALSE
 	goto_if_eq VermilionCity_Gym_EventScript_NoRoomForTM34
-	giveitem_msg VermilionCity_Gym_Text_ReceivedTM34FromLtSurge, ITEM_TM34
+	giveitem_msg VermilionCity_Gym_Text_ReceivedTM34FromLtSurge, ITEM_TM34, 1, MUS_OBTAIN_TMHM
 	setflag FLAG_GOT_TM34_FROM_SURGE
 	msgbox VermilionCity_Gym_Text_ExplainTM34
 	release

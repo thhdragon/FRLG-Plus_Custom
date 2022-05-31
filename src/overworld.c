@@ -2,6 +2,7 @@
 #include "gflib.h"
 #include "bg_regs.h"
 #include "cable_club.h"
+#include "clock.h"
 #include "credits.h"
 #include "event_data.h"
 #include "event_object_movement.h"
@@ -47,6 +48,7 @@
 #include "script_pokemon_util.h"
 #include "start_menu.h"
 #include "tileset_anims.h"
+#include "time_events.h"
 #include "trainer_pokemon_sprites.h"
 #include "vs_seeker.h"
 #include "wild_encounter.h"
@@ -158,7 +160,6 @@ static void mli4_mapscripts_and_other(void);
 static void ReloadObjectsAndRunReturnToFieldMapScript(void);
 static void sub_8057114(void);
 static void SetCameraToTrackGuestPlayer(void);
-static void SetCameraToTrackGuestPlayer_2(void);
 static void sub_8057178(void);
 static void sub_80571A8(void);
 static void CreateLinkPlayerSprites(void);
@@ -191,7 +192,6 @@ static bool32 PlayerIsAtSouthExit(struct TradeRoomPlayer * player);
 static const u8 *TryGetTileEventScript(struct TradeRoomPlayer * player);
 static const u8 *TryInteractWithPlayer(struct TradeRoomPlayer * player);
 static bool32 sub_8057FEC(struct TradeRoomPlayer * player);
-static bool32 sub_8058004(struct TradeRoomPlayer * player);
 static u16 GetDirectionForEventScript(const u8 *script);
 static void sub_80581BC(void);
 static void CreateConfirmLeaveTradeRoomPrompt(void);
@@ -209,7 +209,6 @@ static u8 GetLinkPlayerIdAt(s16 x, s16 y);
 static void CreateLinkPlayerSprite(u8 i, u8 version);
 static u8 MovementEventModeCB_Normal(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8);
 static u8 MovementEventModeCB_Ignored(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8);
-static u8 MovementEventModeCB_Normal_2(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8);
 static u8 FacingHandler_DoNothing(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8);
 static u8 FacingHandler_DpadMovement(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8);
 static u8 FacingHandler_ForcedFacingChange(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8);
@@ -839,6 +838,7 @@ void LoadMapFromCameraTransition(u8 mapGroup, u8 mapNum)
     ResetCyclingRoadChallengeData();
     RestartWildEncounterImmunitySteps();
     MapResetTrainerRematches(mapGroup, mapNum);
+    DoTimeBasedEvents();
     SetSav1WeatherFromCurrMapHeader();
     ChooseAmbientCrySpecies();
     SetDefaultFlashLevel();
@@ -874,6 +874,7 @@ static void mli0_load_map(bool32 a1)
     ResetCyclingRoadChallengeData();
     RestartWildEncounterImmunitySteps();
     MapResetTrainerRematches(gSaveBlock1Ptr->location.mapGroup, gSaveBlock1Ptr->location.mapNum);
+    DoTimeBasedEvents();
     SetSav1WeatherFromCurrMapHeader();
     ChooseAmbientCrySpecies();
     if (isOutdoors)
@@ -896,6 +897,7 @@ static void sub_80559A8(void)
     LoadObjEventTemplatesFromHeader();
     isOutdoors = IsMapTypeOutdoors(gMapHeader.mapType);
     TrySetMapSaveWarpStatus();
+    DoTimeBasedEvents();
     SetSav1WeatherFromCurrMapHeader();
     ChooseAmbientCrySpecies();
     SetDefaultFlashLevel();
@@ -1804,6 +1806,7 @@ void CB2_ContinueSavedGame(void)
     LoadSaveblockMapHeader();
     LoadSaveblockObjEventScripts();
     UnfreezeObjectEvents();
+    DoTimeBasedEvents();
     Overworld_ResetStateOnContinue();
     InitMapFromSavedGame();
     PlayTimeCounter_Start();
@@ -2088,7 +2091,7 @@ static bool32 map_loading_iteration_2_link(u8 *state)
     case 2:
         CreateLinkPlayerSprites();
         ReloadObjectsAndRunReturnToFieldMapScript();
-        SetCameraToTrackGuestPlayer_2();
+        SetCameraToTrackGuestPlayer();
         SetHelpContextForMap();
         (*state)++;
         break;
@@ -2270,12 +2273,6 @@ static void sub_8057114(void)
 }
 
 static void SetCameraToTrackGuestPlayer(void)
-{
-    InitCameraUpdateCallback(GetSpriteForLinkedPlayer(gLocalLinkPlayerId));
-}
-
-// Duplicate function.
-static void SetCameraToTrackGuestPlayer_2(void)
 {
     InitCameraUpdateCallback(GetSpriteForLinkedPlayer(gLocalLinkPlayerId));
 }
@@ -2658,9 +2655,9 @@ static void Task_OvwldCredits_WaitFade(u8 taskId)
 // Link related
 
 static u8 (*const sLinkPlayerMovementModes[])(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8) = {
-    MovementEventModeCB_Normal, // MOVEMENT_MODE_FREE
+    MovementEventModeCB_Normal,  // MOVEMENT_MODE_FREE
     MovementEventModeCB_Ignored, // MOVEMENT_MODE_FROZEN
-    MovementEventModeCB_Normal_2, // MOVEMENT_MODE_SCRIPTED
+    MovementEventModeCB_Normal,  // MOVEMENT_MODE_SCRIPTED
 };
 
 // These handlers return TRUE if the movement was scripted and successful, and FALSE otherwise.
@@ -2798,7 +2795,7 @@ static void HandleLinkPlayerKeyInput(u32 playerId, u16 key, struct TradeRoomPlay
         switch (key)
         {
         case LINK_KEY_CODE_START_BUTTON:
-            if (sub_8058004(trainer))
+            if (sub_8057FEC(trainer))
             {
                 sPlayerTradingStates[playerId] = PLAYER_TRADING_STATE_BUSY;
                 if (trainer->isLocalPlayer)
@@ -3090,12 +3087,6 @@ static u16 KeyInterCB_SendExitRoomKey(u32 key)
     return LINK_KEY_CODE_EXIT_ROOM;
 }
 
-// Duplicate function.
-static u16 KeyInterCB_SendNothing_2(u32 key)
-{
-    return LINK_KEY_CODE_EMPTY;
-}
-
 u32 sub_8057EC0(void)
 {
     if (IsAnyPlayerInTradingState(PLAYER_TRADING_STATE_EXITING_ROOM) == TRUE)
@@ -3136,7 +3127,7 @@ u16 QueueExitLinkRoomKey(void)
 
 u16 sub_8057F70(void)
 {
-    SetKeyInterceptCallback(KeyInterCB_SendNothing_2);
+    SetKeyInterceptCallback(KeyInterCB_SendNothing);
     return 0;
 }
 
@@ -3156,16 +3147,6 @@ static void LoadTradeRoomPlayer(s32 linkPlayerId, s32 myPlayerId, struct TradeRo
 }
 
 static bool32 sub_8057FEC(struct TradeRoomPlayer *player)
-{
-    u8 v1 = player->c;
-    if (v1 == MOVEMENT_MODE_SCRIPTED || v1 == MOVEMENT_MODE_FREE)
-        return TRUE;
-    else
-        return FALSE;
-}
-
-// Duplicate function.
-static bool32 sub_8058004(struct TradeRoomPlayer *player)
 {
     u8 v1 = player->c;
     if (v1 == MOVEMENT_MODE_SCRIPTED || v1 == MOVEMENT_MODE_FREE)
@@ -3525,12 +3506,6 @@ static u8 MovementEventModeCB_Normal(struct LinkPlayerObjectEvent *linkPlayerObj
 static u8 MovementEventModeCB_Ignored(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 dir)
 {
     return FACING_UP;
-}
-
-// Duplicate Function
-static u8 MovementEventModeCB_Normal_2(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 dir)
-{
-    return sLinkPlayerFacingHandlers[dir](linkPlayerObjEvent, objEvent, dir);
 }
 
 static bool8 FacingHandler_DoNothing(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 dir)

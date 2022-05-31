@@ -18,6 +18,8 @@
 #define TRAINER_ENCOUNTER_MUSIC_HIKER       11 // used for other trainer classes too
 #define TRAINER_ENCOUNTER_MUSIC_INTERVIEWER 12
 #define TRAINER_ENCOUNTER_MUSIC_RICH        13 // Rich Boys and Gentlemen
+#define TRAINER_ENCOUNTER_MUSIC_KANTO_MALE  14
+#define TRAINER_ENCOUNTER_MUSIC_KANTO_SUS   15
 
 #define TRAINER_PIC_AQUA_LEADER_ARCHIE      0
 #define TRAINER_PIC_AQUA_GRUNT_M            1

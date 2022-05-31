@@ -9,13 +9,19 @@ FuchsiaCity_Gym_Text_KogaIntro:: @ 819832E
     .string "Poison brings steady doom.\n"
     .string "Sleep renders foes helpless.\p"
     .string "Despair to the creeping horror of\n"
-    .string "POISON-type POKéMON!{PLAY_BGM}{MUS_ENCOUNTER_GYM_LEADER}$"
+    .string "POISON-type POKéMON!$"
 
 FuchsiaCity_Gym_Text_KogaDefeat:: @ 8198444
     .string "Humph!\n"
-    .string "You have proven your worth!\p"
+    .string "You have proven your worth!$"
+
+FuchsiaCity_Gym_Text_KogaAfterDefeat::
     .string "Here!\n"
     .string "Take the SOULBADGE!$"
+
+FuchsiaCity_Gym_Text_ReceivedBadge::
+    .string "{PLAYER} received the SOULBADGE\n"
+    .string "from KOGA!$"
 
 FuchsiaCity_Gym_Text_KogaPostBattle:: @ 8198481
     .string "When afflicted by TOXIC, a POKéMON\n"
@@ -28,7 +34,9 @@ FuchsiaCity_Gym_Text_KogaExplainSoulBadge:: @ 819850E
     .string "Now that you have the SOULBADGE,\n"
     .string "the DEFENSE of your POKéMON rises.\p"
     .string "It also lets you SURF outside of\n"
-    .string "battle.\p"
+    .string "battle.$"
+
+FuchsiaCity_Gym_Text_KogaTakeThis::
     .string "Ah!\n"
     .string "Take this, too!$"
 
@@ -143,14 +151,12 @@ FuchsiaCity_Gym_Text_GymGuyPostVictory:: @ 8198B1D
     .string "even now!$"
 
 FuchsiaCity_Gym_Text_GymStatue:: @ 8198B4B
-    .string "FUCHSIA POKéMON GYM\n"
-    .string "LEADER: KOGA\p"
-    .string "WINNING TRAINERS:\n"
+    .string "FUCHSIA CITY POKéMON GYM\p"
+	.string "KOGA'S CERTIFIED TRAINERS:\n"
     .string "{RIVAL}$"
 
 FuchsiaCity_Gym_Text_GymStatuePlayerWon:: @ 8198B81
-    .string "FUCHSIA POKéMON GYM\n"
-    .string "LEADER: KOGA\p"
-    .string "WINNING TRAINERS:\n"
+    .string "FUCHSIA CITY POKéMON GYM\p"
+	.string "KOGA'S CERTIFIED TRAINERS:\n"
     .string "{RIVAL}, {PLAYER}$"
 

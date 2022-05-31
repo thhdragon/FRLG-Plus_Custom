@@ -78,10 +78,10 @@ static struct EggHatchData *sEggHatchData;
 
 // RAM buffers used to assist with BuildEggMoveset()
 EWRAM_DATA static u16 sHatchedEggLevelUpMoves[EGG_LVL_UP_MOVES_ARRAY_COUNT] = {0};
-EWRAM_DATA static u16 sHatchedEggFatherMoves[4] = {0};
-EWRAM_DATA static u16 sHatchedEggFinalMoves[4] = {0};
+EWRAM_DATA static u16 sHatchedEggFatherMoves[MAX_MON_MOVES] = {0};
+EWRAM_DATA static u16 sHatchedEggFinalMoves[MAX_MON_MOVES] = {0};
 EWRAM_DATA static u16 sHatchedEggEggMoves[EGG_MOVES_ARRAY_COUNT] = {0};
-EWRAM_DATA static u16 sHatchedEggMotherMoves[4] = {0};
+EWRAM_DATA static u16 sHatchedEggMotherMoves[MAX_MON_MOVES] = {0};
 
 #include "data/pokemon/egg_moves.h"
 
@@ -528,7 +528,7 @@ static u16 TakeSelectedPokemonFromDaycare(struct DaycareMon *daycareMon)
         ApplyDaycareExperience(&pokemon);
     }
 
-    if(CalculatePlayerPartyCount() != 6)
+    if(CalculatePlayerPartyCount() != PARTY_SIZE)
     {
         gSpecialVar_MonBoxId = 9999;
         gSpecialVar_MonBoxPos = 9999;
@@ -830,8 +830,9 @@ static void InheritIVs(struct Pokemon *egg, struct DayCare *daycare)
     for (i = 0; i < NELEMS(selectedIvs); i++)
     {
         // Randomly pick an IV from the available list and stop from being chosen again.
-        selectedIvs[i] = availableIVs[Random() % (NUM_STATS - i)];
-        RemoveIVIndexFromList(availableIVs, selectedIvs[i]);
+        u8 index = Random() % (NUM_STATS - i);
+        selectedIvs[i] = availableIVs[index];
+        RemoveIVIndexFromList(availableIVs, index);
     }
 
     // Determine which parent each of the selected IVs should inherit from.
@@ -2110,7 +2111,7 @@ static void Task_EggHatchPlayBGM(u8 taskID)
     {
         PlayBGM(MUS_EVOLUTION);
         DestroyTask(taskID);
-        // UB: task is destroyed, yet the value is incremented
+        return;
     }
     gTasks[taskID].data[0]++;
 }
@@ -2305,7 +2306,7 @@ static void SpriteCB_Egg_2(struct Sprite* sprite)
             if (sprite->data[0] == 15)
             {
                 PlaySE(SE_BALL);
-                StartSpriteAnim(sprite, 2);
+                StartSpriteAnim(sprite, 3);
                 CreateRandomEggShardSprite();
                 CreateRandomEggShardSprite();
             }

@@ -2374,7 +2374,7 @@ static void VBCB_BT_Phase2WhiteFadeInStripes1(void)
     SetGpuReg(REG_OFFSET_BLDCNT, sTransitionStructPtr->bldCnt);
     SetGpuReg(REG_OFFSET_WININ, sTransitionStructPtr->winIn);
     SetGpuReg(REG_OFFSET_WINOUT, sTransitionStructPtr->winOut);
-    SetGpuReg(REG_OFFSET_WIN0V, sTransitionStructPtr->win0H); // BUG: This should obviously be sTransitionStructPtr->win0V
+    SetGpuReg(REG_OFFSET_WIN0V, sTransitionStructPtr->win0V);
     if (sTransitionStructPtr->vblankDma)
         DmaCopy16(3, gScanlineEffectRegBuffers[0], gScanlineEffectRegBuffers[1], 640);
     DmaSet(0, &gScanlineEffectRegBuffers[1][160], &REG_WIN0H, ((DMA_ENABLE | DMA_START_HBLANK | DMA_REPEAT | DMA_16BIT | DMA_SRC_INC | DMA_DEST_FIXED) << 16) | 1);

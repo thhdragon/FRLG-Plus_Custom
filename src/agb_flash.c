@@ -127,7 +127,7 @@ void SetReadFlash1(u16 *dest)
     }
 }
 
-void ReadFlash_Core(u8 *src, u8 *dest, u32 size)
+void ReadFlash_Core(vu8 *src, u8 *dest, u32 size)
 {
     while (size-- != 0)
     {
@@ -142,7 +142,7 @@ void ReadFlash(u16 sectorNum, u32 offset, void *dest, u32 size)
     vu16 readFlash_Core_Buffer[0x40];
     vu16 *funcSrc;
     vu16 *funcDest;
-    void (*readFlash_Core)(u8 *, u8 *, u32);
+    void (*readFlash_Core)(vu8 *, u8 *, u32);
 
     REG_WAITCNT = (REG_WAITCNT & ~WAITCNT_SRAM_MASK) | WAITCNT_SRAM_8;
 
@@ -164,7 +164,7 @@ void ReadFlash(u16 sectorNum, u32 offset, void *dest, u32 size)
         i--;
     }
 
-    readFlash_Core = (void (*)(u8 *, u8 *, u32))((s32)readFlash_Core_Buffer + 1);
+    readFlash_Core = (void (*)(vu8 *, u8 *, u32))((s32)readFlash_Core_Buffer + 1);
 
     src = FLASH_BASE + (sectorNum << gFlash->sector.shift) + offset;
 
@@ -217,7 +217,7 @@ u32 VerifyFlashSector(u16 sectorNum, u8 *src)
     tgt = FLASH_BASE + (sectorNum << gFlash->sector.shift);
     size = gFlash->sector.size;
 
-    return verifyFlashSector_Core(src, tgt, size); // return 0 if verified.
+    return verifyFlashSector_Core(src, tgt, size);
 }
 
 u32 VerifyFlashSectorNBytes(u16 sectorNum, u8 *src, u32 n)
@@ -261,7 +261,7 @@ u32 ProgramFlashSectorAndVerify(u16 sectorNum, u8 *src)
     u32 i;
     u32 result;
 
-    for (i = 0; i < 3; i++) // 3 attempts
+    for (i = 0; i < 3; i++)
     {
         result = ProgramFlashSector(sectorNum, src);
         if (result != 0)
@@ -272,7 +272,7 @@ u32 ProgramFlashSectorAndVerify(u16 sectorNum, u8 *src)
             break;
     }
 
-    return result; // return 0 if verified and programmed.
+    return result;
 }
 
 u32 ProgramFlashSectorAndVerifyNBytes(u16 sectorNum, void *dataSrc, u32 n)

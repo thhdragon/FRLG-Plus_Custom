@@ -1843,9 +1843,9 @@ static void atk0C_datahpupdate(void)
                         gHpDealt = gBattleMons[gActiveBattler].hp;
                         gBattleMons[gActiveBattler].hp = 0;
                     }
-                    if (!gSpecialStatuses[gActiveBattler].dmg && !(gHitMarker & HITMARKER_x100000))
+                    if (!gSpecialStatuses[gActiveBattler].dmg && !(gHitMarker & HITMARKER_PASSIVE_DAMAGE))
                         gSpecialStatuses[gActiveBattler].dmg = gHpDealt;
-                    if (IS_TYPE_PHYSICAL(moveType) && !(gHitMarker & HITMARKER_x100000) && gCurrentMove != MOVE_PAIN_SPLIT)
+                    if (IS_TYPE_PHYSICAL(moveType) && !(gHitMarker & HITMARKER_PASSIVE_DAMAGE) && gCurrentMove != MOVE_PAIN_SPLIT)
                     {
                         gProtectStructs[gActiveBattler].physicalDmg = gHpDealt;
                         gSpecialStatuses[gActiveBattler].physicalDmg = gHpDealt;
@@ -1860,7 +1860,7 @@ static void atk0C_datahpupdate(void)
                             gSpecialStatuses[gActiveBattler].physicalBattlerId = gBattlerTarget;
                         }
                     }
-                    else if (!IS_TYPE_PHYSICAL(moveType) && !(gHitMarker & HITMARKER_x100000))
+                    else if (!IS_TYPE_PHYSICAL(moveType) && !(gHitMarker & HITMARKER_PASSIVE_DAMAGE))
                     {
                         gProtectStructs[gActiveBattler].specialDmg = gHpDealt;
                         gSpecialStatuses[gActiveBattler].specialDmg = gHpDealt;
@@ -1876,7 +1876,7 @@ static void atk0C_datahpupdate(void)
                         }
                     }
                 }
-                gHitMarker &= ~(HITMARKER_x100000);
+                gHitMarker &= ~(HITMARKER_PASSIVE_DAMAGE);
                 BtlController_EmitSetMonData(0, REQUEST_HP_BATTLE, 0, 2, &gBattleMons[gActiveBattler].hp);
                 MarkBattlerForControllerExec(gActiveBattler);
             }
@@ -3133,7 +3133,7 @@ static void atk23_getexp(void)
                         holdEffect = gSaveBlock1Ptr->enigmaBerry.holdEffect;
                     else
                         holdEffect = ItemId_GetHoldEffect(item);
-                    if (holdEffect == HOLD_EFFECT_EXP_SHARE)
+                    if (holdEffect == HOLD_EFFECT_EXP_SHARE && !(gBitTable[i] & sentIn))
                         ++viaExpShare;
                 }
             }
@@ -3154,7 +3154,7 @@ static void atk23_getexp(void)
             }
             if (viaExpShare) // at least one mon is getting exp via exp share
             {
-                *exp = calculatedExp / 2 / viaSentIn;
+                *exp = SAFE_DIV(calculatedExp / 2, viaSentIn);
                 if (*exp == 0)
                     *exp = 1;
                 gExpShareExp = calculatedExp / 2 / viaExpShare;
@@ -3163,7 +3163,7 @@ static void atk23_getexp(void)
             }
             else
             {
-                *exp = calculatedExp / viaSentIn;
+                *exp = SAFE_DIV(calculatedExp, viaSentIn);
                 if (*exp == 0)
                     *exp = 1;
                 gExpShareExp = 0;
@@ -3297,8 +3297,6 @@ static void atk23_getexp(void)
                     gBattleMons[0].maxHP = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_MAX_HP);
                     gBattleMons[0].attack = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_ATK);
                     gBattleMons[0].defense = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_DEF);
-                    // Why is this duplicated?
-                    gBattleMons[0].speed = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_SPEED);
                     gBattleMons[0].speed = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_SPEED);
                     gBattleMons[0].spAttack = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_SPATK);
                     gBattleMons[0].spDefense = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_SPDEF);
@@ -3311,10 +3309,9 @@ static void atk23_getexp(void)
                     gBattleMons[2].maxHP = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_MAX_HP);
                     gBattleMons[2].attack = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_ATK);
                     gBattleMons[2].defense = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_DEF);
-                    // Duplicated again, but this time there's no Sp Defense
-                    gBattleMons[2].speed = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_SPEED);
                     gBattleMons[2].speed = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_SPEED);
                     gBattleMons[2].spAttack = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_SPATK);
+                    gBattleMons[2].spDefense = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_SPDEF);
                 }
                 gBattleScripting.atk23_state = 5;
             }
@@ -3333,7 +3330,7 @@ static void atk23_getexp(void)
         else
         {
             ++gBattleStruct->expGetterMonId;
-            if (gBattleStruct->expGetterMonId <= 5)
+            if (gBattleStruct->expGetterMonId < PARTY_SIZE)
                 gBattleScripting.atk23_state = 2; // loop again
             else
                 gBattleScripting.atk23_state = 6; // we're done
@@ -5551,6 +5548,7 @@ static void atk6C_drawlvlupbox(void)
 {
     if (gBattleScripting.atk6C_state == 0)
     {
+        gBattleScripting.bgBackup = gBattle_BG2_X;
         if (IsMonGettingExpSentOut())
             gBattleScripting.atk6C_state = 3;
         else
@@ -5612,6 +5610,7 @@ static void atk6C_drawlvlupbox(void)
         }
         break;
     case 9:
+        gBattle_BG2_X = 0;
         if (!sub_8026648())
         {
             ClearWindowTilemap(13);
@@ -5632,6 +5631,7 @@ static void atk6C_drawlvlupbox(void)
             ShowBg(1);
             ++gBattlescriptCurrInstr;
         }
+        gBattle_BG2_X = gBattleScripting.bgBackup;
         break;
     }
 }
@@ -5818,7 +5818,7 @@ static void atk70_recordlastability(void)
 {
     gActiveBattler = GetBattlerForBattleScript(gBattlescriptCurrInstr[1]);
     RecordAbilityBattle(gActiveBattler, gLastUsedAbility);
-    gBattlescriptCurrInstr += 1; // UB: Should be + 2, one byte for command and one byte for battlerId argument.
+    gBattlescriptCurrInstr += 2;
 }
 
 void BufferMoveToLearnIntoBattleTextBuff2(void)
@@ -9029,7 +9029,7 @@ static void atkEC_pursuitrelated(void)
         gCurrentMove = MOVE_PURSUIT;
         gBattlescriptCurrInstr += 5;
         gBattleScripting.animTurn = 1;
-        gBattleScripting.field_20 = gBattlerAttacker;
+        gBattleScripting.bgBackup = gBattlerAttacker;
         gBattlerAttacker = gActiveBattler;
     }
     else
@@ -9213,7 +9213,7 @@ static void atkEF_handleballthrow(void)
                     SetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattlerTarget]], MON_DATA_MET_LOCATION, &mapSec);
                     SetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattlerTarget]], MON_DATA_MET_GAME, &version);
                 }    
-                if (CalculatePlayerPartyCount() == 6)
+                if (CalculatePlayerPartyCount() == PARTY_SIZE)
                     gBattleCommunication[MULTISTRING_CHOOSER] = 0;
                 else
                     gBattleCommunication[MULTISTRING_CHOOSER] = 1;
@@ -9269,7 +9269,7 @@ static void atkEF_handleballthrow(void)
                         SetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattlerTarget]], MON_DATA_MET_LOCATION, &mapSec);
                         SetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattlerTarget]], MON_DATA_MET_GAME, &version);
                     }  
-                    if (CalculatePlayerPartyCount() == 6)
+                    if (CalculatePlayerPartyCount() == PARTY_SIZE)
                         gBattleCommunication[MULTISTRING_CHOOSER] = 0;
                     else
                         gBattleCommunication[MULTISTRING_CHOOSER] = 1;

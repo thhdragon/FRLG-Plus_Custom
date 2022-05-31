@@ -118,7 +118,7 @@ Route17_Text_PressBToStayInPlace:: @ 818757B
 
 Route17_Text_RouteSign:: @ 81875BE
     .string "ROUTE 17\n"
-    .string "CELADON CITY - FUCHSIA CITY$"
+	.string "{DOWN_ARROW} FUCHSIA CITY$"
 
 Route17_Text_DontThrowGameThrowBalls:: @ 81875E3
     .string "It's a notice!\p"

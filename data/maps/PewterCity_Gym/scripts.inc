@@ -49,6 +49,13 @@ PewterCity_Gym_EventScript_DefeatedBrock:: @ 816A5C5
 	setflag FLAG_HIDE_CHARMANDER_BALL
 	setflag FLAG_HIDE_SQUIRTLE_BALL
 	setflag FLAG_HIDE_BULBASAUR_BALL
+	msgbox PewterCity_Gym_Text_BrockAwardBadge
+	textcolor 0x2
+	message PewterCity_Gym_Text_ReceivedBadge
+	waitmessage
+	call Common_EventScript_PlayGymBadgeFanfare
+	textcolor 0xFF
+	msgbox PewterCity_Gym_Text_BrockAwardBadge2
 	goto PewterCity_Gym_EventScript_GiveTM39
 	end
 
@@ -57,7 +64,7 @@ PewterCity_Gym_EventScript_GiveTM39:: @ 816A5F3
 	checkitemspace ITEM_TM39, 1
 	compare VAR_RESULT, FALSE
 	goto_if_eq PewterCity_Gym_EventScript_NoRoomForTM39
-	giveitem_msg PewterCity_Gym_Text_ReceivedTM39FromBrock, ITEM_TM39
+	giveitem_msg PewterCity_Gym_Text_ReceivedTM39FromBrock, ITEM_TM39, 1, MUS_OBTAIN_TMHM
 	setflag FLAG_GOT_TM39_FROM_BROCK
 	msgbox PewterCity_Gym_Text_ExplainTM39
 	release

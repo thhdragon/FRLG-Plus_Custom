@@ -17,7 +17,7 @@ CeladonCity_Restaurant_EventScript_CoinCaseMan:: @ 816D1FD
 	checkitemspace ITEM_COIN_CASE, 1
 	compare VAR_RESULT, FALSE
 	goto_if_eq CeladonCity_Restaurant_EventScript_NoRoomForCoinCase
-	giveitem_msg CeladonCity_Restaurant_Text_ReceivedCoinCaseFromMan, ITEM_COIN_CASE
+	giveitem_msg CeladonCity_Restaurant_Text_ReceivedCoinCaseFromMan, ITEM_COIN_CASE, 1, MUS_OBTAIN_KEY_ITEM
 	setflag FLAG_GOT_COIN_CASE
 	release
 	end

@@ -149,7 +149,7 @@ CeladonCity_DepartmentStore_Roof_EventScript_GiveDrink:: @ 816BF7C
 	goto_if_eq CeladonCity_DepartmentStore_Roof_EventScript_NoRoomForReward
 	additem VAR_0x8009
 	textcolor 3
-	playfanfare MUS_LEVEL_UP
+	playfanfare MUS_OBTAIN_TMHM
 	message Text_ReceivedItemFromLittleGirl
 	waitmessage
 	waitfanfare

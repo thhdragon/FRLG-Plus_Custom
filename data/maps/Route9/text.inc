@@ -102,5 +102,5 @@ Route9_Text_ConnerPostBattle:: @ 8184B3B
 
 Route9_Text_RouteSign:: @ 8184B66
     .string "ROUTE 9\n"
-    .string "CERULEAN CITY - ROCK TUNNEL$"
+	.string "{RIGHT_ARROW} ROCK TUNNEL$"
 

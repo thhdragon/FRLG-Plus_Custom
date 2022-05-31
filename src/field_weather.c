@@ -235,6 +235,7 @@ static void Task_WeatherMain(u8 taskId)
             && gWeatherPtr->palProcessingState != WEATHER_PAL_STATE_SCREEN_FADING_OUT)
         {
             // Finished cleaning up previous weather. Now transition to next weather.
+            UpdateCameraPanning();
             sWeatherFuncs[gWeatherPtr->nextWeather].initVars();
             gWeatherPtr->gammaStepFrameCounter = 0;
             gWeatherPtr->palProcessingState = WEATHER_PAL_STATE_CHANGING_WEATHER;

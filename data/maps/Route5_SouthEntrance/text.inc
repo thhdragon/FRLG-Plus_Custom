@@ -22,5 +22,13 @@ Route5_SouthEntrance_Text_ThanksIllShareTeaWithGuards:: @ 819E0C1
     .string "guards!$"
 
 Route5_SouthEntrance_Text_HiHowsItGoing:: @ 819E16D
-    .string "Hi, how's it going?$"
-
+    .string "Hi, how's it going?\n"
+    .string "What do you think of SAFFRON?\l"
+    .string "It's nice, isn't it?\l"
+    .string "Checked out VERMILION CITY yet?\l"
+    .string "Did you party on the S.S. ANNE?\l"
+    .string "What was the party like?\l"
+    .string "Did you bring a date with you?\p"
+    .string "… … … …\n"
+    .string "… … … …\p"
+    .string "Sorry, am I prying too much?$"

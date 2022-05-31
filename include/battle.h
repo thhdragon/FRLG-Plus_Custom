@@ -519,7 +519,7 @@ struct BattleScripting
     u8 battleStyle;
     u8 atk6C_state;
     u8 learnMoveState;
-    u8 field_20;
+    u8 bgBackup;
     u8 reshowMainState;
     u8 reshowHelperState;
     u8 field_23;

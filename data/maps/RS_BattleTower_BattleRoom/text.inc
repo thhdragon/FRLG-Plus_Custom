@@ -15,7 +15,7 @@ BattleTower_BattleRoom_Text_19AD66:: @ 819AD66
 	.string "BATTLE ROOM challenge?$"
 
 BattleTower_BattleRoom_Text_1C6CE1:: @ 81C6CE1
-	.string "SAVING...\n"
+	.string "SAVING…\n"
 	.string "DON'T TURN OFF THE POWER.$"
 
 BattleTower_BattleRoom_Text_1C6D05:: @ 81C6D05

@@ -1687,26 +1687,22 @@ bool8 RunAffineAnimFromTaskData(struct Task *task)
     return TRUE;
 }
 
-// Sets the sprite's y offset equal to the y displacement caused by the
-// matrix's scale in the y dimension.
 void SetBattlerSpriteYOffsetFromYScale(u8 spriteId)
 {
-    s32 var = 64 - GetBattlerYDeltaFromSpriteId(spriteId) * 2;
+    int var = 64 - GetBattlerYDeltaFromSpriteId(spriteId) * 2;
     u16 matrix = gSprites[spriteId].oam.matrixNum;
-    s32 var2 = (var << 8) / gOamMatrices[matrix].d;
+    int var2 = SAFE_DIV(var << 8, gOamMatrices[matrix].d);
 
     if (var2 > 128)
         var2 = 128;
     gSprites[spriteId].pos2.y = (var - var2) / 2;
 }
 
-// Sets the sprite's y offset equal to the y displacement caused by another sprite
-// matrix's scale in the y dimension.
 void SetBattlerSpriteYOffsetFromOtherYScale(u8 spriteId, u8 otherSpriteId)
 {
-    s32 var = 64 - GetBattlerYDeltaFromSpriteId(otherSpriteId) * 2;
+    int var = 64 - GetBattlerYDeltaFromSpriteId(otherSpriteId) * 2;
     u16 matrix = gSprites[spriteId].oam.matrixNum;
-    s32 var2 = (var << 8) / gOamMatrices[matrix].d;
+    int var2 = SAFE_DIV(var << 8, gOamMatrices[matrix].d);
 
     if (var2 > 128)
         var2 = 128;

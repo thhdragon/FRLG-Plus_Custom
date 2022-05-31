@@ -22,5 +22,6 @@ Route7_EastEntrance_Text_ThanksIllShareTeaWithGuards:: @ 819E32D
     .string "guards!$"
 
 Route7_EastEntrance_Text_HiHowsItGoing:: @ 819E3D9
-    .string "Hi, how's it going?$"
-
+    .string "I take my guard duty seriously.\p"
+    .string "What?\n"
+    .string "You don't agree?$"

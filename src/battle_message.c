@@ -418,7 +418,7 @@ static const u8 sText_FoePkmnPrefix4[] = _("Foe");
 static const u8 sText_AllyPkmnPrefix3[] = _("Ally");
 static const u8 sText_AttackerUsedX[] = _("{B_ATK_NAME_WITH_PREFIX} used\n{B_BUFF2}!");
 static const u8 sText_MonPickedUpItem[] = _("Your POKéMON picked\nup some items!");
-static const u8 sText_MonPickedUpItemSolo[] = _("{B_BUFF1} picked up {B_BUFF2} {B_TRAINER2_LOSE_TEXT}!");
+static const u8 sText_MonPickedUpItemSolo[] = _("{B_BUFF1} picked up {B_BUFF2} {B_TRAINER2_LOSE_TEXT}!{PAUSE_UNTIL_PRESS}");
 
 //link title strings
 static const u8 sText_LinkTrainerSentOutPkmnTitle[] = _("{B_LINK_OPPONENT1_NAME}\nsent out {B_OPPONENT_MON1_NAME}!");
@@ -1136,7 +1136,7 @@ const u16 gWeatherContinuesStringIds[] = {
     STRINGID_ITISRAINING,
     STRINGID_ITISRAINING,
     STRINGID_ITISRAINING,
-    STRINGID_ITISRAINING,
+    STRINGID_STARTEDHAIL,
     STRINGID_ITISRAINING,
     STRINGID_ITISRAINING,
     STRINGID_ITISRAINING,
@@ -1145,7 +1145,7 @@ const u16 gWeatherContinuesStringIds[] = {
     STRINGID_ITISRAINING,
     STRINGID_ITISRAINING,
     STRINGID_SUNLIGHTSTRONG,
-    STRINGID_ITISRAINING,
+    STRINGID_STARTEDHAIL,
     STRINGID_ITISRAINING,
     STRINGID_ITISRAINING
 };
@@ -1243,7 +1243,7 @@ const u8 gUnknown_83FE747[] = _("{PALETTE 5}{COLOR_HIGHLIGHT_SHADOW 13 14 15}BAL
 const u8 gText_MoveInterfacePP[] = _("PP ");
 const u8 gText_MoveInterfaceType[] = _("TYPE/");
 const u8 gUnknown_83FE770[] = _("{PALETTE 5}{COLOR_HIGHLIGHT_SHADOW 13 14 15}");
-const u8 gText_BattleYesNoChoice[] = _("{PALETTE 5}{COLOR_HIGHLIGHT_SHADOW 13 14 15}Yes\nNo");
+const u8 gText_BattleYesNoChoice[] = _("{PALETTE 5}{COLOR_HIGHLIGHT_SHADOW 13 14 15}YES\nNO");
 const u8 gText_BattleSwitchWhich[] = _("{PALETTE 5}{COLOR_HIGHLIGHT_SHADOW 13 14 15}Switch\nwhich?");
 const u8 gUnknown_83FE7B6[] = _("{PALETTE 5}{COLOR_HIGHLIGHT_SHADOW 13 14 15}");
 const u8 gUnknown_83FE7BF[] = _("{RIGHT_ARROW_2}");

@@ -155,8 +155,8 @@ CapeBrink_Text_CasparaPostBattle:
 	.string "like this is really worth it.$"
 
 CapeBrink_Text_CasparaRematchIntro:
-	.string "You don't have to keep bothering me,\n"
-	.string "that chair over there is free.\p"
+	.string "You don't have to keep bothering me.\n"
+	.string "That chair over there is free.\p"
 	.string "Another battle?\n"
 	.string "…If it makes you go away, then fine.$"
 

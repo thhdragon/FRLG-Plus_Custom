@@ -7,7 +7,17 @@
 
 ViridianCity_MapScripts:: @ 81658D3
 	map_script MAP_SCRIPT_ON_TRANSITION, ViridianCity_OnTransition
+	map_script MAP_SCRIPT_ON_LOAD, ViridianCity_OnLoad
 	.byte 0
+
+ViridianCity_OnLoad::
+	compare VAR_MAP_SCENE_VIRIDIAN_CITY_GYM_DOOR, 1
+	call_if_eq ViridianCity_EventScript_SetGym8Unlocked
+	end
+
+ViridianCity_EventScript_SetGym8Unlocked::
+	setmetatile 35, 10, METATILE_General_SlidingDoubleDoor, 1
+	return
 
 ViridianCity_MapScript_SetMasterTrainerMovementTypes::
 	setvar TRAINER, MASTER_ABRA
@@ -67,22 +77,13 @@ ViridianCity_EventScript_TryUnlockGym:: @ 8165931
 	setvar VAR_MAP_SCENE_VIRIDIAN_CITY_GYM_DOOR, 1
 	return
 
-ViridianCity_EventScript_GymDoorLocked:: @ 816596D
-	lockall
-	textcolor 3
-	applymovement OBJ_EVENT_ID_PLAYER, Movement_WalkInPlaceFastestUp
-	waitmovement 0
-	delay 20
-	msgbox ViridianCity_Text_GymDoorsAreLocked
-	closemessage
-	applymovement OBJ_EVENT_ID_PLAYER, ViridianCity_Movement_JumpDownLedge
-	waitmovement 0
-	releaseall
-	end
-
 ViridianCity_Movement_JumpDownLedge:: @ 8165992
 	jump_2_down
 	step_end
+
+ViridianCity_EventScript_GymLockedDoor::
+	msgbox ViridianCity_Text_GymDoorsAreLocked, MSGBOX_SIGN
+	end
 
 ViridianCity_EventScript_CitySign:: @ 8165994
 	msgbox ViridianCity_Text_CitySign, MSGBOX_SIGN

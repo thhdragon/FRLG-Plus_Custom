@@ -97,17 +97,24 @@ CinnabarIsland_Gym_EventScript_DefeatedBlaine:: @ 816DA06
 	setvar VAR_MAP_SCENE_CINNABAR_ISLAND, 1
 	clearflag FLAG_HIDE_CINNABAR_BILL
 	set_gym_trainers 7
+	msgbox CinnabarIsland_Gym_Text_BlaineAfterDefeat
+	textcolor 0x2
+	message CinnabarIsland_Gym_Text_ReceivedBadge
+	waitmessage
+	call Common_EventScript_PlayGymBadgeFanfare
+	textcolor 0xFF
+	msgbox CinnabarIsland_Gym_Text_ExplainVolcanoBadge
 	goto CinnabarIsland_Gym_EventScript_GiveTM38
 	end
 
 CinnabarIsland_Gym_EventScript_GiveTM38:: @ 816DA34
-	msgbox CinnabarIsland_Gym_Text_ExplainVolcanoBadge
+	msgbox CinnabarIsland_Gym_Text_BlaineTakeThis
 	checkitemspace ITEM_TM38, 1
 	compare VAR_RESULT, FALSE
 	goto_if_eq CinnabarIsland_Gym_EventScript_NoRoomForTM38
-	giveitem_msg CinnabarIsland_Gym_Text_ReceivedTM38FromBlaine, ITEM_TM38
+	giveitem_msg CinnabarIsland_Gym_Text_ReceivedTM38FromBlaine, ITEM_TM38, 1, MUS_OBTAIN_TMHM
 	setflag FLAG_GOT_TM38_FROM_BLAINE
-	msgbox CinnabarIsland_Gym_Text_FireBlastIsUltimateFireMove
+	msgbox CinnabarIsland_Gym_Text_ExplainTM38
 	release
 	end
 

@@ -7,7 +7,7 @@ VermilionCity_Gym_Text_LtSurgeIntro:: @ 8194BA4
     .string "saved me during the war!\p"
     .string "They zapped my enemies into\n"
     .string "paralysis!\p"
-    .string "The same as I'll do to you!{PLAY_BGM}{MUS_ENCOUNTER_GYM_LEADER}$"
+    .string "The same as I'll do to you!$"
 
 VermilionCity_Gym_Text_LtSurgePostBattle:: @ 8194C8E
     .string "A little word of advice, kid!\p"
@@ -15,11 +15,13 @@ VermilionCity_Gym_Text_LtSurgePostBattle:: @ 8194C8E
     .string "But, it's useless against GROUND-\n"
     .string "type POKéMON!$"
 
-VermilionCity_Gym_Text_ExplainThunderBadgeTakeThis:: @ 8194CFA
+VermilionCity_Gym_Text_ExplainThunderBadge:: @ 8194CFA
     .string "The THUNDERBADGE cranks up your\n"
     .string "POKéMON's SPEED!\p"
     .string "It also lets your POKéMON FLY\n"
-    .string "lightning-quick anytime, kid!\p"
+    .string "lightning-quick anytime, kid!$"
+
+VermilionCity_Gym_Text_TakeThis:: @ 8194CFA
     .string "You're special, kid!\n"
     .string "Take this!$"
 
@@ -35,9 +37,15 @@ VermilionCity_Gym_Text_MakeRoomInYourBag:: @ 8194DE3
     .string "Yo, kid, make room in your BAG!$"
 
 VermilionCity_Gym_Text_LtSurgeDefeat:: @ 8194E03
-    .string "Now that's a shocker!\p"
+    .string "Now that's a shocker!$"
+
+VermilionCity_Gym_Text_LtSurgeAfterDefeat:
     .string "You're the real deal, kid!\p"
     .string "Fine, then, take the THUNDERBADGE!$"
+
+VermilionCity_Gym_Text_ReceivedBadge:
+    .string "{PLAYER} received the THUNDERBADGE\n"
+    .string "from LT. SURGE!$"
 
 VermilionCity_Gym_Text_TuckerIntro:: @ 8194E57
     .string "When I was in the Army, LT. SURGE\n"
@@ -102,15 +110,13 @@ VermilionCity_Gym_Text_GymGuyPostVictory:: @ 81951EC
     .string "That match was electric!$"
 
 VermilionCity_Gym_Text_GymStatue:: @ 819520B
-    .string "VERMILION POKéMON GYM\n"
-    .string "LEADER: LT. SURGE\p"
-    .string "WINNING TRAINERS:\n"
+    .string "VERMILION CITY POKéMON GYM\p"
+	.string "LT. SURGE'S CERTIFIED TRAINERS:\n"
     .string "{RIVAL}$"
 
 VermilionCity_Gym_Text_GymStatuePlayerWon:: @ 8195248
-    .string "VERMILION POKéMON GYM\n"
-    .string "LEADER: LT. SURGE\p"
-    .string "WINNING TRAINERS:\n"
+    .string "VERMILION CITY POKéMON GYM\p"
+	.string "LT. SURGE'S CERTIFIED TRAINERS:\n"
     .string "{RIVAL}, {PLAYER}$"
 
 VermilionCity_Gym_Text_NopeOnlyTrashHere:: @ 8195289

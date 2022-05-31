@@ -76,7 +76,7 @@ Route16_Text_CyclingRoadSign:: @ 8186F7A
 
 Route16_Text_RouteSign:: @ 8186F98
     .string "ROUTE 16\n"
-    .string "CELADON CITY - FUCHSIA CITY$"
+	.string "{RIGHT_ARROW} CELADON CITY$"
 
 Route16_Text_JedIntro:: @ 8186FBD
     .string "JED: Our love knows no bounds.\n"

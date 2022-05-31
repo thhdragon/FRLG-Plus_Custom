@@ -508,6 +508,7 @@ extern const u8 gText_ABtnRegistrationCounter[];
 extern const u8 gText_SaveFileCorruptedPrevWillBeLoaded[];
 extern const u8 gText_SaveFileHasBeenDeleted[];
 extern const u8 gText_1MSubCircuitBoardNotInstalled[];
+extern const u8 gText_BatteryRunDry[];
 extern const u8 gText_NewGame[];
 extern const u8 gText_Continue[];
 extern const u8 gText_MysteryGift[];
@@ -521,6 +522,10 @@ extern const u8 gTextJPDummy_Hiki[];
 extern const u8 gText_Badges[];
 extern const u8 gTextJPDummy_Ko[];
 extern const u8 gText_Register[];
+
+extern const u8 gText_Confirm3[];
+extern const u8 gText_Cancel4[];
+extern const u8 gText_IsThisTheCorrectTime[];
 
 // mystery_gift_menu
 extern const u8 gText_PickOKExit[];
@@ -626,6 +631,19 @@ extern const u8 gText_WhatWouldYouLikeToDoWithPlayersMail[];
 extern const u8 gText_MessageWillBeLost[];
 extern const u8 gText_BagIsFull[];
 extern const u8 gText_MailReturnedToBagMessageErased[];
+
+// reset rtc screen texts
+extern const u8 gText_Day[];
+extern const u8 gText_Colon3[];
+extern const u8 gText_Confirm2[];
+extern const u8 gText_PresentTime[];
+extern const u8 gText_PreviousTime[];
+extern const u8 gText_ResetRTCConfirmCancel[];
+extern const u8 gText_NoSaveFileCantSetTime[];
+extern const u8 gText_PleaseResetTime[];
+extern const u8 gText_ClockHasBeenReset[];
+extern const u8 gText_SaveCompleted[];
+extern const u8 gText_SaveFailed[];
 
 // start_menu
 extern const u8 gStartMenuText_Pokedex[];
@@ -800,9 +818,6 @@ extern const u8 gText_ThreeIsland[];
 extern const u8 gText_Vermilion[];
 extern const u8 gText_Colosseum_2[];
 extern const u8 gText_BerryCrush[];
-extern const u8 gText_Dummy_8417E66[];
-extern const u8 gText_Dummy_8417E67[];
-extern const u8 gText_Dummy_8417E71[];
 extern const u8 gText_PokemonJump[];
 extern const u8 gText_DodrioBerryPicking[];
 extern const u8 gText_2Tinymushrooms[];
@@ -1059,6 +1074,7 @@ extern const u8 gText_TrainerCardTime[];
 extern const u8 gText_Var1sTrainerCard[];
 extern const u8 gText_HallOfFameDebut[];
 extern const u8 gText_WinLossRatio[];
+extern const u8 gText_BattleTowerWinStraight[];
 extern const u8 gText_PokemonTrades[];
 extern const u8 gText_BerryCrushes[];
 extern const u8 gText_UnionRoomTradesBattles[];

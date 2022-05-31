@@ -5,7 +5,7 @@ CeruleanCity_Gym_Text_MistyIntro:: @ 81921EF
     .string "What is your approach when you\n"
     .string "catch and train POKéMON?\p"
     .string "My policy is an all-out offensive\n"
-    .string "with WATER-type POKéMON!{PLAY_BGM}{MUS_ENCOUNTER_GYM_LEADER}$"
+    .string "with WATER-type POKéMON!$"
 
 CeruleanCity_Gym_Text_ExplainTM03:: @ 81922BF
     .string "TM03 teaches WATER PULSE.\p"
@@ -19,7 +19,9 @@ CeruleanCity_Gym_Text_ExplainCascadeBadge:: @ 81922F7
     .string "There's more. You can now use CUT\n"
     .string "anytime, even out of battle.\p"
     .string "You can CUT down small trees to\n"
-    .string "open new pathways.\p"
+    .string "open new pathways.$"
+
+CeruleanCity_Gym_Text_GiveTM03::
     .string "You can also have my favorite TM.$"
 
 CeruleanCity_Gym_Text_ReceivedTM03FromMisty:: @ 81923F1
@@ -31,10 +33,21 @@ CeruleanCity_Gym_Text_BetterMakeRoomForThis:: @ 819240E
 
 CeruleanCity_Gym_Text_MistyDefeat:: @ 819242D
     .string "Wow!\n"
-    .string "You're too much!\p"
+    .string "You're too much!$"
+
+CeruleanCity_Gym_Text_MistyPostMatch::
     .string "All right!\p"
     .string "You can have the CASCADEBADGE to\n"
     .string "show you beat me.$"
+
+CeruleanCity_Gym_Text_ReceivedBadge::
+    .string "{PLAYER} received the CASCADEBADGE\n"
+    .string "from MISTY!$"
+
+CeruleanCity_Gym_Text_MistyPostBattle:
+    .string "Water-type Pokémon are all so\n"
+    .string "adorable, don't you think?\p"
+    .string "I love every last one of them!$"
 
 CeruleanCity_Gym_Text_DianaIntro:: @ 8192481
     .string "What? You?\n"
@@ -79,14 +92,12 @@ CeruleanCity_Gym_Text_WeMakePrettyGoodTeam:: @ 8192688
     .string "darn-good team!$"
 
 CeruleanCity_Gym_Text_GymStatue:: @ 81926E1
-    .string "CERULEAN POKéMON GYM\n"
-    .string "LEADER: MISTY\p"
-    .string "WINNING TRAINERS:\n"
+    .string "CERULEAN CITY POKéMON GYM\p"
+	.string "MISTY'S CERTIFIED TRAINERS:\n"
     .string "{RIVAL}$"
 
 CeruleanCity_Gym_Text_GymStatuePlayerWon:: @ 8192719
-    .string "CERULEAN POKéMON GYM\n"
-    .string "LEADER: MISTY\p"
-    .string "WINNING TRAINERS:\n"
+    .string "CERULEAN CITY POKéMON GYM\p"
+	.string "MISTY'S CERTIFIED TRAINERS:\n"
     .string "{RIVAL}, {PLAYER}$"
 

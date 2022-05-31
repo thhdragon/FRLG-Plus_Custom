@@ -104,7 +104,7 @@ Route12_Text_AndrewPostBattle:: @ 818574D
 
 Route12_Text_RouteSign:: @ 8185797
     .string "ROUTE 12 \n"
-    .string "North to LAVENDER$"
+	.string "{UP_ARROW} LAVENDER TOWN$"
 
 Route12_Text_SportfishingArea:: @ 81857B3
     .string "SPORTFISHING AREA$"

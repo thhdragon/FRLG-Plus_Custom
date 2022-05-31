@@ -350,7 +350,7 @@ static void DoSafariBattle(void)
     StopPlayerAvatar();
     gMain.savedCallback = CB2_EndSafariBattle;
     gBattleTypeFlags = BATTLE_TYPE_SAFARI;
-    CreateBattleStartTask(GetWildBattleTransition(), 0);
+    CreateBattleStartTask(GetWildBattleTransition(), MUS_SAFARI_ZONE);
 }
 
 static void DoGhostBattle(void)
@@ -360,7 +360,7 @@ static void DoGhostBattle(void)
     StopPlayerAvatar();
     gMain.savedCallback = CB2_EndWildBattle;
     gBattleTypeFlags = BATTLE_TYPE_GHOST;
-    CreateBattleStartTask(GetWildBattleTransition(), 0);
+    CreateBattleStartTask(GetWildBattleTransition(), MUS_LAVENDER);
     SetMonData(&gEnemyParty[0], MON_DATA_NICKNAME, gText_Ghost);
     IncrementGameStat(GAME_STAT_TOTAL_BATTLES);
     IncrementGameStat(GAME_STAT_WILD_BATTLES);
@@ -405,7 +405,7 @@ void StartMarowakBattle(void)
     {
         gBattleTypeFlags = BATTLE_TYPE_GHOST;
     }
-    CreateBattleStartTask(GetWildBattleTransition(), 0);
+    CreateBattleStartTask(GetWildBattleTransition(), MUS_LAVENDER);
     SetMonData(&gEnemyParty[0], MON_DATA_NICKNAME, gText_Ghost);
     IncrementGameStat(GAME_STAT_TOTAL_BATTLES);
     IncrementGameStat(GAME_STAT_WILD_BATTLES);
@@ -435,7 +435,7 @@ void StartLegendaryBattle(void)
         CreateBattleStartTask(B_TRANSITION_BLUR, MUS_VS_MEWTWO);
         break;
     case SPECIES_MEW:
-        CreateBattleStartTask(B_TRANSITION_GRID_SQUARES, MUS_VS_MEWTWO);
+        CreateBattleStartTask(B_TRANSITION_GRID_SQUARES, MUS_VS_MEW);
         break;
     case SPECIES_DEOXYS:
         CreateBattleStartTask(B_TRANSITION_BLUR, MUS_VS_DEOXYS);
@@ -1189,22 +1189,52 @@ void PlayTrainerEncounterMusic(void)
         switch (GetTrainerEncounterMusicId(gTrainerBattleOpponent_A))
         {
         case TRAINER_ENCOUNTER_MUSIC_FEMALE:
+            music = MUS_ENCOUNTER_FEMALE;
+            break;
         case TRAINER_ENCOUNTER_MUSIC_GIRL:
+            music = MUS_RS_ENCOUNTER_GIRL;
+            break;
         case TRAINER_ENCOUNTER_MUSIC_TWINS:
-            music = MUS_ENCOUNTER_GIRL;
+            music = MUS_ENCOUNTER_TWINS;
             break;
         case TRAINER_ENCOUNTER_MUSIC_MALE:
+            music = MUS_ENCOUNTER_MALE;
+            break;
         case TRAINER_ENCOUNTER_MUSIC_INTENSE:
+            music = MUS_ENCOUNTER_INTENSE;
+            break;
         case TRAINER_ENCOUNTER_MUSIC_COOL:
+            music = MUS_ENCOUNTER_COOL;
+            break;
         case TRAINER_ENCOUNTER_MUSIC_SWIMMER:
+            music = MUS_ENCOUNTER_SWIMMER;
+            break;
         case TRAINER_ENCOUNTER_MUSIC_ELITE_FOUR:
+            music = MUS_ENCOUNTER_ELITE_FOUR;
+            break;
         case TRAINER_ENCOUNTER_MUSIC_HIKER:
+            music = MUS_ENCOUNTER_HIKER;
+            break;
         case TRAINER_ENCOUNTER_MUSIC_INTERVIEWER:
+            music = MUS_ENCOUNTER_INTERVIEWER;
+            break;
         case TRAINER_ENCOUNTER_MUSIC_RICH:
+            music = MUS_ENCOUNTER_RICH;
+            break;
+        case TRAINER_ENCOUNTER_MUSIC_KANTO_MALE:
             music = MUS_ENCOUNTER_BOY;
             break;
-        default:
+        case TRAINER_ENCOUNTER_MUSIC_AQUA:
+            music = MUS_ENCOUNTER_AQUA;
+            break;
+        case TRAINER_ENCOUNTER_MUSIC_MAGMA:
+            music = MUS_ENCOUNTER_MAGMA;
+            break;
+        case TRAINER_ENCOUNTER_MUSIC_KANTO_SUS:
             music = MUS_ENCOUNTER_ROCKET;
+            break;
+        default:
+            music = MUS_ENCOUNTER_SUSPICIOUS;
             break;
         }
         PlayNewMapMusic(music);

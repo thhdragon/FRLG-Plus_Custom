@@ -46,15 +46,22 @@ CeladonCity_Gym_EventScript_DefeatedErika:: @ 816D0A0
 	setflag FLAG_DEFEATED_ERIKA
 	setflag FLAG_BADGE04_GET
 	set_gym_trainers 4
+	msgbox CeladonCity_Gym_Text_ErikaAfterDefeat
+	textcolor 0x2
+	message CeladonCity_Gym_Text_ReceivedBadge
+	waitmessage
+	call Common_EventScript_PlayGymBadgeFanfare
+	textcolor 0xFF
+	msgbox CeladonCity_Gym_Text_ExplainRainbowBadge
 	goto CeladonCity_Gym_EventScript_GiveTM19
 	end
 
 CeladonCity_Gym_EventScript_GiveTM19:: @ 816D0C6
-	msgbox CeladonCity_Gym_Text_ExplainRainbowBadgeTakeThis
+	msgbox CeladonCity_Gym_Text_TakeThis
 	checkitemspace ITEM_TM19, 1
 	compare VAR_RESULT, FALSE
 	goto_if_eq CeladonCity_Gym_EventScript_NoRoomForTM19
-	giveitem_msg CeladonCity_Gym_Text_ReceivedTM19FromErika, ITEM_TM19
+	giveitem_msg CeladonCity_Gym_Text_ReceivedTM19FromErika, ITEM_TM19, 1, MUS_OBTAIN_TMHM
 	setflag FLAG_GOT_TM19_FROM_ERIKA
 	msgbox CeladonCity_Gym_Text_ExplainTM19
 	release

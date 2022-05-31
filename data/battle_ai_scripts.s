@@ -3206,7 +3206,6 @@ AI_HPAware_DiscouragedEffectsWhenTargetLowHP:: @ 81DBC55
 
 AI_Unknown:: @ 81DBC91
 	if_not_effect EFFECT_SUNNY_DAY, AI_Unknown_End
-	if_equal 0, AI_Unknown_End
 	is_first_turn_for AI_USER
 	if_equal 0, AI_Unknown_End
 	score +5

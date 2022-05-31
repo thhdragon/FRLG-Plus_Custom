@@ -20,7 +20,7 @@ Route4_Text_MtMoonEntrance:: @ 818399B
 
 Route4_Text_RouteSign:: @ 81839B4
     .string "ROUTE 4\n"
-    .string "MT. MOON - CERULEAN CITY$"
+	.string "{RIGHT_ARROW} CERULEAN CITY$"
 
 Text_MegaPunchTeach:: @ 81839D5
     .string "A punch of roaring ferocity!\p"

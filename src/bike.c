@@ -35,6 +35,14 @@ static void (*const sBikeTransitions[])(u8) =
     [BIKE_TRANS_UPHILL]         = BikeTransition_Uphill,
 };
 
+// bikeFrameCounter is input which is represented by sMachBikeSpeeds in order: 0 is normal speed (1 speed), 1 is fast speed (2 speed), 2 is fastest speed (4 speed)
+// static void (*const sMachBikeSpeedCallbacks[])(u8) =
+// {
+//     PlayerGoSpeed1, // normal speed (1 speed)
+//     PlayerGoSpeed2, // fast speed (2 speed)
+//     PlayerGoSpeed4, // fastest speed (4 speed)
+// };
+
 static u8 (*const sBikeInputHandlers[])(u8 *, u16, u16) =
 {
     [BIKE_STATE_NORMAL]  = BikeInputHandler_Normal,
@@ -219,7 +227,7 @@ static void BikeTransition_Downhill(UNUSED u8 v)
 static void BikeTransition_Uphill(u8 direction)
 {
     if (GetBikeCollision(direction) == COLLISION_NONE)
-        PlayerGoSpeed1(direction);
+        PlayerGoSpeed2(direction);
 }
 
 static u8 GetBikeCollision(u8 direction)

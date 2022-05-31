@@ -26,7 +26,7 @@ SaffronCity_Gym_EventScript_Sabrina:: @ 816EDD8
 	trainerbattle_single TRAINER_LEADER_SABRINA, SaffronCity_Gym_Text_SabrinaIntro, SaffronCity_Gym_Text_SabrinaDefeat, SaffronCity_Gym_EventScript_DefeatedSabrina, NO_MUSIC
 	settrainerflag TRAINER_LEADER_SABRINA_CHALLENGE
 	goto_if_unset FLAG_GOT_TM04_FROM_SABRINA, SaffronCity_Gym_EventScript_GiveTM04
-	msgbox SaffronCity_Gym_Text_ExplainTM04
+	msgbox SaffronCity_Gym_Text_SabrinaPostBattle
 	release
 	end
 
@@ -34,7 +34,7 @@ SaffronCity_Gym_EventScript_Sabrina_ChallengeMode::
 	trainerbattle_single TRAINER_LEADER_SABRINA_CHALLENGE, SaffronCity_Gym_Text_SabrinaIntro, SaffronCity_Gym_Text_SabrinaDefeat, SaffronCity_Gym_EventScript_DefeatedSabrina, NO_MUSIC
 	settrainerflag TRAINER_LEADER_SABRINA
 	goto_if_unset FLAG_GOT_TM04_FROM_SABRINA, SaffronCity_Gym_EventScript_GiveTM04
-	msgbox SaffronCity_Gym_Text_ExplainTM04
+	msgbox SaffronCity_Gym_Text_SabrinaPostBattle
 	release
 	end
 
@@ -45,17 +45,24 @@ SaffronCity_Gym_EventScript_DefeatedSabrina:: @ 816EE0A
 	setflag FLAG_DEFEATED_SABRINA
 	setflag FLAG_BADGE06_GET
 	set_gym_trainers 6
+	msgbox SaffronCity_Gym_Text_SabrinaAfterDefeat
+	textcolor 0x2
+	message SaffronCity_Gym_Text_ReceivedBadge
+	waitmessage
+	call Common_EventScript_PlayGymBadgeFanfare
+	textcolor 0xFF
+	msgbox SaffronCity_Gym_Text_ExplainMarshBadge
 	goto SaffronCity_Gym_EventScript_GiveTM04
 	end
 
 SaffronCity_Gym_EventScript_GiveTM04:: @ 816EE3D
-	msgbox SaffronCity_Gym_Text_ExplainMarshBadgeTakeThis
+	msgbox SaffronCity_Gym_Text_TakeThis
 	checkitemspace ITEM_TM04, 1
 	compare VAR_RESULT, FALSE
 	goto_if_eq SaffronCity_Gym_EventScript_NoRoomForTM04
-	giveitem_msg SaffronCity_Gym_Text_ReceivedTM04FromSabrina, ITEM_TM04
+	giveitem_msg SaffronCity_Gym_Text_ReceivedTM04FromSabrina, ITEM_TM04, 1, MUS_OBTAIN_TMHM
 	setflag FLAG_GOT_TM04_FROM_SABRINA
-	msgbox SaffronCity_Gym_Text_SabrinaPostBattle
+	msgbox SaffronCity_Gym_Text_ExplainTM04
 	release
 	end
 

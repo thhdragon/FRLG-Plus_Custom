@@ -7,14 +7,19 @@ ViridianCity_Gym_Text_GiovanniIntro:: @ 818F352
     .string "So be it.\l"
     .string "This time, I'm not holding back!\p"
     .string "Once more, you shall face\n"
-    .string "GIOVANNI, the greatest TRAINER!{PLAY_BGM}{MUS_ENCOUNTER_ROCKET}$"
+    .string "GIOVANNI, the greatest TRAINER!$"
 
 ViridianCity_Gym_Text_GiovanniDefeat:: @ 818F43F
-    .string "Ha!\n"
-    .string "That was a truly intense fight.\l"
+    .string "Ha!$"
+
+ViridianCity_Gym_Text_GiovanniAfterDefeat::
+    .string "That was a truly intense fight.\n"
     .string "You have won!\p"
-    .string "As proof, here is the EARTHBADGE!\n"
-    .string "{PAUSE_MUSIC}{PLAY_BGM}{MUS_OBTAIN_BADGE}{PAUSE 0xFE}{PAUSE 0x56}{RESUME_MUSIC}$"
+    .string "As proof, here is the EARTHBADGE!$"
+
+ViridianCity_Gym_Text_ReceivedBadge::
+    .string "{PLAYER} received the EARTHBADGE\n"
+    .string "from GIOVANNI!$"
 
 ViridianCity_Gym_Text_GiovanniPostBattle:: @ 818F4A2
     .string "Having lost in this fashion, \n"
@@ -27,13 +32,15 @@ ViridianCity_Gym_Text_GiovanniPostBattle:: @ 818F4A2
     .string "Let us meet again someday!\n"
     .string "Farewell!$"
 
-ViridianCity_Gym_Text_ExplainEarthBadgeTakeThis:: @ 818F586
+ViridianCity_Gym_Text_ExplainEarthBadge:: @ 818F586
     .string "The EARTHBADGE makes POKéMON of\n"
     .string "any level obey without question.\p"
     .string "It is evidence of your mastery as\n"
     .string "a POKéMON TRAINER.\p"
     .string "With it, you can challenge the\n"
-    .string "POKéMON LEAGUE.\p"
+    .string "POKéMON LEAGUE.$"
+
+ViridianCity_Gym_Text_GiovanniTakeThis:: @ 818F586
     .string "Also, take this TM.\p"
     .string "Consider it a gift for your POKéMON\n"
     .string "LEAGUE challenge.$"
@@ -158,14 +165,12 @@ ViridianCity_Gym_Text_GymGuyPostVictory:: @ 818FB56
     .string "GYM LEADER of VIRIDIAN?$"
 
 ViridianCity_Gym_Text_GymStatue:: @ 818FB8D
-    .string "VIRIDIAN POKéMON GYM\n"
-    .string "LEADER: ?\p"
-    .string "WINNING TRAINERS:\n"
+    .string "VIRIDIAN CITY POKéMON GYM\p"
+	.string "CERTIFIED TRAINERS:\n"
     .string "{RIVAL}$"
 
 ViridianCity_Gym_Text_GymStatuePlayerWon:: @ 818FBC1
-    .string "VIRIDIAN POKéMON GYM\n"
-    .string "LEADER: GIOVANNI\p"
-    .string "WINNING TRAINERS:\n"
+    .string "VIRIDIAN CITY POKéMON GYM\p"
+	.string "GIOVANNI'S CERTIFIED TRAINERS:\n"
     .string "{RIVAL}, {PLAYER}$"
 

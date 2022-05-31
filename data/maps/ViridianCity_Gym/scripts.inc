@@ -38,15 +38,22 @@ ViridianCity_Gym_EventScript_DefeatedGiovanni:: @ 8169F04
 	setflag FLAG_BADGE08_GET
 	setvar VAR_MAP_SCENE_ROUTE22, 3
 	set_gym_trainers 8
+	msgbox ViridianCity_Gym_Text_GiovanniAfterDefeat
+	textcolor 0x2
+	message ViridianCity_Gym_Text_ReceivedBadge
+	waitmessage
+	call Common_EventScript_PlayGymBadgeFanfare
+	textcolor 0xFF
+	msgbox ViridianCity_Gym_Text_ExplainEarthBadge
 	goto ViridianCity_Gym_EventScript_GiveTM26
 	end
 
 ViridianCity_Gym_EventScript_GiveTM26:: @ 8169F2F
-	msgbox ViridianCity_Gym_Text_ExplainEarthBadgeTakeThis
+	msgbox ViridianCity_Gym_Text_GiovanniTakeThis
 	checkitemspace ITEM_TM26, 1
 	compare VAR_RESULT, FALSE
 	goto_if_eq ViridianCity_Gym_EventScript_NoRoomForTM26
-	giveitem_msg ViridianCity_Gym_Text_ReceivedTM26FromGiovanni, ITEM_TM26
+	giveitem_msg ViridianCity_Gym_Text_ReceivedTM26FromGiovanni, ITEM_TM26, 1, MUS_OBTAIN_TMHM
 	setflag FLAG_GOT_TM26_FROM_GIOVANNI
 	msgbox ViridianCity_Gym_Text_ExplainTM26
 	release

@@ -37,7 +37,7 @@ FuchsiaCity_House2_EventScript_GiveGoodRod:: @ 816D849
 	checkitemspace ITEM_GOOD_ROD, 1
 	compare VAR_RESULT, FALSE
 	goto_if_eq FuchsiaCity_House2_EventScript_NoRoomForGoodRod
-	giveitem_msg FuchsiaCity_House2_Text_ReceivedGoodRod, ITEM_GOOD_ROD
+	giveitem_msg FuchsiaCity_House2_Text_ReceivedGoodRod, ITEM_GOOD_ROD, 1, MUS_OBTAIN_KEY_ITEM
 	msgbox FuchsiaCity_House2_Text_GoodRodCanCatchBetterMons
 	setflag FLAG_GOT_GOOD_ROD
 	release

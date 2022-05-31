@@ -1372,8 +1372,7 @@ static void MoveCursorFunc_DexModeSelect(s32 itemIndex, bool8 onInit, struct Lis
 
 static void ItemPrintFunc_DexModeSelect(u8 windowId, s32 itemId, u8 y)
 {
-    u32 itemId_ = itemId;
-    if (itemId_ >= DEX_CATEGORY_COUNT || sPokedexScreenData->unlockedCategories & (1 << itemId_))
+    if (itemId >= DEX_CATEGORY_COUNT || sPokedexScreenData->unlockedCategories & (1 << itemId))
         ListMenuOverrideSetColors(TEXT_COLOR_WHITE, TEXT_COLOR_TRANSPARENT, TEXT_COLOR_LIGHT_GRAY);
     else
         ListMenuOverrideSetColors(TEXT_DYNAMIC_COLOR_1, TEXT_COLOR_TRANSPARENT, TEXT_DYNAMIC_COLOR_2);
@@ -2536,7 +2535,7 @@ static u32 DexScreen_GetDefaultPersonality(int species)
 
 static void DexScreen_LoadMonPicInWindow(u8 windowId, u16 species, u16 paletteOffset)
 {
-    LoadMonPicInWindow(species, 8, DexScreen_GetDefaultPersonality(species), TRUE, paletteOffset >> 4, windowId);
+    LoadMonPicInWindow(species, SHINY_ODDS, DexScreen_GetDefaultPersonality(species), TRUE, paletteOffset >> 4, windowId);
 }
 
 static void DexScreen_PrintMonDexNo(u8 windowId, u8 fontId, u16 species, u8 x, u8 y)
@@ -3024,11 +3023,7 @@ static bool8 DexScreen_FlipCategoryPageInDirection(u8 direction)
         }
         else
         {
-#ifdef BUGFIX
             DexScreen_TurnCategoryPage_BgEffect(0);
-#else
-            DexScreen_TurnCategoryPage_BgEffect(sPokedexScreenData->data[0]);
-#endif
             BeginNormalPaletteFade(0x00007FFF, 0, 16, 16, color);
             sPokedexScreenData->data[0]++;
         }
@@ -3553,7 +3548,7 @@ u8 DexScreen_DrawMonAreaPage(void)
 
     if (monIsCaught)
     {
-        sPokedexScreenData->windowIds[14] = CreateMonPicSprite_HandleDeoxys(species, 8, DexScreen_GetDefaultPersonality(species), TRUE, 40, 104, 0, 0xFFFF);
+        sPokedexScreenData->windowIds[14] = CreateMonPicSprite_HandleDeoxys(species, SHINY_ODDS, DexScreen_GetDefaultPersonality(species), TRUE, 40, 104, 0, 0xFFFF);
         gSprites[sPokedexScreenData->windowIds[14]].oam.paletteNum = 2;
         gSprites[sPokedexScreenData->windowIds[14]].oam.affineMode = 1;
         gSprites[sPokedexScreenData->windowIds[14]].oam.matrixNum = 2;

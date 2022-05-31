@@ -35,7 +35,11 @@ enum
     TRAINER_CARD_STRING_BERRY_CRUSH_COUNT,
     TRAINER_CARD_STRING_UNION_ROOM,
     TRAINER_CARD_STRING_UNION_ROOM_NUM,
-    TRAINER_CARD_STRING_COUNT,
+    TRAINER_CARD_STRING_BATTLE_TOWER,
+    TRAINER_CARD_STRING_TOWER_WIN_STRAIGHT,
+    TRAINER_CARD_STRING_TOWER_WINS,
+    TRAINER_CARD_STRING_TOWER_STRAIGHTS,
+    TRAINER_CARD_STRING_COUNT
 };
 
 struct TrainerCardData
@@ -124,7 +128,8 @@ static void PrintLinkBattleResultsOnCard(void);
 static void BufferNumTrades(void);
 static void PrintTradesStringOnCard(void);
 static void BufferBerryCrushPoints(void);
-static void PrintBerryCrushStringOnCard(void);
+static void BufferBattleFacilityStats(void);
+static void PrintBerryCrushOrBattleTowerStringOnCard(void);
 static void BufferUnionRoomStats(void);
 static void PrintUnionStringOnCard(void);
 static void PrintPokemonIconsOnCard(void);
@@ -590,7 +595,7 @@ static void Task_TrainerCard(u8 taskId)
         }
         break;
     case STATE_HANDLE_INPUT_BACK:
-        if (JOY_NEW(B_BUTTON))
+        if (JOY_NEW(A_BUTTON))
         {
             if (gReceivedRemoteLinkPlayers && sTrainerCardDataPtr->isLink && InUnionRoom() == TRUE)
             {
@@ -609,7 +614,7 @@ static void Task_TrainerCard(u8 taskId)
                 PlaySE(SE_CARD_FLIP);
             }
         }
-        else if (JOY_NEW(A_BUTTON))
+        else if (JOY_NEW(B_BUTTON))
         {
            if (gReceivedRemoteLinkPlayers && sTrainerCardDataPtr->isLink && InUnionRoom() == TRUE)
            {
@@ -1097,7 +1102,7 @@ static bool8 PrintAllOnCardBack(void)
         PrintTradesStringOnCard();
         break;
     case 4:
-        PrintBerryCrushStringOnCard();
+        PrintBerryCrushOrBattleTowerStringOnCard();
         break;
     case 5:
         PrintUnionStringOnCard();
@@ -1123,6 +1128,7 @@ static void BufferTextForCardBack(void)
     BufferLinkBattleResults();
     BufferNumTrades();
     BufferBerryCrushPoints();
+    BufferBattleFacilityStats();
     BufferUnionRoomStats();
 }
 
@@ -1367,9 +1373,28 @@ static void BufferBerryCrushPoints(void)
     }
 }
 
-static void PrintBerryCrushStringOnCard(void)
+static void BufferBattleFacilityStats(void)
 {
-    if (sTrainerCardDataPtr->cardType != CARD_TYPE_RSE && sTrainerCardDataPtr->trainerCard.berryCrushPoints)
+    u8 buffer[30];
+
+    StringCopy(sTrainerCardDataPtr->strings[TRAINER_CARD_STRING_BATTLE_TOWER], gText_BattleTower);
+    StringCopy(sTrainerCardDataPtr->strings[TRAINER_CARD_STRING_TOWER_WIN_STRAIGHT], gText_BattleTowerWinStraight);
+    ConvertIntToDecimalStringN(buffer, sTrainerCardDataPtr->trainerCard.rse.battleTowerWins, STR_CONV_MODE_RIGHT_ALIGN, 4);
+    StringCopy(sTrainerCardDataPtr->strings[TRAINER_CARD_STRING_TOWER_WINS], buffer);
+    ConvertIntToDecimalStringN(buffer, sTrainerCardDataPtr->trainerCard.rse.battleTowerStraightWins, STR_CONV_MODE_RIGHT_ALIGN, 4);
+    StringCopy(sTrainerCardDataPtr->strings[TRAINER_CARD_STRING_TOWER_STRAIGHTS], buffer);
+}
+
+static void PrintBerryCrushOrBattleTowerStringOnCard(void)
+{
+    if (sTrainerCardDataPtr->cardType != CARD_TYPE_RSE && sTrainerCardDataPtr->trainerCard.rse.battleTowerWins)
+    {
+        AddTextPrinterParameterized3(1, sTrainerCardFontIds[1], sTrainerCardHofDebutXPositions[sTrainerCardDataPtr->cardType], 99, sTrainerCardTextColors, TEXT_SPEED_FF, sTrainerCardDataPtr->strings[TRAINER_CARD_STRING_BATTLE_TOWER]);
+        AddTextPrinterParameterized3(1, sTrainerCardFontIds[1], 88, 99, sTrainerCardTextColors, TEXT_SPEED_FF, sTrainerCardDataPtr->strings[TRAINER_CARD_STRING_TOWER_WIN_STRAIGHT]);
+        AddTextPrinterParameterized3(1, sTrainerCardFontIds[1], 105, 99, sTrainerCardStatColors, TEXT_SPEED_FF, sTrainerCardDataPtr->strings[TRAINER_CARD_STRING_TOWER_WINS]);
+        AddTextPrinterParameterized3(1, sTrainerCardFontIds[1], 142, 99, sTrainerCardStatColors, TEXT_SPEED_FF, sTrainerCardDataPtr->strings[TRAINER_CARD_STRING_TOWER_STRAIGHTS]);
+    }
+    else if (sTrainerCardDataPtr->cardType != CARD_TYPE_RSE && sTrainerCardDataPtr->trainerCard.berryCrushPoints)
     {
         AddTextPrinterParameterized3(1, sTrainerCardFontIds[1], sTrainerCardHofDebutXPositions[sTrainerCardDataPtr->cardType], 99, sTrainerCardTextColors, TEXT_SPEED_FF, sTrainerCardDataPtr->strings[TRAINER_CARD_STRING_BERRY_CRUSH]);
         AddTextPrinterParameterized3(1, sTrainerCardFontIds[1], 186, 99, sTrainerCardStatColors, TEXT_SPEED_FF, sTrainerCardDataPtr->strings[TRAINER_CARD_STRING_BERRY_CRUSH_COUNT]);

@@ -648,7 +648,7 @@ static bool8 pokemon_store(void)
     sub_809EA64(0);
     sub_809E518(3, 0, 1);
     if (sNamingScreenData->templateNum == NAMING_SCREEN_CAUGHT_MON &&
-        CalculatePlayerPartyCount() >= 6)
+        CalculatePlayerPartyCount() >= PARTY_SIZE)
     {
         pokemon_transfer_to_pc_with_message();
         sNamingScreenData->state = MAIN_STATE_UPDATE_SENT_TO_PC_MESSAGE;
@@ -714,7 +714,7 @@ static bool8 sub_809E1D4(void)
 {
     RunTextPrinters();
 
-    if (!IsTextPrinterActive(0) && (JOY_NEW(A_BUTTON)))
+    if (!IsTextPrinterActive(0) && (JOY_NEW(A_BUTTON) || JOY_NEW(B_BUTTON)))
         sNamingScreenData->state = MAIN_STATE_BEGIN_FADE_OUT;
 
     return FALSE;

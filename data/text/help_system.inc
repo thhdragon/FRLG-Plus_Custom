@@ -1216,10 +1216,10 @@ Help_Text_Nuzlocke:: @ 81B7E0F
 	.string "NUZLOCKE$"
 
 Help_Text_Nuzlocke_Catching::
-	.string "  Catching POKéMON in NUZLOCKE MODE$"
+	.string "{CIRCLE_DOT} Catching POKéMON in NUZLOCKE MODE$"
 
 Help_Text_NuzlockeLosing::
-	.string "  Losing battles in NUZLOCKE MODE$"
+	.string "{CIRCLE_DOT} Losing battles in NUZLOCKE MODE$"
 
 Help_Text_IvCalc:: @ 81B7E0F
 	.string "IV CALCULATION$"
@@ -2101,10 +2101,10 @@ Help_Text_DefineExpMod::
 	.string "2× doubles given Experience Points.$"
 
 Help_Text_FRExclusives::
-	.string "  POKéMON exclusive to FIRERED$"
+	.string "{CIRCLE_DOT} POKéMON exclusive to FIRERED$"
 
 Help_Text_LGExclusives::
-	.string "  POKéMON exclusive to LEAFGREEN$"
+	.string "{CIRCLE_DOT} POKéMON exclusive to LEAFGREEN$"
 
 Help_Text_DefineFRExclusives::
 	.string "The POKéMON exclusive to FIRERED\n"

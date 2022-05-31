@@ -26,7 +26,7 @@ CeruleanCity_Gym_EventScript_Misty:: @ 816AAA1
 	trainerbattle_single TRAINER_LEADER_MISTY, CeruleanCity_Gym_Text_MistyIntro, CeruleanCity_Gym_Text_MistyDefeat, CeruleanCity_Gym_EventScript_MistyDefeated, NO_MUSIC
 	settrainerflag TRAINER_LEADER_MISTY_CHALLENGE
 	goto_if_unset FLAG_GOT_TM03_FROM_MISTY, CeruleanCity_Gym_EventScript_GiveTM03
-	msgbox CeruleanCity_Gym_Text_ExplainTM03
+	msgbox CeruleanCity_Gym_Text_MistyPostBattle
 	release
 	end
 
@@ -34,7 +34,7 @@ CeruleanCity_Gym_EventScript_Misty_ChallengeMode::
 	trainerbattle_single TRAINER_LEADER_MISTY_CHALLENGE, CeruleanCity_Gym_Text_MistyIntro, CeruleanCity_Gym_Text_MistyDefeat, CeruleanCity_Gym_EventScript_MistyDefeated, NO_MUSIC
 	settrainerflag TRAINER_LEADER_MISTY
 	goto_if_unset FLAG_GOT_TM03_FROM_MISTY, CeruleanCity_Gym_EventScript_GiveTM03
-	msgbox CeruleanCity_Gym_Text_ExplainTM03
+	msgbox CeruleanCity_Gym_Text_MistyPostBattle
 	release
 	end
 
@@ -44,15 +44,22 @@ CeruleanCity_Gym_EventScript_MistyDefeated:: @ 816AAD3
 	setflag FLAG_BADGE02_GET
 	setrespawn SPAWN_CERULEAN_CITY
 	set_gym_trainers 2
+	msgbox CeruleanCity_Gym_Text_MistyPostMatch
+	textcolor 0x2
+	message CeruleanCity_Gym_Text_ReceivedBadge
+	waitmessage
+	call Common_EventScript_PlayGymBadgeFanfare
+	textcolor 0xFF
+	msgbox CeruleanCity_Gym_Text_ExplainCascadeBadge
 	goto CeruleanCity_Gym_EventScript_GiveTM03
 	end
 
 CeruleanCity_Gym_EventScript_GiveTM03:: @ 816AAF9
-	msgbox CeruleanCity_Gym_Text_ExplainCascadeBadge
+	msgbox CeruleanCity_Gym_Text_GiveTM03
 	checkitemspace ITEM_TM03, 1
 	compare VAR_RESULT, FALSE
 	goto_if_eq CeruleanCity_Gym_EventScript_NoRoomForTM03
-	giveitem_msg CeruleanCity_Gym_Text_ReceivedTM03FromMisty, ITEM_TM03
+	giveitem_msg CeruleanCity_Gym_Text_ReceivedTM03FromMisty, ITEM_TM03, 1, MUS_OBTAIN_TMHM
 	setflag FLAG_GOT_TM03_FROM_MISTY
 	msgbox CeruleanCity_Gym_Text_ExplainTM03
 	release

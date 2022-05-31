@@ -426,6 +426,9 @@ void SortSprites(void)
             // the behavior is undefined.
             j--;
 
+            if (j == 0)
+                break;
+
             sprite1 = &gSprites[gSpriteOrder[j - 1]];
             sprite2 = &gSprites[gSpriteOrder[j]];
             sprite1Priority = gSpritePriorities[gSpriteOrder[j - 1]];
@@ -874,12 +877,18 @@ void ResetAllSprites(void)
 
 void FreeSpriteTiles(struct Sprite *sprite)
 {
+    if (!sprite || !sprite->template)
+        return;
+
     if (sprite->template->tileTag != 0xFFFF)
         FreeSpriteTilesByTag(sprite->template->tileTag);
 }
 
 void FreeSpritePalette(struct Sprite *sprite)
 {
+    if (!sprite || !sprite->template)
+        return;
+
     FreeSpritePaletteByTag(sprite->template->paletteTag);
 }
 
@@ -1312,7 +1321,7 @@ void ApplyAffineAnimFrameRelativeAndUpdateMatrix(u8 matrixNum, struct AffineAnim
 s16 ConvertScaleParam(s16 scale)
 {
     s32 val = 0x10000;
-    return val / scale;
+    return SAFE_DIV(val, scale);
 }
 
 void GetAffineAnimFrame(u8 matrixNum, struct Sprite *sprite, struct AffineAnimFrameCmd *frameCmd)

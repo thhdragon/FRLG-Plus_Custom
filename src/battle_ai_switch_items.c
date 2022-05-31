@@ -307,9 +307,13 @@ static bool8 ShouldSwitch(void)
 
     if ((gBattleMons[gActiveBattler].status2 & (STATUS2_WRAPPED | STATUS2_ESCAPE_PREVENTION))
      || (gStatuses3[gActiveBattler] & STATUS3_ROOTED)
-     || AbilityBattleEffects(ABILITYEFFECT_CHECK_OTHER_SIDE, gActiveBattler, ABILITY_SHADOW_TAG, 0, 0)
-     || AbilityBattleEffects(ABILITYEFFECT_CHECK_OTHER_SIDE, gActiveBattler, ABILITY_ARENA_TRAP, 0, 0))
-        return FALSE; // misses the flying or levitate check
+     || AbilityBattleEffects(ABILITYEFFECT_CHECK_OTHER_SIDE, gActiveBattler, ABILITY_SHADOW_TAG, 0, 0))
+        return FALSE;
+    if (AbilityBattleEffects(ABILITYEFFECT_CHECK_OTHER_SIDE, gActiveBattler, ABILITY_ARENA_TRAP, 0, 0)
+     && gBattleMons[gActiveBattler].type1 != TYPE_FLYING
+     && gBattleMons[gActiveBattler].type2 != TYPE_FLYING
+     && gBattleMons[gActiveBattler].ability != ABILITY_LEVITATE)
+        return FALSE; // Fixes arena trap airborne check
     if (AbilityBattleEffects(ABILITYEFFECT_FIELD_SPORT, 0, ABILITY_MAGNET_PULL, 0, 0))
         if ((gBattleMons[gActiveBattler].type1 == TYPE_STEEL) || (gBattleMons[gActiveBattler].type2 == TYPE_STEEL))
             return FALSE;
@@ -428,7 +432,7 @@ static void ModulateByTypeEffectiveness(u8 atkType, u8 defType1, u8 defType2, u8
 u8 GetMostSuitableMonToSwitchInto(void)
 {
     u8 opposingBattler;
-    u8 bestDmg; // Note : should be changed to u32 for obvious reasons.
+    u32 bestDmg;
     u8 bestMonId;
     u8 battlerIn1, battlerIn2;
     s32 i, j;
@@ -444,8 +448,8 @@ u8 GetMostSuitableMonToSwitchInto(void)
             battlerIn2 = gActiveBattler;
         else
             battlerIn2 = GetBattlerAtPosition(GetBattlerPosition(gActiveBattler) ^ BIT_FLANK);
-        // UB: It considers the opponent only player's side even though it can battle alongside player.
-        opposingBattler = Random() & BIT_FLANK;
+
+        opposingBattler = BATTLE_OPPOSITE(battlerIn1);
         if (gAbsentBattlerFlags & gBitTable[opposingBattler])
             opposingBattler ^= BIT_FLANK;
     }
@@ -543,7 +547,7 @@ u8 GetMostSuitableMonToSwitchInto(void)
     return bestMonId;
 }
 
-static u8 GetAI_ItemType(u8 itemId, const u8 *itemEffect) // NOTE: should take u16 as item Id argument
+static u8 GetAI_ItemType(u16 itemId, const u8 *itemEffect)
 {
     if (itemId == ITEM_FULL_RESTORE)
         return AI_ITEM_FULL_RESTORE;

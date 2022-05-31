@@ -144,7 +144,9 @@ BattleTower_Lobby_Text_19A8AE:: @ 819A8AE
 	.string "The number of matches you win in\n"
 	.string "a row is recorded.\p"
 	.string "The record is posted beside the\n"
-	.string "registration counter.$"
+	.string "registration counter.\p"
+	.string "It's also on the back of your\n"
+	.string "TRAINER'S CARD.$"
 
 BattleTower_Lobby_Text_19A946:: @ 819A946
 	.string "Once you're in the BATTLE TOWER,\n"

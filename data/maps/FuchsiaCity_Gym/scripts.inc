@@ -44,15 +44,22 @@ FuchsiaCity_Gym_EventScript_DefeatedKoga:: @ 816D580
 	setflag FLAG_DEFEATED_KOGA
 	setflag FLAG_BADGE05_GET
 	set_gym_trainers 5
+	msgbox FuchsiaCity_Gym_Text_KogaAfterDefeat
+	textcolor 0x2
+	message FuchsiaCity_Gym_Text_ReceivedBadge
+	waitmessage
+	call Common_EventScript_PlayGymBadgeFanfare
+	textcolor 0xFF
+	msgbox FuchsiaCity_Gym_Text_KogaExplainSoulBadge
 	goto FuchsiaCity_Gym_EventScript_GiveTM06
 	end
 
 FuchsiaCity_Gym_EventScript_GiveTM06:: @ 816D5A6
-	msgbox FuchsiaCity_Gym_Text_KogaExplainSoulBadge
+	msgbox FuchsiaCity_Gym_Text_KogaTakeThis
 	checkitemspace ITEM_TM06, 1
 	compare VAR_RESULT, FALSE
 	goto_if_eq FuchsiaCity_Gym_EventScript_NoRoomForTM06
-	giveitem_msg FuchsiaCity_Gym_Text_ReceivedTM06FromKoga, ITEM_TM06
+	giveitem_msg FuchsiaCity_Gym_Text_ReceivedTM06FromKoga, ITEM_TM06, 1, MUS_OBTAIN_TMHM
 	setflag FLAG_GOT_TM06_FROM_KOGA
 	msgbox FuchsiaCity_Gym_Text_KogaExplainTM06
 	release

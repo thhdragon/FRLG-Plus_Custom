@@ -2222,11 +2222,7 @@ static void LoadObjectEventPalette(u16 paletteTag)
 {
     u16 i = FindObjectEventPaletteIndexByTag(paletteTag);
 
-#ifdef BUGFIX
     if (sObjectEventSpritePalettes[i].tag != OBJ_EVENT_PAL_TAG_NONE)
-#else
-    if (i != OBJ_EVENT_PAL_TAG_NONE) // always true
-#endif
     {
         TryLoadObjectPalette(&sObjectEventSpritePalettes[i]);
     }
@@ -2533,7 +2529,13 @@ u8 CameraObjectGetFollowedObjectId(void)
 
 void CameraObjectReset2(void)
 {
-    FindCameraObject()->data[1] = 2;
+    struct Sprite *cameraObject;
+
+    cameraObject = FindCameraObject();
+    if (cameraObject != NULL)
+    {
+        cameraObject->data[1] = 2;
+    }
 }
 
 u8 CopySprite(struct Sprite *sprite, s16 x, s16 y, u8 subpriority)
@@ -2596,7 +2598,12 @@ const u8 *GetObjectEventScriptPointerByObjectEventId(u8 objectEventId)
 
 static u16 GetObjectEventFlagIdByLocalIdAndMap(u8 localId, u8 mapNum, u8 mapGroup)
 {
-    return GetObjectEventTemplateByLocalIdAndMap(localId, mapNum, mapGroup)->flagId;
+    struct ObjectEventTemplate *obj = GetObjectEventTemplateByLocalIdAndMap(localId, mapNum, mapGroup);
+
+    if (obj == NULL)
+        return 0;
+
+    return obj->flagId;
 }
 
 static u16 GetObjectEventFlagIdByObjectEventId(u8 objectEventId)
@@ -8828,7 +8835,7 @@ static void DoGroundEffects_OnSpawn(struct ObjectEvent *objEvent, struct Sprite 
 {
     u32 flags;
 
-    if (objEvent->triggerGroundEffectsOnMove)
+    if (objEvent->triggerGroundEffectsOnMove && objEvent->localId != OBJ_EVENT_ID_CAMERA)
     {
         flags = 0;
         UpdateObjectEventZCoordAndPriority(objEvent, sprite);
@@ -8844,7 +8851,7 @@ static void DoGroundEffects_OnBeginStep(struct ObjectEvent *objEvent, struct Spr
 {
     u32 flags;
 
-    if (objEvent->triggerGroundEffectsOnMove)
+    if (objEvent->triggerGroundEffectsOnMove && objEvent->localId != OBJ_EVENT_ID_CAMERA)
     {
         flags = 0;
         UpdateObjectEventZCoordAndPriority(objEvent, sprite);
@@ -8861,7 +8868,7 @@ static void DoGroundEffects_OnFinishStep(struct ObjectEvent *objEvent, struct Sp
 {
     u32 flags;
 
-    if (objEvent->triggerGroundEffectsOnStop)
+    if (objEvent->triggerGroundEffectsOnStop && objEvent->localId != OBJ_EVENT_ID_CAMERA)
     {
         flags = 0;
         UpdateObjectEventZCoordAndPriority(objEvent, sprite);

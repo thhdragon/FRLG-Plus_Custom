@@ -112,7 +112,7 @@ Route11_EastEntrance_2F_EventScript_Aide:: @ 816FDD8
 	checkitemspace ITEM_ITEMFINDER, 1
 	compare VAR_RESULT, FALSE
 	goto_if_eq Aide_EventScript_NoRoomForItem
-	giveitem_msg Route11_EastEntrance_2F_Text_ReceivedItemfinderFromAide, ITEM_ITEMFINDER
+	giveitem_msg Route11_EastEntrance_2F_Text_ReceivedItemfinderFromAide, ITEM_ITEMFINDER, 1, MUS_OBTAIN_KEY_ITEM
 	setflag FLAG_GOT_ITEMFINDER
 	msgbox Route11_EastEntrance_2F_Text_ExplainItemfinder
 	release

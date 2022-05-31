@@ -51,7 +51,7 @@ Route15_WestEntrance_2F_EventScript_Aide:: @ 81700B9
 	checkitemspace ITEM_EXP_SHARE, 1
 	compare VAR_RESULT, FALSE
 	goto_if_eq Aide_EventScript_NoRoomForItem
-	giveitem_msg Route15_WestEntrance_2F_Text_ReceivedItemFromAide, ITEM_EXP_SHARE
+	giveitem_msg Route15_WestEntrance_2F_Text_ReceivedItemFromAide, ITEM_EXP_SHARE, 1, MUS_OBTAIN_KEY_ITEM
 	setflag FLAG_GOT_EXP_SHARE_FROM_OAKS_AIDE
 	msgbox Route15_WestEntrance_2F_Text_ExplainExpShare
 	release

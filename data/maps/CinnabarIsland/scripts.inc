@@ -5,12 +5,13 @@
 
 CinnabarIsland_MapScripts:: @ 8166ED6
 	map_script MAP_SCRIPT_ON_TRANSITION, CinnabarIsland_OnTransition
+	map_script MAP_SCRIPT_ON_LOAD, CinnabarIsland_OnLoad
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, CinnabarIsland_OnFrame
 	.byte 0
 
 CinnabarIsland_OnTransition:: @ 8166EE1
 	setworldmapflag FLAG_WORLD_MAP_CINNABAR_ISLAND
-	call CinnabarIsland_EventScript_CheckUnlockGym
+
 	compare VAR_MAP_SCENE_CINNABAR_ISLAND, 1
 	call_if_eq CinnabarIsland_EventScript_ReadyObjectsSailToOneIsland
 	compare VAR_MAP_SCENE_CINNABAR_ISLAND, 3
@@ -18,6 +19,10 @@ CinnabarIsland_OnTransition:: @ 8166EE1
 	compare VAR_MAP_SCENE_CINNABAR_ISLAND_2, 1
 	call_if_eq CinnabarIsland_EventScript_ReadyObjectsSailToOneIslandFromPokeCenter
 	goto CinnabarIsland_MapScript_SetMasterTrainerMovementTypes
+	end
+
+CinnabarIsland_OnLoad::
+	call CinnabarIsland_EventScript_CheckUnlockGym
 	end
 
 CinnabarIsland_MapScript_SetMasterTrainerMovementTypes::
@@ -63,7 +68,7 @@ CinnabarIsland_EventScript_CheckUnlockGym:: @ 8166F5E
 	return
 
 CinnabarIsland_EventScript_UnlockGym:: @ 8166F68
-	setvar VAR_TEMP_1, 1
+	setmetatile 19, 4, METATILE_General_SlidingDoubleDoor, 1
 	return
 
 CinnabarIsland_OnFrame:: @ 8166F6E
@@ -182,6 +187,16 @@ CinnabarIsland_Movement_BillExitToPokeCenter:: @ 81670AB
 	walk_down
 	step_end
 
+CinnabarIsland_Movement_BillExitToPokeCenter2:: @ 81670AB
+	walk_right
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
 CinnabarIsland_EventScript_BillReturnToPokeCenter:: @ 81670B3
 	applymovement OBJ_EVENT_ID_PLAYER, CinnabarIsland_Movement_PlayerWatchBillExit
 	applymovement LOCALID_BILL, CinnabarIsland_Movement_BillApproachDoor
@@ -272,6 +287,7 @@ CinnabarIsland_Movement_BoatArrive:: @ 8167195
 
 CinnabarIsland_Movement_BillBoardBoat:: @ 816719D
 	walk_right
+	walk_right
 	walk_down
 	walk_down
 	walk_right
@@ -314,6 +330,7 @@ CinnabarIsland_Movement_BillBoardBoatFromShore:: @ 81671B6
 CinnabarIsland_Movement_PlayerBoardBoat:: @ 81671BA
 	walk_down
 	walk_right
+	walk_right
 	walk_down
 	walk_down
 	walk_in_place_fastest_right
@@ -331,22 +348,17 @@ CinnabarIsland_Movement_PlayerBoardBoatFromShore:: @ 81671C4
 	set_invisible
 	step_end
 
-@ Triggered when VAR_TEMP_1 is 0
-CinnabarIsland_EventScript_GymDoorLocked:: @ 81671CA
+CinnabarIsland_EventScript_GymDoorLocked::
 	lockall
-	applymovement OBJ_EVENT_ID_PLAYER, Movement_WalkInPlaceFastestUp
-	waitmovement 0
-	delay 20
+	goto_if_set FLAG_HIDE_POKEMON_MANSION_B1F_SECRET_KEY, CinnabarIsland_EventScript_GymDoorUnlocked
 	msgbox CinnabarIsland_Text_DoorIsLocked
-	closemessage
-	applymovement OBJ_EVENT_ID_PLAYER, CinnabarIsland_Movement_ForcePlayerFromDoor
-	waitmovement 0
 	releaseall
 	end
 
-CinnabarIsland_Movement_ForcePlayerFromDoor:: @ 81671ED
-	walk_down
-	step_end
+CinnabarIsland_EventScript_GymDoorUnlocked::
+	msgbox CinnabarIsland_Text_DoorIsUnlocked
+	releaseall
+	end
 
 CinnabarIsland_EventScript_Woman:: @ 81671EF
 	lock

@@ -124,5 +124,5 @@ Route13_Text_SelectToSwitchItems:: @ 8185DEF
 
 Route13_Text_RouteSign:: @ 8185E2C
     .string "ROUTE 13\n"
-    .string "North to SILENCE BRIDGE$"
+	.string "{UP_ARROW} SILENCE BRIDGE$"
 

@@ -981,7 +981,6 @@ void Thunderstorm_InitVars(void)
     gWeatherPtr->targetRainSpriteCount = 16;
     gWeatherPtr->gammaTargetIndex = 3;
     gWeatherPtr->gammaStepDelay = 20;
-    gWeatherPtr->weatherGfxLoaded = FALSE;  // duplicate assignment
     gWeatherPtr->thunderTriggered = FALSE;
     SetRainStrengthFromSoundEffect(SE_THUNDERSTORM);
 }
@@ -1010,7 +1009,6 @@ void Downpour_InitVars(void)
     gWeatherPtr->targetRainSpriteCount = 24;
     gWeatherPtr->gammaTargetIndex = 3;
     gWeatherPtr->gammaStepDelay = 20;
-    gWeatherPtr->weatherGfxLoaded = FALSE;  // duplicate assignment
     SetRainStrengthFromSoundEffect(SE_DOWNPOUR);
 }
 

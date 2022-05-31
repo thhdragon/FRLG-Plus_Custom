@@ -5,15 +5,29 @@ SaffronCity_Gym_Text_SabrinaIntro:: @ 819B53C
     .string "It started when a spoon I\n"
     .string "carelessly tossed, bent.\p"
     .string "I dislike battling, but if you wish,\n"
-    .string "I will show you my powers!{PLAY_BGM}{MUS_ENCOUNTER_GYM_LEADER}$"
+    .string "I will show you my powers!$"
 
 SaffronCity_Gym_Text_SabrinaDefeat:: @ 819B602
     .string "This loss shocks me!\n"
-    .string "But, a loss is a loss.\p"
+    .string "But, a loss is a loss.$"
+
+SaffronCity_Gym_Text_SabrinaAfterDefeat::
     .string "I admit, I didn't work hard enough\n"
     .string "to win.\p"
     .string "Your victory has earned you the\n"
     .string "MARSHBADGE.$"
+
+SaffronCity_Gym_Text_ReceivedBadge::
+    .string "{PLAYER} received the MARSHBADGE\n"
+    .string "from SABRINA!$"
+
+SaffronCity_Gym_Text_ExplainMarshBadge:: @ 819B6FA
+    .string "The MARSHBADGE makes POKéMON up\n"
+    .string "to Lv. 70 obey you.\p"
+    .string "Stronger POKéMON will become wild,\n"
+    .string "ignoring your orders in battle.\p"
+    .string "Just don't raise your POKéMON too\n"
+    .string "much to avoid that problem.$"
 
 SaffronCity_Gym_Text_SabrinaPostBattle:: @ 819B685
     .string "Psychic power isn't something that\n"
@@ -21,13 +35,7 @@ SaffronCity_Gym_Text_SabrinaPostBattle:: @ 819B685
     .string "Everyone has psychic power.\n"
     .string "People just don't realize it.$"
 
-SaffronCity_Gym_Text_ExplainMarshBadgeTakeThis:: @ 819B6FA
-    .string "The MARSHBADGE makes POKéMON up\n"
-    .string "to Lv. 70 obey you.\p"
-    .string "Stronger POKéMON will become wild,\n"
-    .string "ignoring your orders in battle.\p"
-    .string "Just don't raise your POKéMON too\n"
-    .string "much to avoid that problem.\p"
+SaffronCity_Gym_Text_TakeThis:: @ 819B6FA
     .string "Wait, please take this TM with you.$"
 
 SaffronCity_Gym_Text_ReceivedTM04FromSabrina:: @ 819B7D3
@@ -147,14 +155,12 @@ SaffronCity_Gym_Text_GymGuyPostVictory:: @ 819BDBB
     .string "at the slots!$"
 
 SaffronCity_Gym_Text_GymStatue:: @ 819BDFE
-    .string "SAFFRON POKéMON GYM\n"
-    .string "LEADER: SABRINA\p"
-    .string "WINNING TRAINERS:\n"
+    .string "SAFFRON CITY POKéMON GYM\p"
+	.string "SABRINA'S CERTIFIED TRAINERS:\n"
     .string "{RIVAL}$"
 
 SaffronCity_Gym_Text_GymStatuePlayerWon:: @ 819BE37
-    .string "SAFFRON POKéMON GYM\n"
-    .string "LEADER: SABRINA\p"
-    .string "WINNING TRAINERS:\n"
+    .string "SAFFRON CITY POKéMON GYM\p"
+	.string "SABRINA'S CERTIFIED TRAINERS:\n"
     .string "{RIVAL}, {PLAYER}$"
 

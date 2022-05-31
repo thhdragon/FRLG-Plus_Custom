@@ -12,16 +12,22 @@ PewterCity_Gym_Text_BrockIntro:: @ 8190CD4
     .string "That's the TRAINER's honor that\n"
     .string "compels you to challenge me.\p"
     .string "Fine, then!\n"
-    .string "Show me your best!{PLAY_BGM}{MUS_ENCOUNTER_GYM_LEADER}$"
+    .string "Show me your best!$"
 
 PewterCity_Gym_Text_BrockDefeat:: @ 8190E4F
     .string "I took you for granted, and so\n"
-    .string "I lost.\p"
+    .string "I lost.$"
+
+PewterCity_Gym_Text_BrockAwardBadge:
     .string "As proof of your victory, I confer\n"
     .string "on you this…the official POKéMON\l"
-    .string "LEAGUE BOULDERBADGE.\p"
-    .string "{SIZE}Á{PLAYER} received the BOULDERBADGE\n"
-    .string "from BROCK!{PAUSE_MUSIC}{PLAY_BGM}{MUS_OBTAIN_BADGE}{PAUSE 0xFE}{PAUSE 0x56}{RESUME_MUSIC}\p"
+    .string "LEAGUE BOULDERBADGE.$"
+
+PewterCity_Gym_Text_ReceivedBadge:
+    .string "{PLAYER} received the BOULDERBADGE\n"
+    .string "from BROCK!$"
+
+PewterCity_Gym_Text_BrockAwardBadge2:
     .string "{SIZE}ÇJust having the BOULDERBADGE makes\n"
     .string "your POKéMON more powerful.\p"
     .string "It also enables the use of the\n"
@@ -105,14 +111,12 @@ PewterCity_Gym_Text_YoureChampMaterial:: @ 819143C
     .string "You're POKéMON champ material!$"
 
 PewterCity_Gym_Text_GymStatue:: @ 819146E
-    .string "PEWTER POKéMON GYM\n"
-    .string "LEADER: BROCK\p"
-    .string "WINNING TRAINERS:\n"
+    .string "PEWTER CITY POKéMON GYM\p"
+	.string "BROCK'S CERTIFIED TRAINERS:\n"
     .string "{RIVAL}$"
 
 PewterCity_Gym_Text_GymStatuePlayerWon:: @ 81914A4
-    .string "PEWTER POKéMON GYM\n"
-    .string "LEADER: BROCK\p"
-    .string "WINNING TRAINERS:\n"
+    .string "PEWTER CITY POKéMON GYM\p"
+	.string "BROCK'S CERTIFIED TRAINERS:\n"
     .string "{RIVAL}, {PLAYER}$"
 

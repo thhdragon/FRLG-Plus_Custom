@@ -12,14 +12,26 @@ CeladonCity_Gym_Text_ErikaIntro:: @ 8197114
     .string "GRASS type.\p"
     .string "…Oh, I'm sorry, I had no idea that\n"
     .string "you wished to challenge me.\p"
-    .string "Very well, but I shall not lose.{PLAY_BGM MUS_ENCOUNTER_GYM_LEADER}$"
+    .string "Very well, but I shall not lose.$"
 
 CeladonCity_Gym_Text_ErikaDefeat:: @ 8197260
     .string "Oh!\n"
-    .string "I concede defeat.\l"
+    .string "I concede defeat.$"
+
+CeladonCity_Gym_Text_ErikaAfterDefeat::
     .string "You are remarkably strong.\p"
     .string "I must confer on you the\n"
     .string "RAINBOWBADGE.$"
+
+CeladonCity_Gym_Text_ReceivedBadge::
+    .string "{PLAYER} received the RAINBOWBADGE\n"
+    .string "from ERIKA!$"
+
+CeladonCity_Gym_Text_ExplainRainbowBadge::
+    .string "The RAINBOWBADGE will make\n"
+    .string "POKéMON up to Lv. 50 obey.\p"
+    .string "It also allows POKéMON to use\n"
+    .string "STRENGTH in and out of battle.$"
 
 CeladonCity_Gym_Text_ErikaPostBattle:: @ 81972B8
     .string "You are cataloging POKéMON?\n"
@@ -27,11 +39,7 @@ CeladonCity_Gym_Text_ErikaPostBattle:: @ 81972B8
     .string "I would never collect POKéMON if\n"
     .string "they were unattractive.$"
 
-CeladonCity_Gym_Text_ExplainRainbowBadgeTakeThis:: @ 8197327
-    .string "The RAINBOWBADGE will make\n"
-    .string "POKéMON up to Lv. 50 obey.\p"
-    .string "It also allows POKéMON to use\n"
-    .string "STRENGTH in and out of battle.\p"
+CeladonCity_Gym_Text_TakeThis:: @ 8197327
     .string "Please also take this with you.$"
 
 CeladonCity_Gym_Text_ReceivedTM19FromErika:: @ 81973BA
@@ -139,14 +147,12 @@ CeladonCity_Gym_Text_MaryPostBattle:: @ 819783E
     .string "Wait until next time!$"
 
 CeladonCity_Gym_Text_GymStatue:: @ 8197874
-    .string "CELADON POKéMON GYM\n"
-    .string "LEADER: ERIKA\p"
-    .string "WINNING TRAINERS:\n"
+    .string "CELADON CITY POKéMON GYM\p"
+	.string "ERIKA'S CERTIFIED TRAINERS:\n"
     .string "{RIVAL}$"
 
 CeladonCity_Gym_Text_GymStatuePlayerWon:: @ 81978AB
-    .string "CELADON POKéMON GYM\n"
-    .string "LEADER: ERIKA\p"
-    .string "WINNING TRAINERS:\n"
+    .string "CELADON CITY POKéMON GYM\p"
+	.string "ERIKA'S CERTIFIED TRAINERS:\n"
     .string "{RIVAL}, {PLAYER}$"
 

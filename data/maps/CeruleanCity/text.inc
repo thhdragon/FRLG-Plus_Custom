@@ -168,7 +168,7 @@ CeruleanCity_Text_TrainerTipsHeldItems:: @ 817F453
 
 CeruleanCity_Text_BikeShopSign:: @ 817F4C5
     .string "Grass and caves handled easily!\n"
-    .string "BIKE SHOP$"
+    .string "MIRACLE CYCLE$"
 
 CeruleanCity_Text_GymSign:: @ 817F4EF
     .string "CERULEAN CITY POKéMON GYM\n"

@@ -117,6 +117,7 @@ Route23_EventScript_RecognizeBadge:: @ 81A795F
 Route23_EventScript_BadgeGuardTrigger:: @ 81A796E
 	textcolor 0
 	applymovement VAR_0x8009, Movement_WalkInPlaceFastestLeft
+	applymovement OBJ_EVENT_ID_PLAYER, Movement_WalkInPlaceFastestRight
 	waitmovement 0
 	switch VAR_TEMP_1
 	case 1, Route23_EventScript_CheckBoulderBadgeTrigger

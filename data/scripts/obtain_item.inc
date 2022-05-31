@@ -46,7 +46,7 @@ EventScript_BufferItemsPocket:: @ 81A66F9
 EventScript_BufferKeyItemsPocket:: @ 81A6709
 	getstdstring 2, STDSTRING_KEY_ITEMS_POCKET
 	compare VAR_0x8007, TRUE
-	call_if_eq EventScript_PlayFanfareObtainedItem
+	call_if_eq EventScript_PlayFanfareObtainedKeyItem
 	return
 
 EventScript_BufferPokeBallsPocket:: @ 81A6719
@@ -64,7 +64,7 @@ EventScript_BufferTMCase:: @ 81A6729
 EventScript_BufferBerryPouch:: @ 81A6739
 	getstdstring 2, STDSTRING_BERRY_POUCH
 	compare VAR_0x8007, TRUE
-	call_if_eq EventScript_PlayFanfareObtainedItem
+	call_if_eq EventScript_PlayFanfareObtainedBerry
 	return
 
 EventScript_BufferMedicinePocket:: @ 81A66F9
@@ -92,11 +92,19 @@ EventScript_NoRoomForItem:: @ 81A675E
 	return
 
 EventScript_PlayFanfareObtainedItem:: @ 81A6764
-	playfanfare MUS_LEVEL_UP
+	playfanfare MUS_OBTAIN_ITEM
+	return
+
+EventScript_PlayFanfareObtainedKeyItem:: @ 81A6764
+	playfanfare MUS_OBTAIN_KEY_ITEM
+	return
+
+EventScript_PlayFanfareObtainedBerry::
+	playfanfare MUS_OBTAIN_BERRY
 	return
 
 EventScript_PlayFanfareObtainedTMHM:: @ 81A6768
-	playfanfare MUS_LEVEL_UP
+	playfanfare MUS_OBTAIN_TMHM
 	return
 
 Std_ObtainDecoration:: @ 81A676C

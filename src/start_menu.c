@@ -34,6 +34,7 @@
 #include "option_menu.h"
 #include "save_menu_util.h"
 #include "help_system.h"
+#include "rtc.h"
 #include "constants/songs.h"
 #include "constants/field_weather.h"
 
@@ -111,6 +112,7 @@ static void task50_after_link_battle_save(u8 taskId);
 static void PrintSaveStats(void);
 static void CloseSaveStatsWindow(void);
 static void CloseStartMenu(void);
+static void UpdateClockDisplay(void);
 
 static const struct MenuAction sStartMenuActionTable[] = {
     { gStartMenuText_Pokedex, {.u8_void = StartMenuPokedexCallback} },
@@ -244,27 +246,70 @@ static void SetUpStartMenu_UnionRoom(void)
     AppendToStartMenuItems(STARTMENU_EXIT);
 }
 
-static void DrawSafariZoneStatsWindow(void)
+static void Task_PutTimeInTimeBox(u8 taskId)
 {
-    sSafariZoneStatsWindowId = AddWindow(&sSafariZoneStatsWindowTemplate);
+    ConvertIntToDecimalStringN(gStringVar1, gLocalTime.hours, STR_CONV_MODE_LEADING_ZEROS, 2);
+    ConvertIntToDecimalStringN(gStringVar2, gLocalTime.minutes, STR_CONV_MODE_LEADING_ZEROS, 2);
+    StringExpandPlaceholders(gStringVar4, gStartMenu_TimeBoxClock);
+    AddTextPrinterParameterized(sSafariZoneStatsWindowId, 2, gStringVar4, 1, 1, 0xFF, NULL);
+    CopyWindowToVram(sSafariZoneStatsWindowId, COPYWIN_GFX);
+}
+
+static void DrawTimeBox(void)
+{
+    bool32 inSafariZone = GetSafariZoneFlag();
+
+    struct WindowTemplate TimeBoxWindowTemplate = {0};
+    TimeBoxWindowTemplate.tilemapLeft = 1;
+    TimeBoxWindowTemplate.tilemapTop = 1;
+    TimeBoxWindowTemplate.width = 4;
+    if (!inSafariZone)
+        TimeBoxWindowTemplate.height = 2;
+    else
+        TimeBoxWindowTemplate.height = 4;
+    TimeBoxWindowTemplate.paletteNum = 15;
+    TimeBoxWindowTemplate.baseBlock = 0x008;
+    
+    RtcCalcLocalTime();
+    sSafariZoneStatsWindowId = AddWindow(&TimeBoxWindowTemplate);
     PutWindowTilemap(sSafariZoneStatsWindowId);
     DrawStdWindowFrame(sSafariZoneStatsWindowId, FALSE);
-    ConvertIntToDecimalStringN(gStringVar1, gSafariZoneStepCounter, STR_CONV_MODE_RIGHT_ALIGN, 3);
-    ConvertIntToDecimalStringN(gStringVar2, 600, STR_CONV_MODE_RIGHT_ALIGN, 3);
-    ConvertIntToDecimalStringN(gStringVar3, gNumSafariBalls, STR_CONV_MODE_RIGHT_ALIGN, 2);
-    StringExpandPlaceholders(gStringVar4, gUnknown_84162A9);
-    AddTextPrinterParameterized(sSafariZoneStatsWindowId,2, gStringVar4, 4, 3, 0xFF, NULL);
-    CopyWindowToVram(sSafariZoneStatsWindowId, COPYWIN_GFX);
+    FlagSet(FLAG_TEMP_5);
+    if (inSafariZone)
+    {
+        ConvertIntToDecimalStringN(gStringVar1, gSafariZoneStepCounter, STR_CONV_MODE_RIGHT_ALIGN, 3);
+        ConvertIntToDecimalStringN(gStringVar2, 600, STR_CONV_MODE_RIGHT_ALIGN, 3);
+        ConvertIntToDecimalStringN(gStringVar3, gNumSafariBalls, STR_CONV_MODE_RIGHT_ALIGN, 2);
+        StringExpandPlaceholders(gStringVar4, gUnknown_84162A9);
+        AddTextPrinterParameterized(sSafariZoneStatsWindowId, 2, gStringVar4, 4, 3, 0xFF, NULL);
+    }
+    gSpecialVar_0x8004 = CreateTask(Task_PutTimeInTimeBox, 2);
+}
+
+void UpdateClockDisplay(void)
+{
+	if (!FlagGet(FLAG_TEMP_5))
+		return;
+	RtcCalcLocalTime();
 }
 
 static void DestroySafariZoneStatsWindow(void)
 {
     if (GetSafariZoneFlag())
     {
+        DestroyTask(gSpecialVar_0x8004);
         ClearStdWindowAndFrameToTransparent(sSafariZoneStatsWindowId, FALSE);
         CopyWindowToVram(sSafariZoneStatsWindowId, COPYWIN_GFX);
         RemoveWindow(sSafariZoneStatsWindowId);
     }
+	if (FlagGet(FLAG_SYS_CLOCK_SET))
+	{
+        DestroyTask(gSpecialVar_0x8004);
+		ClearStdWindowAndFrameToTransparent(sSafariZoneStatsWindowId, FALSE);
+        CopyWindowToVram(sSafariZoneStatsWindowId, COPYWIN_GFX);
+        RemoveWindow(sSafariZoneStatsWindowId);
+		FlagClear(FLAG_TEMP_5);
+	}
 }
 
 static s8 PrintStartMenuItems(s8 *cursor_p, u8 nitems)
@@ -309,8 +354,8 @@ static s8 DoDrawStartMenu(void)
         sDrawStartMenuState[0]++;
         break;
     case 3:
-        if (GetSafariZoneFlag())
-            DrawSafariZoneStatsWindow();
+        if (FlagGet(FLAG_SYS_CLOCK_SET))
+            DrawTimeBox();
         sDrawStartMenuState[0]++;
         break;
     case 4:
@@ -324,6 +369,8 @@ static s8 DoDrawStartMenu(void)
             DrawHelpMessageWindowWithText(sStartMenuDescPointers[sStartMenuOrder[sStartMenuCursorPos]]);
         }
         CopyWindowToVram(GetStartMenuWindowId(), COPYWIN_MAP);
+        apply_map_tileset1_tileset2_palette(gMapHeader.mapLayout);
+        BlendPalettes(0x3FFFFFFF, 0, RGB_BLACK);
         return TRUE;
     }
     return FALSE;
@@ -399,6 +446,7 @@ void ShowStartMenu(void)
 
 static bool8 StartCB_HandleInput(void)
 {
+    UpdateClockDisplay();
     if (JOY_NEW(DPAD_UP))
     {
         PlaySE(SE_SELECT);
@@ -509,6 +557,7 @@ static bool8 StartMenuPlayerCallback(void)
 
 static bool8 StartMenuSaveCallback(void)
 {
+    DestroyTask(gSpecialVar_0x8004);
     sStartMenuCallback = StartCB_Save1;
     return FALSE;
 }

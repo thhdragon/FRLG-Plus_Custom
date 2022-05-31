@@ -1315,7 +1315,7 @@ static void Task_OakSpeech27(u8 taskId)
     case -1:
         PlaySE(SE_SELECT);
         if (sOakSpeechResources->unk_0010 == 0)
-            gTasks[taskId].func = Task_OakSpeech24;
+            gTasks[taskId].func = Task_OakSpeech16;
         else
             gTasks[taskId].func = Task_OakSpeech28;
         break;

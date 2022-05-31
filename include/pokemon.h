@@ -470,5 +470,7 @@ u16 ExtendedToNationalOrder(u16 expandedNum);
 u16 ExtendedPokedexNumToSpecies(u16 nationalNum);
 u16 NationalToExtendedOrder(u16 nationalNum);
 u16 SpeciesToExtendedPokedexNum(u16 species);
+bool8 DoesCaughtMonHaveItem(void);
+void PutCaughtMonItemInBag(void);
 
 #endif // GUARD_POKEMON_H

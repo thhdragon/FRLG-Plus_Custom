@@ -1693,6 +1693,8 @@ static void atk08_adjustnormaldamage2(void)
 
 static void atk09_attackanimation(void)
 {
+    u8 i;   
+    
     if (!gBattleControllerExecFlags)
     {
         if ((gHitMarker & HITMARKER_NO_ANIMATIONS) && (gCurrentMove != MOVE_TRANSFORM && gCurrentMove != MOVE_SUBSTITUTE))
@@ -1714,6 +1716,13 @@ static void atk09_attackanimation(void)
             }
             if (!(gMoveResultFlags & MOVE_RESULT_NO_EFFECT))
             {
+        for (i = 0; i < MAX_BATTLERS_COUNT; i++)
+        {
+            if (!(gBattleTypeFlags & BATTLE_TYPE_DOUBLE) && (i == B_POSITION_PLAYER_RIGHT || i == B_POSITION_OPPONENT_RIGHT))
+                break;
+            if (gBattleMons[i].hp != 0)
+                SetHealthboxSpriteInvisible(gHealthboxSpriteIds[i]);
+        }
                 gActiveBattler = gBattlerAttacker;
                 BtlController_EmitMoveAnimation(0, gCurrentMove, gBattleScripting.animTurn, gBattleMovePower, gBattleMoveDamage, gBattleMons[gBattlerAttacker].friendship, &gDisableStructs[gBattlerAttacker]);
                 ++gBattleScripting.animTurn;
@@ -1732,8 +1741,19 @@ static void atk09_attackanimation(void)
 
 static void atk0A_waitanimation(void)
 {
+    u8 i;
+    
     if (!gBattleControllerExecFlags)
+    {
+        for (i = 0; i < MAX_BATTLERS_COUNT; i++)
+        {
+            if (!(gBattleTypeFlags & BATTLE_TYPE_DOUBLE) && (i == B_POSITION_PLAYER_RIGHT || i == B_POSITION_OPPONENT_RIGHT))
+                break;
+            if (gBattleMons[i].hp != 0)
+                SetHealthboxSpriteVisible(gHealthboxSpriteIds[i]);
+        }
         ++gBattlescriptCurrInstr;
+    }
 }
 
 static void atk0B_healthbarupdate(void)

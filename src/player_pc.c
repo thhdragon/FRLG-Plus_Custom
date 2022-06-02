@@ -321,7 +321,7 @@ static void Task_DepositItem_WaitFadeAndGoToBag(u8 taskId)
     if (!gPaletteFade.active)
     {
         CleanupOverworldWindowsAndTilemaps();
-        GoToBagMenu(ITEMMENULOCATION_ITEMPC, OPEN_BAG_ITEMS, CB2_ReturnToField);
+        GoToBagMenu(ITEMMENULOCATION_ITEMPC, OPEN_BAG_LAST, CB2_ReturnToField);
         gFieldCallback = CB2_ReturnFromDepositMenu;
         DestroyTask(taskId);
     }

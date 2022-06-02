@@ -95,7 +95,7 @@ void StoreHPAndStatusInBoxMon(struct Pokemon *mon)
         SetMonData(mon, MON_DATA_BOX_HP, &currentHP);
         SetMonData(mon, MON_DATA_BOX_STATUS, &boxStatusCondition);
     }
-    else if(gSaveBlock1Ptr->keyFlags.nuzlocke == 1)
+    else if(gSaveBlock1Ptr->keyFlags.nuzlocke == 1 || gSaveBlock1Ptr->keyFlags.nuzlocke == 2)
     {   //keep fainted when deposited in Nuzlocke Mode
         if(currentHP == 0)
         {
@@ -164,7 +164,7 @@ void PopulateBoxHpAndStatusToPartyMon(struct Pokemon *mon)
         }
         SetMonData(mon, MON_DATA_STATUS, &statusField);
     }
-    else if(gSaveBlock1Ptr->keyFlags.nuzlocke == 1)
+    else if(gSaveBlock1Ptr->keyFlags.nuzlocke == 1 || gSaveBlock1Ptr->keyFlags.nuzlocke == 2)
     {   //keep fainted when withdrawn in Nuzlocke Mode
         if(currentHP == 0)
         {

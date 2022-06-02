@@ -57,7 +57,7 @@ enum
     BP_ACTION_USE = 0,
     BP_ACTION_TOSS,
     BP_ACTION_GIVE,
-    BP_ACTION_EXIT,
+    BP_ACTION_CANCEL,
     BP_ACTION_DUMMY
 };
 
@@ -103,7 +103,7 @@ static void Task_WaitButtonThenTossBerries(u8 taskId);
 static void Task_BerryPouch_Give(u8 taskId);
 static void Task_Give_PrintThereIsNoPokemon(u8 taskId);
 static void Task_WaitButtonBeforeDialogueWindowDestruction(u8 taskId);
-static void Task_BerryPouch_Exit(u8 taskId);
+static void Task_BerryPouch_Cancel(u8 taskId);
 static void Task_ContextMenu_FromPartyGiveMenu(u8 taskId);
 static void Task_ContextMenu_FromPokemonPC(u8 taskId);
 static void Task_ContextMenu_Sell(u8 taskId);
@@ -179,7 +179,7 @@ static const struct MenuAction sContextMenuActions[] = {
     {gOtherText_Use,  Task_BerryPouch_Use},
     {gOtherText_Toss, Task_BerryPouch_Toss},
     {gOtherText_Give, Task_BerryPouch_Give},
-    {gOtherText_Exit, Task_BerryPouch_Exit},
+    {gOtherText_Cancel, Task_BerryPouch_Cancel},
     {gString_Dummy,   NULL}
 };
 
@@ -187,18 +187,18 @@ static const u8 sOptions_UseGiveTossExit[] = {
     BP_ACTION_USE,
     BP_ACTION_GIVE,
     BP_ACTION_TOSS,
-    BP_ACTION_EXIT
+    BP_ACTION_CANCEL
 };
 
 static const u8 sOptions_GiveExit[] = {
     BP_ACTION_GIVE,
-    BP_ACTION_EXIT,
+    BP_ACTION_CANCEL,
     BP_ACTION_DUMMY,
     BP_ACTION_DUMMY
 };
 
 static const u8 sOptions_Exit[] = {
-    BP_ACTION_EXIT,
+    BP_ACTION_CANCEL,
     BP_ACTION_DUMMY,
     BP_ACTION_DUMMY,
     BP_ACTION_DUMMY
@@ -207,7 +207,14 @@ static const u8 sOptions_Exit[] = {
 static const u8 sOptions_UseToss_Exit[] = {
     BP_ACTION_USE,
     BP_ACTION_TOSS,
-    BP_ACTION_EXIT,
+    BP_ACTION_CANCEL,
+    BP_ACTION_DUMMY
+};
+
+static const u8 sOptions_Toss_Exit[] = {
+    BP_ACTION_TOSS,
+    BP_ACTION_CANCEL,
+    BP_ACTION_DUMMY,
     BP_ACTION_DUMMY
 };
 
@@ -1017,6 +1024,19 @@ static void CreateNormalContextMenu(u8 taskId)
             sContextMenuNumOptions = 2;
         }
     }
+    else if (gSaveBlock1Ptr->keyFlags.noIH == 1 || gSaveBlock1Ptr->keyFlags.noIH == 3)
+    {
+        if (gSpecialVar_ItemId >= ITEM_POMEG_BERRY && gSpecialVar_ItemId <= ITEM_TAMATO_BERRY)
+        {
+            sContextMenuOptions = sOptions_UseGiveTossExit;
+            sContextMenuNumOptions = 4;
+        }
+        else
+        {
+            sContextMenuOptions = sOptions_Toss_Exit;
+            sContextMenuNumOptions = 2;
+        }
+    }
     else
     {
         sContextMenuOptions = sOptions_UseGiveTossExit;
@@ -1049,7 +1069,7 @@ static void Task_NormalContextMenu_HandleInput(u8 taskId)
             break;
         case -1:
             PlaySE(SE_SELECT);
-            sContextMenuActions[BP_ACTION_EXIT].func.void_u8(taskId);
+            sContextMenuActions[BP_ACTION_CANCEL].func.void_u8(taskId);
             break;
         default:
             PlaySE(SE_SELECT);
@@ -1227,7 +1247,7 @@ void Task_BerryPouch_DestroyDialogueWindowAndRefreshListMenu(u8 taskId)
     Task_CleanUpAndReturnToMain(taskId);
 }
 
-static void Task_BerryPouch_Exit(u8 taskId)
+static void Task_BerryPouch_Cancel(u8 taskId)
 {
     DestroyVariableWindow(sContextMenuNumOptions + 9);
     DestroyVariableWindow(6);

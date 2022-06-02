@@ -503,7 +503,14 @@ bool8 CheckNuzlockeDupeFlags(u16 species)
     u8 bit = species % 8;   //get bit in byte
     u8 mask = 1 << bit;
 
-    return (gSaveBlock1Ptr->nuzlockeDupeFlags[index] & mask) != 0;
+    if(IsMonShiny(&gEnemyParty[0]) && gSaveBlock1Ptr->keyFlags.nuzlocke == 1)
+    {
+        return (gSaveBlock1Ptr->nuzlockeDupeFlags[index] & mask) != 0;
+    }
+    else if(gSaveBlock1Ptr->keyFlags.nuzlocke == 2)
+    {
+        return (gSaveBlock1Ptr->nuzlockeDupeFlags[index] & mask) != 0;
+    }
 }
 
 bool8 IsWildMonNuzlockeDupe(u16 species)
@@ -523,12 +530,19 @@ void SetNuzlockeDupeFlags(u16 species)
     u8 bit = species % 8;   //get bit in byte
     u8 mask = 1 << bit;
 
-    gSaveBlock1Ptr->nuzlockeDupeFlags[index] |= mask;
+    if(IsMonShiny(&gEnemyParty[0]) && gSaveBlock1Ptr->keyFlags.nuzlocke == 1)
+    {
+        gSaveBlock1Ptr->nuzlockeDupeFlags[index] |= mask;
+    }
+    else if(gSaveBlock1Ptr->keyFlags.nuzlocke == 2)
+    {
+        gSaveBlock1Ptr->nuzlockeDupeFlags[index] |= mask;
+    }
 }
 
 static void CB2_EndWildBattle(void)
 {
-    if(gSaveBlock1Ptr->keyFlags.nuzlocke == 1)
+    if(gSaveBlock1Ptr->keyFlags.nuzlocke == 1 || gSaveBlock1Ptr->keyFlags.nuzlocke == 2)
     {   
         if(!IsWildMonNuzlockeDupe(GetMonData(&gEnemyParty[0], MON_DATA_SPECIES)))
         {
@@ -550,7 +564,7 @@ static void CB2_EndWildBattle(void)
 
 static void CB2_EndScriptedWildBattle(void)
 {
-    if(gSaveBlock1Ptr->keyFlags.nuzlocke == 1)
+    if(gSaveBlock1Ptr->keyFlags.nuzlocke == 1 || gSaveBlock1Ptr->keyFlags.nuzlocke == 2)
     {   
         if(!IsWildMonNuzlockeDupe(GetMonData(&gEnemyParty[0], MON_DATA_SPECIES)))
         {

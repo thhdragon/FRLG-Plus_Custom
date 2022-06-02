@@ -775,7 +775,7 @@ bool8 FldEff_PokecenterHeal(void)
     u8 nPokemon;
     struct Task * task;
 
-    if(gSaveBlock1Ptr->keyFlags.nuzlocke == 1)
+    if(gSaveBlock1Ptr->keyFlags.nuzlocke == 1 || gSaveBlock1Ptr->keyFlags.nuzlocke == 2)
         nPokemon = CountAliveMonsInNuzlocke(); 
     else
         nPokemon = CountPartyNonEggMons();

@@ -485,7 +485,7 @@ static void ApplyDaycareExperience(struct Pokemon *mon)
     bool8 firstMove;
     u16 learnedMove;
 
-    for (i = 0; i < MAX_LEVEL; i++)
+    for (i = 0; i < GetCurrentPartyLevelCap(); i++)
     {
         // Add the mon's gained daycare experience level by level until it can't level up anymore.
         if (TryIncrementMonLevel(mon))
@@ -521,7 +521,7 @@ static u16 TakeSelectedPokemonFromDaycare(struct DaycareMon *daycareMon)
     BoxMonToMon(&daycareMon->mon, &pokemon);
     PopulateBoxHpAndStatusToPartyMon(&pokemon);
 
-    if (GetMonData(&pokemon, MON_DATA_LEVEL) != MAX_LEVEL)
+    if (GetMonData(&pokemon, MON_DATA_LEVEL) != GetCurrentPartyLevelCap())
     {
         experience = GetMonData(&pokemon, MON_DATA_EXP) + daycareMon->steps;
         SetMonData(&pokemon, MON_DATA_EXP, &experience);
@@ -1851,7 +1851,7 @@ static void AddHatchedMonToParty(u8 id)
     SetMonData(mon, MON_DATA_MET_LEVEL, &caughtLvl);
 
     //faint egg if Nuzlocke && not outsider && already gotten mon where it was received
-    if(gSaveBlock1Ptr->keyFlags.nuzlocke == 1)
+    if(gSaveBlock1Ptr->keyFlags.nuzlocke == 1 || gSaveBlock1Ptr->keyFlags.nuzlocke == 2)
     {
         if(eggOTID == GetMonData(mon, MON_DATA_OT_ID))
         {   // If not an outsider Egg
@@ -1887,7 +1887,7 @@ static void AddHatchedMonToParty(u8 id)
     MonRestorePP(mon);
     CalculateMonStats(mon, FALSE);
 
-    if(gSaveBlock1Ptr->keyFlags.nuzlocke == 1)
+    if(gSaveBlock1Ptr->keyFlags.nuzlocke == 1 || gSaveBlock1Ptr->keyFlags.nuzlocke == 2)
     {
         if(NuzlockeFlagGet(mapsecid))
         {   // Already had an encounter where Egg was encountered
@@ -2178,7 +2178,7 @@ static void CB2_EggHatch_1(void)
         break;
     case 8:
         DayCare_GetMonNickname(&gPlayerParty[sEggHatchData->eggPartyID], gStringVar1);
-        if(gSaveBlock1Ptr->keyFlags.nuzlocke == 1)
+        if(gSaveBlock1Ptr->keyFlags.nuzlocke == 1 || gSaveBlock1Ptr->keyFlags.nuzlocke == 2)
         {
             DayCare_GetMonNickname(&gPlayerParty[sEggHatchData->eggPartyID], gStringVar3);
             species = GetMonData(&gPlayerParty[sEggHatchData->eggPartyID], MON_DATA_SPECIES);

@@ -345,7 +345,7 @@ static bool8 TryGenerateWildMon(const struct WildPokemonInfo * info, u8 area, u8
         slot = ChooseWildMonIndex_WaterRock();
         break;
     }
-    if(gMapHeader.mapLayoutId == LAYOUT_VIRIDIAN_FOREST && gSaveBlock1Ptr->keyFlags.nuzlocke == 1)
+    if(gMapHeader.mapLayoutId == LAYOUT_VIRIDIAN_FOREST && (gSaveBlock1Ptr->keyFlags.nuzlocke == 1 || gSaveBlock1Ptr->keyFlags.nuzlocke == 2))
         slot = ViridianForestNuzlockeOverride(info, slot);
     level = ChooseWildMonLevel(&info->wildPokemon[slot]);
     if (flags & WILD_CHECK_REPEL && !IsWildLevelAllowedByRepel(level))
@@ -752,7 +752,7 @@ static bool8 IsWildLevelAllowedByRepel(u8 wildLevel)
     if (!VarGet(VAR_REPEL_STEP_COUNT))
         return TRUE;
 
-    if(gSaveBlock1Ptr->keyFlags.nuzlocke == 1 && NuzlockeFlagGet(GetCurrentRegionMapSectionId()) == FALSE) //if Nuzlocke & first encounter not done Repel doesn't work.
+    if((gSaveBlock1Ptr->keyFlags.nuzlocke == 1 || gSaveBlock1Ptr->keyFlags.nuzlocke == 2) && NuzlockeFlagGet(GetCurrentRegionMapSectionId()) == FALSE) //if Nuzlocke & first encounter not done Repel doesn't work.
         return TRUE;
 
     for (i = 0; i < PARTY_SIZE; i++)

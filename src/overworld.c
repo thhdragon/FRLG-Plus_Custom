@@ -1658,7 +1658,7 @@ void CB2_WhiteOut(void)
         ScriptContext2_Disable();
         gFieldCallback = FieldCB_RushInjuredPokemonToCenter;
         val = 0;
-        if(gSaveBlock1Ptr->keyFlags.nuzlocke == 1 || gSaveBlock1Ptr->keyFlags.noPMC == 1)
+        if(gSaveBlock1Ptr->keyFlags.nuzlocke == 1 || gSaveBlock1Ptr->keyFlags.nuzlocke == 2 || gSaveBlock1Ptr->keyFlags.noPMC == 1)
         {
             if(GetFirstAliveBoxMon() == 420) //no usable Pokemon
             {

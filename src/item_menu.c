@@ -287,6 +287,13 @@ static const u8 sContextMenuItems_CheckGiveTossCancel[] = {
     ITEMMENUACTION_CANCEL
 };
 
+static const u8 sContextMenuItems_GiveTossCancel[] = {
+    ITEMMENUACTION_GIVE,
+    ITEMMENUACTION_TOSS,
+    ITEMMENUACTION_CANCEL,
+    ITEMMENUACTION_DUMMY
+};
+
 static const u8 sContextMenuItems_GiveIfNotKeyItemPocket[][2] = {
     {
         ITEMMENUACTION_GIVE,
@@ -1466,6 +1473,41 @@ static void OpenContextMenu(u8 taskId)
     switch (gBagMenuState.location)
     {
     case ITEMMENULOCATION_BATTLE:
+        if (gSpecialVar_ItemId == ITEM_BERRY_POUCH)
+        {
+            if (gSaveBlock1Ptr->keyFlags.noIH == 2 || gSaveBlock1Ptr->keyFlags.noIH == 3)
+            {
+                sContextMenuItemsBuffer[0] = ITEMMENUACTION_CANCEL;
+                sContextMenuItemsPtr = sContextMenuItemsBuffer;
+                sContextMenuNumItems = 1;
+            }
+            else
+            {
+                sContextMenuItemsBuffer[0] = ITEMMENUACTION_OPEN_BERRIES;
+                sContextMenuItemsBuffer[1] = ITEMMENUACTION_CANCEL;
+                sContextMenuItemsPtr = sContextMenuItemsBuffer;
+                sContextMenuNumItems = 2;
+            }
+        }
+        else if (ItemId_GetBattleUsage(gSpecialVar_ItemId))
+        {
+            if ((gSaveBlock1Ptr->keyFlags.noIH == 2 || gSaveBlock1Ptr->keyFlags.noIH == 3) && (ItemId_GetBattleFunc(gSpecialVar_ItemId) == BattleUseFunc_PokeFlute || ItemId_GetBattleFunc(gSpecialVar_ItemId) == BattleUseFunc_Medicine || ItemId_GetBattleFunc(gSpecialVar_ItemId) == BattleUseFunc_Ether))
+            {
+                sContextMenuItemsPtr = sContextMenuItems_Cancel;
+                sContextMenuNumItems = 1;
+            }
+            else
+            {
+                sContextMenuItemsPtr = sContextMenuItems_BattleUse;
+                sContextMenuNumItems = 2;
+            }
+        }
+        else
+        {
+            sContextMenuItemsPtr = sContextMenuItems_Cancel;
+            sContextMenuNumItems = 1;
+        }
+        break;
     case ITEMMENULOCATION_TTVSCR_STATUS:
         if (gSpecialVar_ItemId == ITEM_BERRY_POUCH)
         {
@@ -1512,13 +1554,35 @@ static void OpenContextMenu(u8 taskId)
             switch (gBagMenuState.pocket)
             {
             case 0: //pockets in order of Items, Medicine, Key Items, Held Items, Poke Balls
-            case 1:
                 sContextMenuNumItems = 4;
                 if (ItemIsMail(gSpecialVar_ItemId) == TRUE)
                     sContextMenuItemsPtr = sContextMenuItems_CheckGiveTossCancel;
                 else
                     sContextMenuItemsPtr = sContextMenuItems_Field[gBagMenuState.pocket];
                 break;
+            case 1:
+                if (gSaveBlock1Ptr->keyFlags.noIH == 1 || gSaveBlock1Ptr->keyFlags.noIH == 3)
+                {
+                    if (ItemIsMail(gSpecialVar_ItemId) == TRUE)
+                    {
+                        sContextMenuItemsPtr = sContextMenuItems_CheckGiveTossCancel;
+                        sContextMenuNumItems = 4;
+                    }
+                    else
+                        sContextMenuItemsPtr = sContextMenuItems_GiveTossCancel;
+                        sContextMenuNumItems = 3;
+                }
+                else
+                {
+                    sContextMenuNumItems = 4;
+                    if (ItemIsMail(gSpecialVar_ItemId) == TRUE)
+                    {
+                        sContextMenuItemsPtr = sContextMenuItems_CheckGiveTossCancel;
+                    }
+                    else
+                        sContextMenuItemsPtr = sContextMenuItems_Field[gBagMenuState.pocket];
+                }
+                    break;
             case 2:
                 sContextMenuItemsPtr = sContextMenuItemsBuffer;
                 sContextMenuNumItems = 3;
@@ -2555,23 +2619,23 @@ enum BagSortOptions
 };
 enum ItemSortType
 {
-	ITEM_TYPE_FIELD_USE,
-	ITEM_TYPE_HEALTH_RECOVERY,
-	ITEM_TYPE_STATUS_RECOVERY,
-	ITEM_TYPE_PP_RECOVERY,
-	ITEM_TYPE_STAT_BOOST_DRINK,
-	ITEM_TYPE_EVOLUTION_STONE,
-	ITEM_TYPE_EVOLUTION_ITEM,
-	ITEM_TYPE_BATTLE_ITEM,
-	ITEM_TYPE_FLUTE,
-	ITEM_TYPE_STAT_BOOST_HELD_ITEM,
-	ITEM_TYPE_HELD_ITEM,
-	ITEM_TYPE_INCENSE,
-	ITEM_TYPE_MEGA_STONE,
-	ITEM_TYPE_SELLABLE,
-	ITEM_TYPE_SHARD,
-	ITEM_TYPE_FOSSIL,
-	ITEM_TYPE_MAIL,
+    ITEM_TYPE_FIELD_USE,
+    ITEM_TYPE_HEALTH_RECOVERY,
+    ITEM_TYPE_STATUS_RECOVERY,
+    ITEM_TYPE_PP_RECOVERY,
+    ITEM_TYPE_STAT_BOOST_DRINK,
+    ITEM_TYPE_EVOLUTION_STONE,
+    ITEM_TYPE_EVOLUTION_ITEM,
+    ITEM_TYPE_BATTLE_ITEM,
+    ITEM_TYPE_FLUTE,
+    ITEM_TYPE_STAT_BOOST_HELD_ITEM,
+    ITEM_TYPE_HELD_ITEM,
+    ITEM_TYPE_INCENSE,
+    ITEM_TYPE_MEGA_STONE,
+    ITEM_TYPE_SELLABLE,
+    ITEM_TYPE_SHARD,
+    ITEM_TYPE_FOSSIL,
+    ITEM_TYPE_MAIL,
 };
 static const u8 sText_SortItemsHow[] = _("Sort items how?");
 static const u8 sText_Name[] = _("name");

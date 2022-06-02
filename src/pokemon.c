@@ -5504,7 +5504,7 @@ bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item, u8 partyIndex, u8 mov
                 retVal = FALSE;
             }
             if ((itemEffect[cmdIndex] & ITEM3_LEVEL_UP)  // raise level
-             && GetMonData(mon, MON_DATA_LEVEL, NULL) != 100)
+             && GetMonData(mon, MON_DATA_LEVEL, NULL) < GetCurrentPartyLevelCap())
             {
                 data = gExperienceTables[gBaseStats[GetMonData(mon, MON_DATA_SPECIES, NULL)].growthRate][GetMonData(mon, MON_DATA_LEVEL, NULL) + 1];
                 SetMonData(mon, MON_DATA_EXP, &data);
@@ -5605,7 +5605,7 @@ bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item, u8 partyIndex, u8 mov
                         // revive?
                         if (val & (ITEM4_REVIVE >> 2))
                         {
-                            if (gSaveBlock1Ptr->keyFlags.nuzlocke == 1 || GetMonData(mon, MON_DATA_HP, NULL) != 0)
+                            if (gSaveBlock1Ptr->keyFlags.nuzlocke == 1 || gSaveBlock1Ptr->keyFlags.nuzlocke == 2 || GetMonData(mon, MON_DATA_HP, NULL) != 0)
                             {
                                 idx++;
                                 break;
@@ -6029,7 +6029,7 @@ bool8 PokemonItemUseNoEffect(struct Pokemon *mon, u16 item, u8 partyIndex, u8 mo
              && gSideTimers[GetBattlerSide(gActiveBattler)].mistTimer == 0)
                 retVal = FALSE;
             if ((itemEffect[cmdIndex] & ITEM3_LEVEL_UP)  // raise level
-             && GetMonData(mon, MON_DATA_LEVEL, NULL) != 100)
+             && GetMonData(mon, MON_DATA_LEVEL, NULL) < GetCurrentPartyLevelCap())
                 retVal = FALSE;
             if ((itemEffect[cmdIndex] & ITEM3_SLEEP)
              && PartyMonHasStatus(mon, partyIndex, STATUS1_SLEEP, battlerId))
@@ -6079,7 +6079,7 @@ bool8 PokemonItemUseNoEffect(struct Pokemon *mon, u16 item, u8 partyIndex, u8 mo
                         // revive?
                         if (curEffect & (ITEM4_REVIVE >> 2))
                         {
-                            if (gSaveBlock1Ptr->keyFlags.nuzlocke == 1 || GetMonData(mon, MON_DATA_HP, NULL) != 0)
+                            if (gSaveBlock1Ptr->keyFlags.nuzlocke == 1 || gSaveBlock1Ptr->keyFlags.nuzlocke == 2 || GetMonData(mon, MON_DATA_HP, NULL) != 0)
                             {
                                 idx++;
                                 break;
@@ -7062,26 +7062,22 @@ static void SetMonExpWithMaxLevelCheck(struct Pokemon *mon, int species, u8 unus
 
 bool8 TryIncrementMonLevel(struct Pokemon *mon)
 {
-    u16 species = GetMonData(mon, MON_DATA_SPECIES, NULL);
-    u8 level = GetMonData(mon, MON_DATA_LEVEL, NULL);
-    u8 newLevel = level + 1;
-    u32 exp = GetMonData(mon, MON_DATA_EXP, NULL);
-
-    if (level < 100)
+    u16 species = GetMonData(mon, MON_DATA_SPECIES, 0);
+    u8 nextLevel = GetMonData(mon, MON_DATA_LEVEL, 0) + 1;
+    u32 expPoints = GetMonData(mon, MON_DATA_EXP, 0);
+    if (expPoints > gExperienceTables[gBaseStats[species].growthRate][GetCurrentPartyLevelCap()])
     {
-        if (exp > gExperienceTables[gBaseStats[species].growthRate][newLevel])
-        {
-            SetMonData(mon, MON_DATA_LEVEL, &newLevel);
-            SetMonExpWithMaxLevelCheck(mon, species, newLevel, exp);
-            return TRUE;
-        }
-        else
-            return FALSE;
+        expPoints = gExperienceTables[gBaseStats[species].growthRate][GetCurrentPartyLevelCap()];
+        SetMonData(mon, MON_DATA_EXP, &expPoints);
+    }
+    if (nextLevel > GetCurrentPartyLevelCap() || expPoints < gExperienceTables[gBaseStats[species].growthRate][nextLevel])
+    {
+        return FALSE;
     }
     else
     {
-        SetMonExpWithMaxLevelCheck(mon, species, level, exp);
-        return FALSE;
+        SetMonData(mon, MON_DATA_LEVEL, &nextLevel);
+        return TRUE;
     }
 }
 
@@ -8185,4 +8181,131 @@ void SetFirstDeoxysForm(void)
             break;
         }
     }
+}
+
+enum LevelCap {
+    LEVEL_CAP_NO_BADGES,
+    LEVEL_CAP_BADGE_1,
+    LEVEL_CAP_BADGE_2,
+    LEVEL_CAP_BADGE_3,
+    LEVEL_CAP_BADGE_4,
+    LEVEL_CAP_BADGE_5,
+    LEVEL_CAP_BADGE_6,
+    LEVEL_CAP_BADGE_7,
+    LEVEL_CAP_BADGE_8
+};
+
+const u8 gLevelCapTable_Off[] = 
+{
+    [LEVEL_CAP_NO_BADGES] = 100,
+    [LEVEL_CAP_BADGE_1] = 100,
+    [LEVEL_CAP_BADGE_2] = 100,
+    [LEVEL_CAP_BADGE_3] = 100,
+    [LEVEL_CAP_BADGE_4] = 100,
+    [LEVEL_CAP_BADGE_5] = 100,
+    [LEVEL_CAP_BADGE_6] = 100,
+    [LEVEL_CAP_BADGE_7] = 100,
+    [LEVEL_CAP_BADGE_8] = 100,
+};
+
+const u8 gLevelCapTable_Strict[] = 
+{
+    [LEVEL_CAP_NO_BADGES] = 14,
+    [LEVEL_CAP_BADGE_1] = 21,
+    [LEVEL_CAP_BADGE_2] = 24,
+    [LEVEL_CAP_BADGE_3] = 29,
+    [LEVEL_CAP_BADGE_4] = 43,
+    [LEVEL_CAP_BADGE_5] = 43,
+    [LEVEL_CAP_BADGE_6] = 47,
+    [LEVEL_CAP_BADGE_7] = 50,
+    [LEVEL_CAP_BADGE_8] = 54,
+};
+
+const u8 gLevelCapTable_Harsh[] = 
+{
+    [LEVEL_CAP_NO_BADGES] = 12,
+    [LEVEL_CAP_BADGE_1] = 18,
+    [LEVEL_CAP_BADGE_2] = 18,
+    [LEVEL_CAP_BADGE_3] = 24,
+    [LEVEL_CAP_BADGE_4] = 37,
+    [LEVEL_CAP_BADGE_5] = 37,
+    [LEVEL_CAP_BADGE_6] = 40,
+    [LEVEL_CAP_BADGE_7] = 42,
+    [LEVEL_CAP_BADGE_8] = 51,
+};
+
+const u8 gLevelCapTable_Relaxed[] = 
+{
+    [LEVEL_CAP_NO_BADGES] = 16,
+    [LEVEL_CAP_BADGE_1] = 23,
+    [LEVEL_CAP_BADGE_2] = 26,
+    [LEVEL_CAP_BADGE_3] = 31,
+    [LEVEL_CAP_BADGE_4] = 45,
+    [LEVEL_CAP_BADGE_5] = 45,
+    [LEVEL_CAP_BADGE_6] = 49,
+    [LEVEL_CAP_BADGE_7] = 52,
+    [LEVEL_CAP_BADGE_8] = 56,
+};
+
+u8 GetCurrentPartyLevelCap(void)
+{
+    u16 i, badgeCount = 0;
+
+    if (FlagGet(FLAG_DEFEATED_LORELEI) && gSaveBlock1Ptr->keyFlags.levelcap == 1)
+        return 56;
+    if (FlagGet(FLAG_DEFEATED_LORELEI) && gSaveBlock1Ptr->keyFlags.levelcap == 2)
+        return 51;
+    if (FlagGet(FLAG_DEFEATED_LORELEI) && gSaveBlock1Ptr->keyFlags.levelcap == 3)
+        return 58;
+
+    if (FlagGet(FLAG_DEFEATED_BRUNO) && gSaveBlock1Ptr->keyFlags.levelcap == 1)
+        return 58;
+    if (FlagGet(FLAG_DEFEATED_BRUNO) && gSaveBlock1Ptr->keyFlags.levelcap == 2)
+        return 53;
+    if (FlagGet(FLAG_DEFEATED_BRUNO) && gSaveBlock1Ptr->keyFlags.levelcap == 3)
+        return 60;
+        
+    if (FlagGet(FLAG_DEFEATED_AGATHA) && gSaveBlock1Ptr->keyFlags.levelcap == 1)
+        return 60;
+    if (FlagGet(FLAG_DEFEATED_AGATHA) && gSaveBlock1Ptr->keyFlags.levelcap == 2)
+        return 54;
+    if (FlagGet(FLAG_DEFEATED_AGATHA) && gSaveBlock1Ptr->keyFlags.levelcap == 3)
+        return 62;
+        
+    if (FlagGet(FLAG_DEFEATED_LANCE) && gSaveBlock1Ptr->keyFlags.levelcap == 1)
+        return 63;
+    if (FlagGet(FLAG_DEFEATED_LANCE) && gSaveBlock1Ptr->keyFlags.levelcap == 2)
+        return 57;
+    if (FlagGet(FLAG_DEFEATED_LANCE) && gSaveBlock1Ptr->keyFlags.levelcap == 3)
+        return 65;
+
+    if (FlagGet(FLAG_DEFEATED_CHAMP) && gSaveBlock1Ptr->keyFlags.levelcap == 1)
+        return 75;
+    if (FlagGet(FLAG_DEFEATED_CHAMP) && gSaveBlock1Ptr->keyFlags.levelcap == 2)
+        return 72;
+    if (FlagGet(FLAG_DEFEATED_CHAMP) && gSaveBlock1Ptr->keyFlags.levelcap == 3)
+        return 77;
+
+    if (FlagGet(FLAG_FOUGHT_MEWTWO)) //after beating the E4 remove the cap
+        return MAX_LEVEL;
+
+    for (i = FLAG_BADGE01_GET; i < FLAG_BADGE01_GET + NUM_BADGES; i++) //count badges
+    {
+        if (FlagGet(i))
+            badgeCount++;
+    }
+
+    if (gSaveBlock1Ptr->keyFlags.levelcap == 0) //vanilla level cap
+        return gLevelCapTable_Off[badgeCount];
+
+    if (gSaveBlock1Ptr->keyFlags.levelcap == 1) //strict level cap
+        return gLevelCapTable_Strict[badgeCount];
+
+    if (gSaveBlock1Ptr->keyFlags.levelcap == 2) //harsh level cap
+        return gLevelCapTable_Harsh[badgeCount];
+
+    if (gSaveBlock1Ptr->keyFlags.levelcap == 3) //relaxed level cap
+        return gLevelCapTable_Relaxed[badgeCount];
+
+    return MAX_LEVEL;
 }

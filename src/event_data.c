@@ -374,8 +374,17 @@ u8 NuzlockeFlagSet(u8 mapsec)
         return 0;
     }
     if(id != 0)
-        FlagSet(NUZLOCKE_FLAGS_START + (id - 1));
-    return 0;
+    {
+        if(gSaveBlock1Ptr->keyFlags.nuzlocke == 1 && !IsMonShiny(&gEnemyParty[0]))
+        {
+            FlagSet(NUZLOCKE_FLAGS_START + (id - 1));
+        }
+        else if(gSaveBlock1Ptr->keyFlags.nuzlocke == 2)
+        {
+            FlagSet(NUZLOCKE_FLAGS_START + (id - 1));
+        }
+        return 0;
+    }
 }
 
 u8 NuzlockeFlagClear(u8 mapsec)
@@ -418,8 +427,17 @@ u8 NuzlockeFlagGet(u8 mapsec)
         return 0;
     }
     if(id != 0)
-        return FlagGet(NUZLOCKE_FLAGS_START + (id - 1));
-    return FALSE;
+    {
+        if(gSaveBlock1Ptr->keyFlags.nuzlocke == 1 && !IsMonShiny(&gEnemyParty[0]))
+        {
+            return FlagGet(NUZLOCKE_FLAGS_START + (id - 1));
+        }
+        else if(gSaveBlock1Ptr->keyFlags.nuzlocke == 2)
+        {
+            return FlagGet(NUZLOCKE_FLAGS_START + (id - 1));
+        }
+        return FALSE;
+    }
 }
 
 bool8 CheckMasterTrainerFlag(u16 flag)

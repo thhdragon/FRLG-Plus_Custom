@@ -436,12 +436,12 @@ static void Task_RushInjuredPokemonToCenter(u8 taskId)
         if (FieldFadeTransitionBackgroundEffectIsFinished() == TRUE)
         {
             DestroyTask(taskId);
-            if(gSaveBlock1Ptr->keyFlags.nuzlocke == 1 || gSaveBlock1Ptr->keyFlags.noPMC == 1)
+            if(gSaveBlock1Ptr->keyFlags.nuzlocke == 1 || gSaveBlock1Ptr->keyFlags.nuzlocke == 2 || gSaveBlock1Ptr->keyFlags.noPMC == 1)
             {
                 if(GetFirstAliveBoxMon() == 420) //no usable Pokemon
                 {
                     gGlobalFieldTintMode = 1; //should grayscale palettes?
-                    if(gSaveBlock1Ptr->keyFlags.nuzlocke == 1 && gSaveBlock1Ptr->keyFlags.noPMC == 1)
+                    if((gSaveBlock1Ptr->keyFlags.nuzlocke == 1 || gSaveBlock1Ptr->keyFlags.nuzlocke == 2) && gSaveBlock1Ptr->keyFlags.noPMC == 1)
                         ScriptContext1_SetupScript(EventScript_BothGameOver); //both noPMC and Nuzlocke
                     else if(gSaveBlock1Ptr->keyFlags.noPMC == 0)
                         ScriptContext1_SetupScript(EventScript_NuzlockeGameOver); //just Nuzlocke
@@ -466,12 +466,12 @@ static void Task_RushInjuredPokemonToCenter(u8 taskId)
         if (FieldFadeTransitionBackgroundEffectIsFinished() == TRUE)
         {
             DestroyTask(taskId);
-            if(gSaveBlock1Ptr->keyFlags.nuzlocke == 1 || gSaveBlock1Ptr->keyFlags.noPMC == 1)
+            if(gSaveBlock1Ptr->keyFlags.nuzlocke == 1 || gSaveBlock1Ptr->keyFlags.nuzlocke == 2 || gSaveBlock1Ptr->keyFlags.noPMC == 1)
             {
                 if(GetFirstAliveBoxMon() == 420) //no usable Pokemon
                 {
                     gGlobalFieldTintMode = 1; //should grayscale palettes?
-                    if(gSaveBlock1Ptr->keyFlags.nuzlocke == 1 && gSaveBlock1Ptr->keyFlags.noPMC == 1)
+                    if((gSaveBlock1Ptr->keyFlags.nuzlocke == 1 || gSaveBlock1Ptr->keyFlags.nuzlocke == 2) && gSaveBlock1Ptr->keyFlags.noPMC == 1)
                         ScriptContext1_SetupScript(EventScript_BothGameOver_Mom); //both noPMC and Nuzlocke
                     else if(gSaveBlock1Ptr->keyFlags.noPMC == 0)
                         ScriptContext1_SetupScript(EventScript_NuzlockeGameOver_Mom); //just Nuzlocke

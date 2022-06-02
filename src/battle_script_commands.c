@@ -27,6 +27,7 @@
 #include "reshow_battle_screen.h"
 #include "battle_controllers.h"
 #include "battle_interface.h"
+#include "battle_main.h"
 #include "battle_setup.h"
 #include "constants/battle_anim.h"
 #include "constants/battle_move_effects.h"
@@ -3151,6 +3152,9 @@ static void atk23_getexp(void)
                 case 3:
                     calculatedExp = calculatedExp * 2;
                     break;
+                case 4:
+                    calculatedExp = calculatedExp * 4;
+                    break;
             }
             if (viaExpShare) // at least one mon is getting exp via exp share
             {
@@ -3187,7 +3191,7 @@ static void atk23_getexp(void)
                 gBattleScripting.atk23_state = 5;
                 gBattleMoveDamage = 0; // used for exp
             }
-            else if (GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_LEVEL) == MAX_LEVEL || gSaveBlock1Ptr->keyFlags.expMod == 0 || FlagGet(FLAG_MASTER_TRAINER_BATTLE))
+            else if (GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_LEVEL) >= GetCurrentPartyLevelCap() || gSaveBlock1Ptr->keyFlags.expMod == 0 || FlagGet(FLAG_MASTER_TRAINER_BATTLE))
             {
                 *(&gBattleStruct->sentInPokes) >>= 1;
                 gBattleScripting.atk23_state = 5;
@@ -3259,7 +3263,7 @@ static void atk23_getexp(void)
         if (!gBattleControllerExecFlags)
         {
             gBattleBufferB[gBattleStruct->expGetterBattlerId][0] = 0;
-            if (GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_HP) && GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_LEVEL) != MAX_LEVEL)
+            if (GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_HP) && GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_LEVEL) < GetCurrentPartyLevelCap())
             {
                 gBattleResources->beforeLvlUp->stats[STAT_HP]    = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_MAX_HP);
                 gBattleResources->beforeLvlUp->stats[STAT_ATK]   = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_ATK);
@@ -9175,12 +9179,12 @@ static void atkEF_handleballthrow(void)
             {
                 BtlController_EmitBallThrowAnim(0, BALL_3_SHAKES_SUCCESS);
                 MarkBattlerForControllerExec(gActiveBattler);
-                if(gSaveBlock1Ptr->keyFlags.nuzlocke == 1)
+                if(gSaveBlock1Ptr->keyFlags.nuzlocke == 1 || gSaveBlock1Ptr->keyFlags.nuzlocke == 2)
                     gBattlescriptCurrInstr = BattleScript_SuccessBallThrowForceNick;
                 else 
                     gBattlescriptCurrInstr = BattleScript_SuccessBallThrow;
                 SetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattlerTarget]], MON_DATA_POKEBALL, &gLastUsedItem);
-                if(gSaveBlock1Ptr->keyFlags.nuzlocke == 1)
+                if(gSaveBlock1Ptr->keyFlags.nuzlocke == 1 || gSaveBlock1Ptr->keyFlags.nuzlocke == 2)
                 {
                     if(NuzlockeFlagGet(GetCurrentRegionMapSectionId()) == TRUE) //already caught something here, faint mon
                     {
@@ -9231,12 +9235,12 @@ static void atkEF_handleballthrow(void)
                 MarkBattlerForControllerExec(gActiveBattler);
                 if (shakes == BALL_3_SHAKES_SUCCESS) // mon caught, copy of the code above
                 {
-                    if(gSaveBlock1Ptr->keyFlags.nuzlocke == 1)
+                    if(gSaveBlock1Ptr->keyFlags.nuzlocke == 1 || gSaveBlock1Ptr->keyFlags.nuzlocke == 2)
                         gBattlescriptCurrInstr = BattleScript_SuccessBallThrowForceNick;
                     else 
                         gBattlescriptCurrInstr = BattleScript_SuccessBallThrow;
                     SetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattlerTarget]], MON_DATA_POKEBALL, &gLastUsedItem);
-                    if(gSaveBlock1Ptr->keyFlags.nuzlocke == 1)
+                    if(gSaveBlock1Ptr->keyFlags.nuzlocke == 1 || gSaveBlock1Ptr->keyFlags.nuzlocke == 2)
                     {
                         if(NuzlockeFlagGet(GetCurrentRegionMapSectionId()) == TRUE) //already caught something here, faint mon
                         {

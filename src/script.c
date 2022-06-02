@@ -1556,7 +1556,7 @@ void SetLastViewedPokedexEntry(void)
 
 void TurnOffNuzlockeMode(void)
 {
-    if(gSaveBlock1Ptr->keyFlags.nuzlocke == 1)
+    if(gSaveBlock1Ptr->keyFlags.nuzlocke == 1 || gSaveBlock1Ptr->keyFlags.nuzlocke == 2)
     {
         gSaveBlock1Ptr->keyFlags.nuzlocke = 0;
     }

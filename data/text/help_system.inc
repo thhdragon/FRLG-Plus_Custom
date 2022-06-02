@@ -1210,16 +1210,31 @@ Help_Text_Version:: @ 81B7E0F
 	.string "VERSION$"
 
 Help_Text_Difficulty:: @ 81B7E0F
-	.string "DIFFICULTY$"
+	.string "DIFFICULTY MODE$"
+
+Help_Text_LevelCap:: @ 81B7E0F
+	.string "LEVEL CAP$"
+	
+Help_Text_LevelCapStrict:: @ 81B7E0F
+	.string "{CIRCLE_DOT} Details for STRICT$"
+
+Help_Text_LevelCapHarsh:: @ 81B7E0F
+	.string "{CIRCLE_DOT} Details for HARSH$"
+	
+Help_Text_LevelCapRelaxed:: @ 81B7E0F
+	.string "{CIRCLE_DOT} Details for RELAXED$"
 
 Help_Text_Nuzlocke:: @ 81B7E0F
-	.string "NUZLOCKE$"
+	.string "NUZLOCKE MODE$"
 
 Help_Text_Nuzlocke_Catching::
-	.string "  Catching POKéMON in NUZLOCKE MODE$"
+	.string "{CIRCLE_DOT} Catching POKéMON$"
 
 Help_Text_NuzlockeLosing::
-	.string "  Losing battles in NUZLOCKE MODE$"
+	.string "{CIRCLE_DOT} Losing a POKéMON battle$"
+
+Help_Text_Nuzlocke_ShinyClause::
+	.string "{CIRCLE_DOT} Shiny POKéMON clause$"
 
 Help_Text_IvCalc:: @ 81B7E0F
 	.string "IV CALCULATION$"
@@ -1229,6 +1244,18 @@ Help_Text_EvCalc:: @ 81B7E0F
 
 Help_Text_NoFreeHeals:: @ 81B7E0F
 	.string "NO FREE HEALS$"
+
+Help_Text_NoIH:: @ 81B7E0F
+	.string "NO ITEM HEALS$"
+
+Help_Text_NoIHBag:: @ 81B7E0F
+	.string "{CIRCLE_DOT} Details for FIELD DISABLED$"
+
+Help_Text_NoIHBattle:: @ 81B7E0F
+	.string "{CIRCLE_DOT} Details for BATTLE DISABLED$"
+
+Help_Text_NoIHBoth:: @ 81B7E0F
+	.string "{CIRCLE_DOT} Details for BOTH DISABLED$"
 
 Help_Text_DefineHP:: @ 81B7E16
 	.string "HP indicates a POKéMON's vitality.\n"
@@ -1559,15 +1586,51 @@ Help_Text_DefineVersion:: @ 81B7E0F
 
 Help_Text_DefineDifficulty:: @ 81B7E0F
 	.string "You can adjust the game's difficulty.\n"
-	.string "In EASY MODE, POKéMON battles with\l"
-	.string "TRAINERS are easier than normal.\l"
-	.string "In CHALLENGE MODE, POKéMON battles\l"
-	.string "with TRAINERS are more difficult than\l"
-	.string "normal and BADGE boosts are disabled.\l"
-	.string "NORMAL MODE is the standard difficulty.$"
+	.string "On EASY, POKéMON battles with TRAINERS\l"
+	.string "are easier than normal.\l"
+	.string "On CHALLENGE, POKéMON battles with\l"
+	.string "TRAINERS are more difficult than normal\l"
+	.string "and BADGE boosts are disabled.\l"
+	.string "DISABLED is the standard difficulty.$"
+
+Help_Text_DefineLevelCap:: @ 81B7E0F
+	.string "You can adjust the game's level cap\n"
+	.string "to one of the options listed below.\l"
+	.string "{CIRCLE_DOT} STRICT\l"
+	.string "{CIRCLE_DOT} HARSH\l"
+	.string "{CIRCLE_DOT} RELAXED\l"
+	.string "\l"
+	.string "DISABLED is the standard level cap.$"
+
+Help_Text_DefineLevelCapStrict:: @ 81B7E0F
+	.string "STRICT sets the level cap at the\n"
+	.string "next GYM LEADER'S highest POKéMON\l"
+	.string "level. The limit before getting the\l"
+	.string "first BADGE is set at level 14. After\l"
+	.string "defeating the ELITE FOUR, the level\l"
+	.string "cap is set at 75. Find MEWTWO to\l"
+	.string "remove the cap.$"
+
+Help_Text_DefineLevelCapHarsh:: @ 81B7E0F
+	.string "HARSH sets the level cap at the\n"
+	.string "next GYM LEADER'S lowest POKéMON\l"
+	.string "level. The limit before getting the\l"
+	.string "first BADGE is set at level 12. After\l"
+	.string "defeating the ELITE FOUR, the level\l"
+	.string "cap is set at 72. Find MEWTWO to\l"
+	.string "remove the cap.$"
+
+Help_Text_DefineLevelCapRelaxed:: @ 81B7E0F
+	.string "RELAXED sets the level cap at the\n"
+	.string "next GYM LEADER'S highest POKéMON\l"
+	.string "level, +2. The limit before getting\l"
+	.string "the first BADGE is set at level 16.\l"
+	.string "After defeating the ELITE FOUR, the\l"
+	.string "level cap is set at 77. Find MEWTWO\l"
+	.string "to remove the cap.$"
 
 Help_Text_DefineNuzlocke:: @ 81B7E0F
-	.string "Turning on the NUZLOCKE key imposes\n"
+	.string "Turning on the NUZLOCKE MODE key sets\n"
 	.string "additional rules on your journey to\l"
 	.string "increase the difficulty. POKéMON that\l"
 	.string "have fainted can't be healed, and only\l"
@@ -1593,6 +1656,13 @@ Help_Text_DefineNuzlockeLosing::
 	.string "the choice to soft reset or to turn off\l"
 	.string "NUZLOCKE MODE and heal your party.$"
 
+Help_Text_DefineNuzlocke_ShinyClause::
+	.string "This option enables the shiny clause\n"
+	.string "variant of NUZLOCKE MODE.\l"
+	.string "\l"
+	.string "Shiny POKéMON do not count against the\l"
+	.string "first encounter in an area.$"
+
 Help_Text_DefineIvCalc:: @ 81B7E0F
 	.string "You can alter how your POKéMON's\n"
 	.string "potential, or INDIVIDUAL VALUES,\l"
@@ -1613,12 +1683,42 @@ Help_Text_DefineEvCalc:: @ 81B7E0F
 
 Help_Text_DefineNoFreeHeals::
 	.string "You can disable free POKéMON party\n"
-	.string "heals by switching NO FREE HEALS to ON.\l"
-	.string "This will disable several full party\l"
-	.string "heals, most notably from POKéMON\l"
-	.string "CENTERS. Additionally, the PC STORAGE\l"
-	.string "SYSTEM will not heal POKéMON sent to\l"
-	.string "it when ON. To heal, use items instead.$"
+	.string "heals by switching NO FREE HEALS to\l"
+	.string "PKMN CTR DISABLED. This will disable\l"
+	.string "several full party heals, including\l"
+	.string "POKéMON CENTERS. The PC STORAGE\l"
+	.string "SYSTEM will also not heal POKéMON sent\l"
+	.string "to it. To heal, use items instead.$"
+
+Help_Text_DefineNoIH::
+	.string "You can adjust item heals by enabling\n"
+	.string "one of the options listed below.\l"
+	.string "{CIRCLE_DOT} FIELD DISABLED\l"
+	.string "{CIRCLE_DOT} BATTLE DISABLED\l"
+	.string "{CIRCLE_DOT} BOTH DISABLED\l"
+	.string "\l"
+	.string "ITEM USE ENABLED is the default mode.$"
+
+Help_Text_DefineNoIHBag::
+	.string "Enabling this option turns off the use\n"
+	.string "of items outside of POKéMON battles\l"
+	.string "from the MEDICINE POCKET and\l"
+	.string "BERRY POUCH. EV changing BERRIES are\l"
+	.string "still enabled.$"
+
+Help_Text_DefineNoIHBattle::
+	.string "Enabling this option turns off the use\n"
+	.string "of items inside of POKéMON battles from\l"
+	.string "the MEDICINE POCKET and BERRY POUCH.\l"
+	.string "The POKé FLUTE is also disabled.$"
+
+Help_Text_DefineNoIHBoth::
+	.string "Enabling this option turns off the use\n"
+	.string "of items inside and outside of POKéMON\l"
+	.string "battles from the MEDICINE POCKET and\l"
+	.string "BERRY POUCH. The POKé FLUTE is also\l"
+	.string "disabled. EV changing BERRIES are still\l"
+	.string "enabled.$"
 
 Help_Text_TheHelpSystem:: @ 81B9BB7
 	.string "The HELP System$"
@@ -2092,19 +2192,19 @@ Help_Text_ExpMod::
 	.string "EXP. MODIFIER$"
 
 Help_Text_DefineExpMod::
-	.string "This option allows you to modify the\n"
-	.string "amount of Experience Points your\l"
-	.string "POKéMON earn from battle.\l"
+	.string "Allows you to modify the amount of\n"
+	.string "Experience Points earned in battle.\l"
 	.string "0× disables Experience Point gains.\l"
-	.string "1/2× halves given Experience Points.\l"
+	.string "1/2× halves Experience Point gains.\l"
 	.string "1× is the standard modifier.\l"
-	.string "2× doubles given Experience Points.$"
+	.string "2× doubles Experience Point gains.\l"
+	.string "4× quadruples Experience Point gains.$"
 
 Help_Text_FRExclusives::
-	.string "  POKéMON exclusive to FIRERED$"
+	.string "{CIRCLE_DOT} POKéMON exclusive to FIRERED$"
 
 Help_Text_LGExclusives::
-	.string "  POKéMON exclusive to LEAFGREEN$"
+	.string "{CIRCLE_DOT} POKéMON exclusive to LEAFGREEN$"
 
 Help_Text_DefineFRExclusives::
 	.string "The POKéMON exclusive to FIRERED\n"

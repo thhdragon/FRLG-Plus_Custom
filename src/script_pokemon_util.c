@@ -44,14 +44,14 @@ void HealPlayerParty(void)
         u16 maxHP = GetMonData(&gPlayerParty[i], MON_DATA_MAX_HP);
         arg[0] = maxHP;
         arg[1] = maxHP >> 8;
-        if(gSaveBlock1Ptr->keyFlags.nuzlocke == 1)
+        if(gSaveBlock1Ptr->keyFlags.nuzlocke == 1 || gSaveBlock1Ptr->keyFlags.nuzlocke == 2)
         {
             if(GetMonData(&gPlayerParty[i], MON_DATA_HP) != 0 && !FlagGet(FLAG_SYS_IS_LINKING)) //don't heal fainted Pokemon in Nuzlocke except when linking
                 SetMonData(&gPlayerParty[i], MON_DATA_HP, arg);
         }
         ppBonuses = GetMonData(&gPlayerParty[i], MON_DATA_PP_BONUSES);
 
-        if(GetMonData(&gPlayerParty[i], MON_DATA_HP) != 0 && gSaveBlock1Ptr->keyFlags.nuzlocke == 1 && !FlagGet(FLAG_SYS_IS_LINKING)) //don't heal fainted Pokemon in Nuzlocke except when linking
+        if(GetMonData(&gPlayerParty[i], MON_DATA_HP) != 0 && (gSaveBlock1Ptr->keyFlags.nuzlocke == 1 || gSaveBlock1Ptr->keyFlags.nuzlocke == 2) && !FlagGet(FLAG_SYS_IS_LINKING)) //don't heal fainted Pokemon in Nuzlocke except when linking
         {
             // restore PP.
             for(j = 0; j < MAX_MON_MOVES; j++)
@@ -114,7 +114,7 @@ u8 ScriptGiveMon(u16 species, u8 level, u16 item, u32 unused1, u32 unused2, u8 u
     heldItem[0] = item;
     heldItem[1] = item >> 8;
     SetMonData(mon, MON_DATA_HELD_ITEM, heldItem);
-    if(gSaveBlock1Ptr->keyFlags.nuzlocke == 1 && !IN_OAKS_LAB) //if this is Oak's Lab, don't set Nuzlocke flags
+    if((gSaveBlock1Ptr->keyFlags.nuzlocke == 1 || gSaveBlock1Ptr->keyFlags.nuzlocke == 2) && !IN_OAKS_LAB) //if this is Oak's Lab, don't set Nuzlocke flags
     {
         if(NuzlockeFlagGet(GetCurrentRegionMapSectionId()) == TRUE) //already caught something here, faint mon
         {
@@ -136,7 +136,7 @@ u8 ScriptGiveMon(u16 species, u8 level, u16 item, u32 unused1, u32 unused2, u8 u
     case MON_GIVEN_TO_PC:
         GetSetPokedexFlag(nationalDexNum, FLAG_SET_SEEN);
         GetSetPokedexFlag(nationalDexNum, FLAG_SET_CAUGHT);
-        if(gSaveBlock1Ptr->keyFlags.nuzlocke == 1)
+        if(gSaveBlock1Ptr->keyFlags.nuzlocke == 1 || gSaveBlock1Ptr->keyFlags.nuzlocke == 2)
         {
             if(wasFirstCatch)
             {   //if first catch in area, set dupe flag for this species.

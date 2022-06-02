@@ -321,9 +321,18 @@ static void Task_DepositItem_WaitFadeAndGoToBag(u8 taskId)
     if (!gPaletteFade.active)
     {
         CleanupOverworldWindowsAndTilemaps();
-        GoToBagMenu(ITEMMENULOCATION_ITEMPC, OPEN_BAG_LAST, CB2_ReturnToField);
-        gFieldCallback = CB2_ReturnFromDepositMenu;
-        DestroyTask(taskId);
+        if (gBagMenuState.pocket == POCKET_KEY_ITEMS - 1)
+        {
+            gFieldCallback = CB2_ReturnFromDepositMenu;
+            SetMainCallback2(CB2_ReturnToField);
+            DestroyTask(taskId);
+        }
+        else
+        {
+            GoToBagMenu(ITEMMENULOCATION_ITEMPC, OPEN_BAG_LAST, CB2_ReturnToField);
+            gFieldCallback = CB2_ReturnFromDepositMenu;
+            DestroyTask(taskId);
+        }
     }
 }
 

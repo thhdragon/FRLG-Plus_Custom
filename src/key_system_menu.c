@@ -20,6 +20,7 @@ enum
 {
     MENUITEM_VERSION = 0,
     MENUITEM_DIFFICULTY,
+    MENUITEM_FORCEDSTYLE,
     MENUITEM_LEVELCAP,
     MENUITEM_ADVANCED,
     MENUITEM_CANCEL,
@@ -145,13 +146,14 @@ static const struct BgTemplate sKeySystemMenuBgTemplates[] =
 };
 
 static const u16 sKeySystemMenuPalette[] = INCBIN_U16("graphics/misc/unk_83cc2e4.gbapal");
-static const u16 sKeySystemMenuItemCounts[MENUITEM_COUNT] = {2, 3, 4, 1, 0};
+static const u16 sKeySystemMenuItemCounts[MENUITEM_COUNT] = {2, 3, 2, 4, 1, 0};
 static const u16 sKeySystemSubMenuItemCounts[MENUITEM_COUNT2] = {3, 3, 2, 2, 4, 5, 0};
 
 static const u8 *const sKeySystemMenuItemsNames[MENUITEM_COUNT] =
 {
     [MENUITEM_VERSION]    = gText_Version,
     [MENUITEM_DIFFICULTY] = gText_Difficulty,
+    [MENUITEM_FORCEDSTYLE]   = gText_ForcedStyle,
     [MENUITEM_LEVELCAP]   = gText_LevelCap,
     [MENUITEM_ADVANCED]   = gText_Advanced,
     [MENUITEM_CANCEL]     = gText_OptionMenuSaveAndExit,
@@ -175,17 +177,23 @@ static const u8 *const sVersionOptions[] =
 
 static const u8 *const sDifficultyOptions[] =
 {
-    gText_NormalDifficulty,
+    gText_Disabled,
     gText_ChallengeDifficulty,
     gText_EasyDifficulty
 };
 
 static const u8 *const sLevelCapOptions[] =
 {
-    gText_LevelCapOff,
+    gText_Disabled,
     gText_StrictLevelCap,
     gText_HarshLevelCap,
     gText_RelaxedLevelCap
+};
+
+static const u8 *const sForcedStyleOptions[] =
+{
+    gText_Disabled,
+    gText_Enabled
 };
 
 static const u8 *const sAdvancedOptions[] =
@@ -201,7 +209,7 @@ static const u8 *const sPMCOptions[] =
 
 static const u8 *const sNuzlockeShinyOptions[] =
 {
-    gText_Nuzlocke_Off,
+    gText_Disabled,
     gText_Nuzlocke_ShinyOn,
     gText_Nuzlocke_ShinyOff
 };
@@ -268,6 +276,7 @@ void CB2_KeySystemMenuFromContinueScreen(void)
     sKeySystemMenuPtr->inSubMenu = 0;
     sKeySystemMenuPtr->option[MENUITEM_VERSION] = gSaveBlock1Ptr->keyFlags.version;
     sKeySystemMenuPtr->option[MENUITEM_DIFFICULTY] = gSaveBlock1Ptr->keyFlags.difficulty;
+    sKeySystemMenuPtr->option[MENUITEM_FORCEDSTYLE] = gSaveBlock1Ptr->keyFlags.forcedstyle;
     sKeySystemMenuPtr->option[MENUITEM_LEVELCAP] = gSaveBlock1Ptr->keyFlags.levelcap;
     sKeySystemMenuPtr->option[MENUITEM_ADVANCED] = 0;
     sKeySystemMenuPtr->subOption[MENUITEM_NUZLOCKE] = gSaveBlock1Ptr->keyFlags.nuzlocke;
@@ -666,6 +675,9 @@ static void BufferKeySystemMenuString(u8 selection)
             case MENUITEM_DIFFICULTY:
                 AddTextPrinterParameterized3(1, 2, x, y, dst, -1, sDifficultyOptions[sKeySystemMenuPtr->option[selection]]);
                 break;
+            case MENUITEM_FORCEDSTYLE:
+                AddTextPrinterParameterized3(1, 2, x, y, dst, -1, sForcedStyleOptions[sKeySystemMenuPtr->option[selection]]);
+                break;
             case MENUITEM_LEVELCAP:
                 AddTextPrinterParameterized3(1, 2, x, y, dst, -1, sLevelCapOptions[sKeySystemMenuPtr->option[selection]]);
                 break;
@@ -713,6 +725,7 @@ static void CloseAndSaveKeySystemMenu(u8 taskId)
     FreeAllWindowBuffers();
     gSaveBlock1Ptr->keyFlags.version = sKeySystemMenuPtr->option[MENUITEM_VERSION];
     gSaveBlock1Ptr->keyFlags.difficulty = sKeySystemMenuPtr->option[MENUITEM_DIFFICULTY];
+    gSaveBlock1Ptr->keyFlags.forcedstyle = sKeySystemMenuPtr->option[MENUITEM_FORCEDSTYLE];
     gSaveBlock1Ptr->keyFlags.levelcap = sKeySystemMenuPtr->option[MENUITEM_LEVELCAP];
     gSaveBlock1Ptr->keyFlags.nuzlocke = sKeySystemMenuPtr->subOption[MENUITEM_NUZLOCKE];
     if(gSaveBlock1Ptr->keyFlags.ivCalcMode != sKeySystemMenuPtr->subOption[MENUITEM_IV] || gSaveBlock1Ptr->keyFlags.evCalcMode != sKeySystemMenuPtr->subOption[MENUITEM_EV])

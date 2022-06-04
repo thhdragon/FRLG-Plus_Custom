@@ -2313,7 +2313,10 @@ static void BattleStartClearSetData(void)
     gHitMarker = 0;
     if (!(gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_POKEDUDE)) && gSaveBlock2Ptr->optionsBattleSceneOff)
         gHitMarker |= HITMARKER_NO_ANIMATIONS;
-    gBattleScripting.battleStyle = gSaveBlock2Ptr->optionsBattleStyle;
+    if(gSaveBlock1Ptr->keyFlags.forcedstyle == 1)
+        gBattleScripting.battleStyle = gSaveBlock2Ptr->optionsBattleStyle = OPTIONS_BATTLE_STYLE_SET;
+    else
+        gBattleScripting.battleStyle = gSaveBlock2Ptr->optionsBattleStyle;
     gMultiHitCounter = 0;
     gBattleOutcome = 0;
     gBattleControllerExecFlags = 0;

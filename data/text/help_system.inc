@@ -1212,6 +1212,9 @@ Help_Text_Version:: @ 81B7E0F
 Help_Text_Difficulty:: @ 81B7E0F
 	.string "DIFFICULTY MODE$"
 
+Help_Text_ForcedStyle:: @ 81B7E0F
+	.string "FORCED STYLE$"
+
 Help_Text_LevelCap:: @ 81B7E0F
 	.string "LEVEL CAP$"
 	
@@ -1592,6 +1595,15 @@ Help_Text_DefineDifficulty:: @ 81B7E0F
 	.string "TRAINERS are more difficult than normal\l"
 	.string "and BADGE boosts are disabled.\l"
 	.string "DISABLED is the standard difficulty.$"
+
+Help_Text_DefineForcedStyle:: @ 81B7E0F
+	.string "You can force the game's BATTLE STYLE\n"
+	.string "to SET. While this option is on, the\l"
+	.string "BATTLE STYLE will continue to persist,\l"
+	.string "regardless of the OPTION menu setting.\l"
+	.string "\l"
+	.string "\l"
+	.string "DISABLED turns off the forced style.$"
 
 Help_Text_DefineLevelCap:: @ 81B7E0F
 	.string "You can adjust the game's level cap\n"
@@ -2195,10 +2207,10 @@ Help_Text_DefineExpMod::
 	.string "Allows you to modify the amount of\n"
 	.string "Experience Points earned in battle.\l"
 	.string "0× disables Experience Point gains.\l"
-	.string "1/2× halves Experience Point gains.\l"
+	.string "1/2× halves given Experience Points.\l"
 	.string "1× is the standard modifier.\l"
-	.string "2× doubles Experience Point gains.\l"
-	.string "4× quadruples Experience Point gains.$"
+	.string "2× doubles given Experience Points.\l"
+	.string "4× quadruples given Experience Points.$"
 
 Help_Text_FRExclusives::
 	.string "{CIRCLE_DOT} POKéMON exclusive to FIRERED$"

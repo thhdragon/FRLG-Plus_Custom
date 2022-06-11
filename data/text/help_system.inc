@@ -1212,8 +1212,17 @@ Help_Text_Version:: @ 81B7E0F
 Help_Text_Difficulty:: @ 81B7E0F
 	.string "DIFFICULTY MODE$"
 
-Help_Text_ForcedStyle:: @ 81B7E0F
-	.string "FORCED STYLE$"
+Help_Text_Nuzlocke:: @ 81B7E0F
+	.string "NUZLOCKE MODE$"
+
+Help_Text_Nuzlocke_Catching::
+	.string "{CIRCLE_DOT} Catching POKéMON$"
+
+Help_Text_NuzlockeLosing::
+	.string "{CIRCLE_DOT} Losing a POKéMON battle$"
+
+Help_Text_Nuzlocke_ShinyClause::
+	.string "{CIRCLE_DOT} Shiny POKéMON clause$"
 
 Help_Text_LevelCap:: @ 81B7E0F
 	.string "LEVEL CAP$"
@@ -1226,18 +1235,9 @@ Help_Text_LevelCapHarsh:: @ 81B7E0F
 	
 Help_Text_LevelCapRelaxed:: @ 81B7E0F
 	.string "{CIRCLE_DOT} Details for RELAXED$"
-
-Help_Text_Nuzlocke:: @ 81B7E0F
-	.string "NUZLOCKE MODE$"
-
-Help_Text_Nuzlocke_Catching::
-	.string "{CIRCLE_DOT} Catching POKéMON$"
-
-Help_Text_NuzlockeLosing::
-	.string "{CIRCLE_DOT} Losing a POKéMON battle$"
-
-Help_Text_Nuzlocke_ShinyClause::
-	.string "{CIRCLE_DOT} Shiny POKéMON clause$"
+	
+Help_Text_ExpMod::
+	.string "EXP. MODIFIER$"
 
 Help_Text_IvCalc:: @ 81B7E0F
 	.string "IV CALCULATION$"
@@ -1259,6 +1259,12 @@ Help_Text_NoIHBattle:: @ 81B7E0F
 
 Help_Text_NoIHBoth:: @ 81B7E0F
 	.string "{CIRCLE_DOT} Details for BOTH DISABLED$"
+
+Help_Text_NoEH:: @ 81B7E0F
+	.string "NO ENEMY HEALS$"
+
+Help_Text_ForcedStyle:: @ 81B7E0F
+	.string "FORCE SET STYLE$"
 
 Help_Text_DefineHP:: @ 81B7E16
 	.string "HP indicates a POKéMON's vitality.\n"
@@ -1596,14 +1602,39 @@ Help_Text_DefineDifficulty:: @ 81B7E0F
 	.string "and BADGE boosts are disabled.\l"
 	.string "DISABLED is the standard difficulty.$"
 
-Help_Text_DefineForcedStyle:: @ 81B7E0F
-	.string "You can force the game's BATTLE STYLE\n"
-	.string "to SET. While this option is on, the\l"
-	.string "BATTLE STYLE will continue to persist,\l"
-	.string "regardless of the OPTION menu setting.\l"
+Help_Text_DefineNuzlocke:: @ 81B7E0F
+	.string "Turning on NUZLOCKE MODE imposes\n"
+	.string "additional rules on your journey to\l"
+	.string "increase the difficulty. POKéMON that\l"
+	.string "have fainted can't be healed, and only\l"
+	.string "the first wild POKéMON seen in an area\l"
+	.string "is usable in battle. If you run out of\l"
+	.string "POKéMON, this key can be turned off.$"
+
+Help_Text_DefineNuzlocke_Catching::
+	.string "Only the first POKéMON encountered in\n"
+	.string "an area will be usable in battle.\l"
+	.string "Further POKéMON caught in the area will\l"
+	.string "be fainted upon capture. If the first\l"
+	.string "encounter is a POKéMON that was caught\l"
+	.string "previously and wasn't fainted, it won't\l"
+	.string "count as the first if not caught.$"
+
+Help_Text_DefineNuzlockeLosing::
+	.string "If you lose a battle and white out in\n"
+	.string "NUZLOCKE MODE, a non-fainted POKéMON\l"
+	.string "will be withdrawn from the PC STORAGE\l"
+	.string "SYSTEM. If you don't have any POKéMON\l"
+	.string "left that can battle, you will be given\l"
+	.string "the choice to soft reset or to turn off\l"
+	.string "NUZLOCKE MODE and heal your party.$"
+
+Help_Text_DefineNuzlocke_ShinyClause::
+	.string "This option enables the shiny clause\n"
+	.string "variant of NUZLOCKE MODE.\l"
 	.string "\l"
-	.string "\l"
-	.string "DISABLED turns off the forced style.$"
+	.string "Shiny POKéMON do not count against the\l"
+	.string "first encounter in an area.$"
 
 Help_Text_DefineLevelCap:: @ 81B7E0F
 	.string "You can adjust the game's level cap\n"
@@ -1641,39 +1672,14 @@ Help_Text_DefineLevelCapRelaxed:: @ 81B7E0F
 	.string "level cap is set at 77. Find MEWTWO\l"
 	.string "to remove the cap.$"
 
-Help_Text_DefineNuzlocke:: @ 81B7E0F
-	.string "Turning on the NUZLOCKE MODE key sets\n"
-	.string "additional rules on your journey to\l"
-	.string "increase the difficulty. POKéMON that\l"
-	.string "have fainted can't be healed, and only\l"
-	.string "the first wild POKéMON seen in an area\l"
-	.string "is usable in battle. If you run out of\l"
-	.string "POKéMON, this key can be turned off.$"
-
-Help_Text_DefineNuzlocke_Catching::
-	.string "Only the first POKéMON encountered in\n"
-	.string "an area will be usable in battle.\l"
-	.string "Further POKéMON caught in the area will\l"
-	.string "be fainted upon capture. If the first\l"
-	.string "encounter is a POKéMON that was caught\l"
-	.string "previously and wasn't fainted, it won't\l"
-	.string "count as the first if not caught.$"
-
-Help_Text_DefineNuzlockeLosing::
-	.string "If you lose a battle and white out in\n"
-	.string "NUZLOCKE MODE, a non-fainted POKéMON\l"
-	.string "will be withdrawn from the PC STORAGE\l"
-	.string "SYSTEM. If you don't have any POKéMON\l"
-	.string "left that can battle, you will be given\l"
-	.string "the choice to soft reset or to turn off\l"
-	.string "NUZLOCKE MODE and heal your party.$"
-
-Help_Text_DefineNuzlocke_ShinyClause::
-	.string "This option enables the shiny clause\n"
-	.string "variant of NUZLOCKE MODE.\l"
-	.string "\l"
-	.string "Shiny POKéMON do not count against the\l"
-	.string "first encounter in an area.$"
+Help_Text_DefineExpMod::
+	.string "Allows you to modify the amount of\n"
+	.string "Experience Points earned in battle.\l"
+	.string "0× disables Experience Point gains.\l"
+	.string "1/2× halves given Experience Points.\l"
+	.string "2× doubles given Experience Points.\l"
+	.string "4× quadruples given Experience Points.\l"
+	.string "DISABLED is the standard modifier.$"
 
 Help_Text_DefineIvCalc:: @ 81B7E0F
 	.string "You can alter how your POKéMON's\n"
@@ -1731,6 +1737,20 @@ Help_Text_DefineNoIHBoth::
 	.string "BERRY POUCH. The POKé FLUTE is also\l"
 	.string "disabled. EV changing BERRIES are still\l"
 	.string "enabled.$"
+
+Help_Text_DefineNoEH::
+	.string "Enabling this option turns off the use\n"
+	.string "of items used by other POKéMON\l"
+	.string "TRAINERS in battle.$"
+
+Help_Text_DefineForcedStyle:: @ 81B7E0F
+	.string "You can force the game's BATTLE STYLE\n"
+	.string "to SET. While this option is ENABLED,\l"
+	.string "the BATTLE STYLE will continue to\l"
+	.string "persist regardless of the OPTION menu\l"
+	.string "setting.\l"
+	.string "\l"
+	.string "DISABLED turns off the forced style.$"
 
 Help_Text_TheHelpSystem:: @ 81B9BB7
 	.string "The HELP System$"
@@ -2199,18 +2219,6 @@ Help_Text_HowToUseKeySystemSubmenu::
 	.string "   settings.\n"
 	.string "{CIRCLE_3} Press the A or B Button after\n"
 	.string "   making changes to go back.$"
-
-Help_Text_ExpMod::
-	.string "EXP. MODIFIER$"
-
-Help_Text_DefineExpMod::
-	.string "Allows you to modify the amount of\n"
-	.string "Experience Points earned in battle.\l"
-	.string "0× disables Experience Point gains.\l"
-	.string "1/2× halves given Experience Points.\l"
-	.string "1× is the standard modifier.\l"
-	.string "2× doubles given Experience Points.\l"
-	.string "4× quadruples given Experience Points.$"
 
 Help_Text_FRExclusives::
 	.string "{CIRCLE_DOT} POKéMON exclusive to FIRERED$"

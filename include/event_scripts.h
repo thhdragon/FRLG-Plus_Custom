@@ -1164,6 +1164,7 @@ extern const u8 Help_Text_NoIH[];
 extern const u8 Help_Text_NoIHBag[];
 extern const u8 Help_Text_NoIHBattle[];
 extern const u8 Help_Text_NoIHBoth[];
+extern const u8 Help_Text_NoEH[];
 extern const u8 Help_Text_DefineVersion[];
 extern const u8 Help_Text_DefineDifficulty[];
 extern const u8 Help_Text_DefineForcedStyle[];
@@ -1182,6 +1183,7 @@ extern const u8 Help_Text_DefineNoIH[];
 extern const u8 Help_Text_DefineNoIHBag[];
 extern const u8 Help_Text_DefineNoIHBattle[];
 extern const u8 Help_Text_DefineNoIHBoth[];
+extern const u8 Help_Text_DefineNoEH[];
 
 extern const u8 EventScript_FldEffStrength[];
 extern const u8 EventScript_FailSweetScent[];

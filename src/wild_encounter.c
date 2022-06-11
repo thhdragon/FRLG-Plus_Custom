@@ -332,16 +332,35 @@ static bool8 TryGenerateWildMon(const struct WildPokemonInfo * info, u8 area, u8
             break;
         if (TryGetAbilityInfluencedWildMonIndex(info->wildPokemon, TYPE_ELECTRIC, ABILITY_STATIC, &slot))
             break;
+        if (TryGetAbilityInfluencedWildMonIndex(info->wildPokemon, TYPE_ELECTRIC, ABILITY_LIGHTNING_ROD, &slot))
+            break;
+        if (TryGetAbilityInfluencedWildMonIndex(info->wildPokemon, TYPE_FIRE, ABILITY_FLASH_FIRE, &slot))
+            break;
 
         slot = ChooseWildMonIndex_Land();
         break;
     case WILD_AREA_WATER:
+        if (TryGetAbilityInfluencedWildMonIndex(info->wildPokemon, TYPE_STEEL, ABILITY_MAGNET_PULL, &slot))
+            break;
         if (TryGetAbilityInfluencedWildMonIndex(info->wildPokemon, TYPE_ELECTRIC, ABILITY_STATIC, &slot))
+            break;
+        if (TryGetAbilityInfluencedWildMonIndex(info->wildPokemon, TYPE_ELECTRIC, ABILITY_LIGHTNING_ROD, &slot))
+            break;
+        if (TryGetAbilityInfluencedWildMonIndex(info->wildPokemon, TYPE_FIRE, ABILITY_FLASH_FIRE, &slot))
             break;
 
         slot = ChooseWildMonIndex_WaterRock();
         break;
     case WILD_AREA_ROCKS:
+        if (TryGetAbilityInfluencedWildMonIndex(info->wildPokemon, TYPE_STEEL, ABILITY_MAGNET_PULL, &slot))
+            break;
+        if (TryGetAbilityInfluencedWildMonIndex(info->wildPokemon, TYPE_ELECTRIC, ABILITY_STATIC, &slot))
+            break;
+        if (TryGetAbilityInfluencedWildMonIndex(info->wildPokemon, TYPE_ELECTRIC, ABILITY_LIGHTNING_ROD, &slot))
+            break;
+        if (TryGetAbilityInfluencedWildMonIndex(info->wildPokemon, TYPE_FIRE, ABILITY_FLASH_FIRE, &slot))
+            break;
+
         slot = ChooseWildMonIndex_WaterRock();
         break;
     }

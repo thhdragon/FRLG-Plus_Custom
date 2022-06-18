@@ -6602,7 +6602,8 @@ void CursorCb_MoveItemCallback(u8 taskId)
     case 1:     // User hit A on a Pokemon
         // Pokemon can't give away items to eggs or themselves
         if (GetMonData(&gPlayerParty[gPartyMenu.slotId2], MON_DATA_IS_EGG)
-            || gPartyMenu.slotId == gPartyMenu.slotId2)
+            || gPartyMenu.slotId == gPartyMenu.slotId2
+            || IS_ITEM_MAIL(GetMonData(&gPlayerParty[gPartyMenu.slotId2], MON_DATA_HELD_ITEM)))
         {
             PlaySE(SE_FAILURE);
             return;

@@ -570,8 +570,7 @@ static void sub_80BB4B8(u8 taskId)
             DestroySprite(&gSprites[gTasks[taskId].data[3]]);
         if (gTasks[taskId].data[6] == 1)
             ++gSprites[gTasks[taskId].data[7]].oam.priority;
-        Free(sAnimStatsChangeData);
-        sAnimStatsChangeData = NULL;
+        FREE_AND_SET_NULL(sAnimStatsChangeData);
         DestroyAnimVisualTask(taskId);
         break;
     }

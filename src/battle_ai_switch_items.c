@@ -420,10 +420,10 @@ static void ModulateByTypeEffectiveness(u8 atkType, u8 defType1, u8 defType2, u8
         {
             // Check type1.
             if (TYPE_EFFECT_DEF_TYPE(i) == defType1)
-                *var = (*var * TYPE_EFFECT_MULTIPLIER(i)) / 10;
+                *var = (*var * TYPE_EFFECT_MULTIPLIER(i)) / TYPE_MUL_NORMAL;
             // Check type2.
             if (TYPE_EFFECT_DEF_TYPE(i) == defType2 && defType1 != defType2)
-                *var = (*var * TYPE_EFFECT_MULTIPLIER(i)) / 10;
+                *var = (*var * TYPE_EFFECT_MULTIPLIER(i)) / TYPE_MUL_NORMAL;
         }
         i += 3;
     }
@@ -432,7 +432,7 @@ static void ModulateByTypeEffectiveness(u8 atkType, u8 defType1, u8 defType2, u8
 u8 GetMostSuitableMonToSwitchInto(void)
 {
     u8 opposingBattler;
-    u32 bestDmg;
+    s32 bestDmg;
     u8 bestMonId;
     u8 battlerIn1, battlerIn2;
     s32 i, j;
@@ -462,8 +462,8 @@ u8 GetMostSuitableMonToSwitchInto(void)
     invalidMons = 0;
     while (invalidMons != 0x3F) // All mons are invalid.
     {
-        bestDmg = 0;
-        bestMonId = 6;
+        bestDmg = TYPE_MUL_NO_EFFECT;
+        bestMonId = PARTY_SIZE;
         // Find the mon whose type is the most suitable offensively.
         for (i = 0; i < PARTY_SIZE; ++i)
         {
@@ -478,10 +478,10 @@ u8 GetMostSuitableMonToSwitchInto(void)
             {
                 u8 type1 = gBaseStats[species].type1;
                 u8 type2 = gBaseStats[species].type2;
-                u8 typeDmg = 10;
+                u8 typeDmg = TYPE_MUL_NORMAL;
                 ModulateByTypeEffectiveness(gBattleMons[opposingBattler].type1, type1, type2, &typeDmg);
                 ModulateByTypeEffectiveness(gBattleMons[opposingBattler].type2, type1, type2, &typeDmg);
-                if (bestDmg < typeDmg)
+                if (bestDmg > typeDmg)
                 {
                     bestDmg = typeDmg;
                     bestMonId = i;
@@ -516,8 +516,8 @@ u8 GetMostSuitableMonToSwitchInto(void)
     gBattleScripting.dmgMultiplier = 1;
     gMoveResultFlags = 0;
     gCritMultiplier = 1;
-    bestDmg = 0;
-    bestMonId = 6;
+    bestDmg = TYPE_MUL_NO_EFFECT;
+    bestMonId = PARTY_SIZE;
     // If we couldn't find the best mon in terms of typing, find the one that deals most damage.
     for (i = 0; i < PARTY_SIZE; ++i)
     {

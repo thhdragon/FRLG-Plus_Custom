@@ -484,8 +484,7 @@ bool8 InitEasyChatSelection(void)
 
 void DestroyEasyChatSelectionData(void)
 {
-    if (sEasyChatSelectionData != NULL)
-        Free(sEasyChatSelectionData);
+    TRY_FREE_AND_SET_NULL(sEasyChatSelectionData);
 }
 
 static void PopulateECGroups(void)

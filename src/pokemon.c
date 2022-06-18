@@ -8174,17 +8174,13 @@ struct OakSpeechNidoranFStruct *OakSpeechNidoranFSetup(u8 battlePosition, bool8 
     }
     if (flags & 2)
     {
-        if (sOakSpeechNidoranResources->frameImages != NULL)
-            FREE_AND_SET_NULL(sOakSpeechNidoranResources->frameImages);
-        if (sOakSpeechNidoranResources->templates != NULL)
-            FREE_AND_SET_NULL(sOakSpeechNidoranResources->templates);
+        TRY_FREE_AND_SET_NULL(sOakSpeechNidoranResources->frameImages);
+        TRY_FREE_AND_SET_NULL(sOakSpeechNidoranResources->templates);
     }
     if (flags & 1)
     {
-        if (sOakSpeechNidoranResources->bufferPtrs != NULL)
-            FREE_AND_SET_NULL(sOakSpeechNidoranResources->bufferPtrs);
-        if (sOakSpeechNidoranResources->dataBuffer != NULL)
-            FREE_AND_SET_NULL(sOakSpeechNidoranResources->dataBuffer);
+        TRY_FREE_AND_SET_NULL(sOakSpeechNidoranResources->bufferPtrs);
+        TRY_FREE_AND_SET_NULL(sOakSpeechNidoranResources->dataBuffer);
     }
     if (flags)
     {
@@ -8209,14 +8205,10 @@ void OakSpeechNidoranFFreeResources(void)
         }
         else
         {
-            if (sOakSpeechNidoranResources->frameImages != NULL)
-                FREE_AND_SET_NULL(sOakSpeechNidoranResources->frameImages);
-            if (sOakSpeechNidoranResources->templates != NULL)
-                FREE_AND_SET_NULL(sOakSpeechNidoranResources->templates);
-            if (sOakSpeechNidoranResources->bufferPtrs != NULL)
-                FREE_AND_SET_NULL(sOakSpeechNidoranResources->bufferPtrs);                    
-            if (sOakSpeechNidoranResources->dataBuffer != NULL)
-                FREE_AND_SET_NULL(sOakSpeechNidoranResources->dataBuffer);
+            TRY_FREE_AND_SET_NULL(sOakSpeechNidoranResources->frameImages);
+            TRY_FREE_AND_SET_NULL(sOakSpeechNidoranResources->templates);
+            TRY_FREE_AND_SET_NULL(sOakSpeechNidoranResources->bufferPtrs);                    
+            TRY_FREE_AND_SET_NULL(sOakSpeechNidoranResources->dataBuffer);
             memset(sOakSpeechNidoranResources, 0, sizeof(struct OakSpeechNidoranFStruct));
             FREE_AND_SET_NULL(sOakSpeechNidoranResources);
         }

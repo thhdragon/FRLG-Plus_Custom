@@ -1469,6 +1469,10 @@
 	.2byte \localId
 	.endm
 
+	.macro mysterygift
+	.byte 0xd5
+	.endm
+
 @ Supplementary
 
 	.macro goto_if_unset flag:req, dest:req

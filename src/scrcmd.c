@@ -35,6 +35,7 @@
 #include "field_effect.h"
 #include "fieldmap.h"
 #include "field_door.h"
+#include "mystery_gift.h"
 #include "constants/event_objects.h"
 
 extern u16 (*const gSpecials[])(void);
@@ -2257,6 +2258,14 @@ bool8 ScrCmd_setmonmetlocation(struct ScriptContext * ctx)
 
     if (partyIndex < PARTY_SIZE)
         SetMonData(&gPlayerParty[partyIndex], MON_DATA_MET_LOCATION, &location);
+    return FALSE;
+}
+
+bool8 ScrCmd_mysterygift(struct ScriptContext * ctx)
+{
+    gSpecialVar_0x8004 = 0;
+    gStringVar1[0] = EOS;
+    ShowEnterPasswordScreen();
     return FALSE;
 }
 

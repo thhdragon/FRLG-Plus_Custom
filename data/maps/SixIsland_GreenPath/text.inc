@@ -13,7 +13,7 @@ SixIsland_GreenPath_Text_JaclynPostBattle:: @ 818B7FD
 
 SixIsland_GreenPath_Text_LeftRouteSign:: @ 818B84D
     .string "GREEN PATH\n"
-    .string "PATTERN BUSH AHEAD$"
+    .string "PATTERN BUSH {UP_ARROW}$"
 
 SixIsland_GreenPath_Text_RightRouteSign:: @ 818B86B
     .string "GREEN PATH\n"

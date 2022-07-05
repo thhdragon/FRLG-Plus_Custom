@@ -156,8 +156,7 @@ CeruleanCity_Text_ThisIsCeruleanCave:: @ 817F319
 
 CeruleanCity_Text_CitySign:: @ 817F420
     .string "CERULEAN CITY\n"
-    .string "A Mysterious, Blue Aura Surrounds\l"
-    .string "It$"
+    .string "A Mysterious, Blue Aura Surrounds It$"
 
 CeruleanCity_Text_TrainerTipsHeldItems:: @ 817F453
     .string "TRAINER TIPS\p"

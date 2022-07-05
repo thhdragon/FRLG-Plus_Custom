@@ -7777,7 +7777,7 @@ void SetWildMonHeldItem(void)
         if(species == SPECIES_PIKACHU && GetCurrentRegionMapSectionId() != MAPSEC_VIRIDIAN_FOREST)
             isHighLeveledPikachu = TRUE;
 
-        if (!GetMonData(&gPlayerParty[0], MON_DATA_IS_EGG, 0)
+        if (!GetMonData(&gPlayerParty[0], MON_DATA_SANITY_IS_EGG, 0)
             && GetMonAbility(&gPlayerParty[0]) == ABILITY_COMPOUND_EYES)
         {
             var1 = 20;

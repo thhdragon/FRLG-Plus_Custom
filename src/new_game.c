@@ -155,6 +155,7 @@ void NewGameInitData(void)
     StringCopy(gSaveBlock1Ptr->rivalName, rivalName);
     ResetTrainerTowerResults();
     gSaveBlock1Ptr->keyFlags.expMod = 2; // normal exp
+    gSaveBlock2Ptr->lastUsedBall = 0;
 }
 
 static void ResetMiniGamesResults(void)

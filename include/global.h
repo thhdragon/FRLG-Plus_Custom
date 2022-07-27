@@ -309,6 +309,7 @@ struct SaveBlock2
               u16 optionsBattleTransitions:1; // whether battle transitions are disabled
               u16 optionsBattleIntroAnim:1; // whether battle intro slide is disabled
               u16 optionsExpBarAnimSpeed:1;  // whether exp bar animates instantly
+			  u16 expShare:1;
     /*0x018*/ struct Pokedex pokedex;
     /*0x090*/ u8 filler_90[0x8];
     /*0x098*/ struct Time localTimeOffset;

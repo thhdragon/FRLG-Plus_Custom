@@ -23,6 +23,14 @@
   * [Are trade evolution items available before the postgame?](#are-trade-evolution-items-available-before-the-postgame)
   * [Where do I get the event tickets so I can obtain Mew, Lugia and Ho-oh, Deoxys, and Latias and Latias?](#where-do-i-get-the-event-tickets-so-i-can-obtain-mew-lugia-and-ho-oh-deoxys-and-latias-and-latias)
   * [How do I get Sudowoodo to battle me?](#how-do-i-get-sudowoodo-to-battle-me)
+* Gameplay:
+  * [I just started the game, where is the Key System Menu? I can't change my difficulty after a new game!](#i-just-started-the-game-where-is-the-key-system-menu-i-cant-change-my-difficulty-after-a-new-game)
+  * [Where do I unlock Gym Leader rematches?](#where-do-i-unlock-gym-leader-rematches)
+  * [How does inviting a Gym Leader work? A Gym Leader I invited is gone! When is the rematch lady's Spearow coming back?](#how-does-inviting-a-gym-leader-work-a-gym-leader-i-invited-is-gone-when-is-the-rematch-ladys-spearow-coming-back)
+  * [Can I rematch Giovanni? I can only invite seven Gym Leaders.](#can-i-rematch-giovanni-i-can-only-invite-seven-gym-leaders)
+  * [What are the Challenge Mode boss trainer levels? I want to level cap my Nuzlocke run.](#what-are-the-challenge-mode-boss-trainer-levels-i-want-to-level-cap-my-nuzlocke-run)
+  * [Where are the new Move Tutors and what moves do they teach?](#where-are-the-new-move-tutors-and-what-moves-do-they-teach)
+  * [Is there a location list for all the Master Trainers?](#is-there-a-location-list-for-all-the-master-trainers)
 * Troubleshooting Savefiles, Emulators, and Flashcarts:
   * [Is my vanilla FireRed or LeafGreen save compatible with FRLG+?](#is-my-vanilla-firered-or-leafgreen-save-compatible-with-frlg)
   * [My emulator/flashcart doesn't work with FRLG+! The game won't save!](#my-emulatorflashcart-doesnt-work-with-frlg-the-game-wont-save)
@@ -32,8 +40,6 @@
 * Miscellaneous:
   * [Will text be decapitalized?](#will-text-be-decapitalized)
   * [How do I link to other games? When is the earliest I can link?](#how-do-i-link-to-other-games-when-is-the-earliest-i-can-link)
-  * [Where are the new Move Tutors and what moves do they teach?](#where-are-the-new-move-tutors-and-what-moves-do-they-teach)
-  * [Is there a location list for all the Master Trainers?](#is-there-a-location-list-for-all-the-master-trainers)
 
 ## Mechanics:
 
@@ -47,7 +53,9 @@ No. This hack aims to preserve the original battle mechanics and maintain link c
 No.
 
 ### Will you improve breeding mechanics?
-Breeding mechanics have been ported from Emerald, but no further improvements will be made. This hack is not meant to supplant the vanilla games when it comes to obtaining good Pokémon.
+Breeding mechanics have been ported from Emerald, save for Volt Tackle Pichu breeding, but no further improvements will be made. This hack is not meant to supplant the vanilla games when it comes to obtaining good Pokémon.
+
+Because Volt Tackle Pichu are illegal in Generation III if they weren't generated in Emerald, the Volt Tackle breeding mechanic will not be ported.
 
 ### What are the shiny chances? Will they be improved?
 The shiny chance is 1/8192, as it was in Generation III. The odds of encountering a shiny Pokémon will not be increased.
@@ -140,6 +148,68 @@ Yes. Most are available as wild held items. Items like the Up-grade have been mo
   have a Fresh Water in your bag and talk to it.
 </details>
 
+## Gameplay:
+
+### I just started the game, where is the Key System Menu? I can't change my difficulty after a new game!
+Once you have started a new game, you need to save and reset. The Key System Menu is on the Main Menu alongside the Continue and New Game options. 
+
+### Where do I unlock Gym Leader rematches?
+There is an old woman in a house on Seven Island who will start the sidequest for you.
+
+### How does inviting a Gym Leader work? A Gym Leader I invited is gone! When is the rematch lady's Spearow coming back?
+When you show the old woman in the Battle House a full Fame Checker entry for a Gym Leader, her Spearow will leave to bring them an invitation. Once Spearow returns, the invited Gym Leader will periodically visit the Battle House basement where they can be rematched. Once beaten, a Gym Leader will return to their Gym, but will come back to the house automatically to train after some time.
+
+Both Spearow returning and Gym Leaders visiting are based on steps taken while outside of the Seven Island town area. There is randomness involved in how many steps it takes to trigger a Gym Leader visit, but there is bad luck protection that will begin forcing visits to prevent long waits between visits.
+
+The sign outside the Battle House will report which Gym Leaders are currently visiting.
+
+### Can I rematch Giovanni? I can only invite seven Gym Leaders.
+Giovanni is canonically on the run after he flees his Gym and is not seen again in FRLG+. Only the first seven Gym Leaders can be rematched.
+
+### What are the Challenge Mode boss trainer levels? I want to level cap my Nuzlocke run.
+<details>
+<summary>Their levels are as follows:</summary>
+Brock: 15<br>
+Misty: 22<br>
+Lt. Surge: 26<br>
+Erika: 31<br>
+Koga: 46<br>
+Sabrina: 46<br>
+Blaine: 51<br>
+Giovanni: 54<br>
+Lorelei: 58<br>
+Bruno: 60<br>
+Agatha: 62<br>
+Lance: 64<br>
+Champion: 67<br>
+</details>
+
+### Where are the new Move Tutors and what moves do they teach?
+<details>
+    <summary>New move tutor locations:</summary>
+    
+• Fury Cutter - Vermilion City
+
+• Rollout - Route 24
+
+• Swagger - Route 10
+
+• Dynamic Punch - Saffron City
+
+• Sleep Talk - Silph Co.
+
+• Nightmare - Silph Co.
+
+• Self-Destruct - Cinnabar Island
+
+• Sky Attack - Mt. Ember
+
+The tutors in Saffron City and Silph Co. will not appear until Team Rocket has been driven from the city.
+</details>
+
+### Is there a location list for all the Master Trainers?
+The Master Trainers are all in the same locations as they were in LGPE, with the exception of Master Trainers who would have been on Cycling Road. Those that would have been on Cycling Road have been moved to Routes 16 and 18. Keeping that in mind, [refer to this list from Bulbapedia](https://bulbapedia.bulbagarden.net/wiki/Master_Trainer#Trainer_list) for the Master Trainer locations.
+
 ## Troubleshooting Savefiles, Emulators, and Flashcarts:
 
 ### Is my vanilla FireRed or LeafGreen save compatible with FRLG+?
@@ -167,32 +237,6 @@ No.
 FRLG+ is fully compatible with everything that the vanilla international FireRed and LeafGreen games were compatible with. If your emulator supports linking, refer to its documentation for how to initiate a link.
 
 The player may link with all Generation III GBA and GCN games the moment they receive the Pokédex. Finishing the Net Center on One Island is no longer a prerequisite for trading with the Hoenn games, trading with the Orre games, using Pokémon Box: Ruby and Sapphire, or receiving Eggs or Pokémon that are not in the Kanto Pokédex.
-
-### Where are the new Move Tutors and what moves do they teach?
-<details>
-    <summary>New move tutor locations:</summary>
-    
-• Fury Cutter - Vermilion City
-
-• Rollout - Route 24
-
-• Swagger - Route 10
-
-• Dynamic Punch - Saffron City
-
-• Sleep Talk - Silph Co.
-
-• Nightmare - Silph Co.
-
-• Self-Destruct - Cinnabar Island
-
-• Sky Attack - Mt. Ember
-
-The tutors in Saffron City and Silph Co. will not appear until Team Rocket has been driven from the city.
-</details>
-
-### Is there a location list for all the Master Trainers?
-The Master Trainers are all in the same locations as they were in LGPE, with the exception of Master Trainers who would have been on Cycling Road. Those that would have been on Cycling Road have been moved to Routes 16 and 18. Keeping that in mind, [refer to this list from Bulbapedia](https://bulbapedia.bulbagarden.net/wiki/Master_Trainer#Trainer_list) for the Master Trainer locations.
 &nbsp;
 &nbsp;
 &nbsp;

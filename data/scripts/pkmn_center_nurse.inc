@@ -3,13 +3,7 @@ EventScript_PkmnCenterNurse:: @ 81A6578
 	callnative CheckTrainerCardStars
 	compare VAR_RESULT, 2
 	goto_if_ge EventScript_PkmnCenterNurseTrainerCard
-	message Text_WelcomeWantToHealPkmn
-	waitmessage
-	multichoice 19, 8, MULTICHOICE_YES_NO, FALSE | (TRUE << 1)
-	switch VAR_RESULT
-	case 0, EventScript_PkmnCenterNurse_HealPkmn
-	case 1 EventScript_PkmnCenterNurse_Goodbye
-	case SCR_MENU_CANCEL, EventScript_PkmnCenterNurse_Goodbye
+	goto EventScript_PkmnCenterNurse_HealPkmn
 	end
 
 EventScript_PkmnCenterNurse_HealPkmn:: @ 81A65B8
@@ -44,11 +38,10 @@ EventScript_PkmnCenterNurse_CheckTrainerTowerAndUnionRoom:: @ 81A65EC
 	end
 
 EventScript_PkmnCenterNurse_ReturnPkmn:: @ 81A661D
-	message Text_RestoredPkmnToFullHealth
-	waitmessage
 	applymovement VAR_LAST_TALKED, Movement_Bow
 	waitmovement 0
 	msgbox Text_WeHopeToSeeYouAgain
+	goto EventScript_PkmnCenterNurse_PlayerTurn
 	return
 
 EventScript_PkmnCenterNurse_PlayerWaitingInUionRoom:: @ 81A6636
@@ -60,10 +53,12 @@ EventScript_PkmnCenterNurse_PlayerWaitingInUionRoom:: @ 81A6636
 	applymovement VAR_LAST_TALKED, Movement_Bow
 	waitmovement 0
 	msgbox Text_WeHopeToSeeYouAgain
+	goto EventScript_PkmnCenterNurse_PlayerTurn
 	return
 
 EventScript_PkmnCenterNurse_Goodbye:: @ 81A6663
 	msgbox Text_WeHopeToSeeYouAgain
+	goto EventScript_PkmnCenterNurse_PlayerTurn
 	return
 
 Movement_Bow:: @ 81A666C
@@ -106,6 +101,7 @@ EventScript_PkmnCenterNurse_ReturnPkmnTrainerCard:: @ 81A661D
 	applymovement VAR_LAST_TALKED, Movement_Bow
 	waitmovement 0
 	msgbox Text_WeHopeToSeeYouAgain
+	goto EventScript_PkmnCenterNurse_PlayerTurn
 	return
 
 Text_WelcomeTrainerCardFirst::
@@ -159,3 +155,10 @@ Text_SoftlockClerk_Initial::
 Text_SoftlockClerk_GaveAlready::
 	.string "Hello, TRAINER!\n"
 	.string "Put those POKé BALLS to good use!$"
+
+EventScript_PkmnCenterNurse_PlayerTurn::
+    closemessage
+    applymovement OBJ_EVENT_ID_PLAYER, Movement_FaceDown
+    waitmovement 0
+    release
+    end

@@ -9,6 +9,7 @@
 #include "battle_message.h"
 #include "battle_scripts.h"
 #include "battle_setup.h"
+#include "battle_util.h"
 #include "battle_string_ids.h"
 #include "berry.h"
 #include "data.h"
@@ -577,6 +578,7 @@ static void (*const sTurnActionsFuncsTable[])(void) =
     [B_ACTION_TRY_FINISH] = HandleAction_TryFinish,
     [B_ACTION_FINISHED] = HandleAction_ActionFinished,
     [B_ACTION_NOTHING_FAINTED] = HandleAction_NothingIsFainted,
+    [B_ACTION_THROW_BALL] = HandleAction_ThrowBall,
 };
 
 static void (*const sEndTurnFuncsTable[])(void) =
@@ -3372,6 +3374,9 @@ static void HandleTurnActionSelectionState(void)
                 case B_ACTION_OLDMAN_THROW:
                     ++gBattleCommunication[gActiveBattler];
                     break;
+                case B_ACTION_THROW_BALL:
+                    ++gBattleCommunication[gActiveBattler];
+                    break;
                 }
             }
             break;
@@ -3609,7 +3614,7 @@ static void SetActionsAndBattlersTurnOrder(void)
         {
             for (gActiveBattler = 0; gActiveBattler < gBattlersCount; ++gActiveBattler)
             {
-                if (gChosenActionByBattler[gActiveBattler] == B_ACTION_USE_ITEM || gChosenActionByBattler[gActiveBattler] == B_ACTION_SWITCH)
+                if (gChosenActionByBattler[gActiveBattler] == B_ACTION_USE_ITEM || gChosenActionByBattler[gActiveBattler] == B_ACTION_SWITCH || gChosenActionByBattler[gActiveBattler] == B_ACTION_THROW_BALL)
                 {
                     gActionsByTurnOrder[turnOrderId] = gChosenActionByBattler[gActiveBattler];
                     gBattlerByTurnOrder[turnOrderId] = gActiveBattler;
@@ -3618,7 +3623,7 @@ static void SetActionsAndBattlersTurnOrder(void)
             }
             for (gActiveBattler = 0; gActiveBattler < gBattlersCount; ++gActiveBattler)
             {
-                if (gChosenActionByBattler[gActiveBattler] != B_ACTION_USE_ITEM && gChosenActionByBattler[gActiveBattler] != B_ACTION_SWITCH)
+                if (gChosenActionByBattler[gActiveBattler] != B_ACTION_USE_ITEM && gChosenActionByBattler[gActiveBattler] != B_ACTION_SWITCH && gChosenActionByBattler[gActiveBattler] != B_ACTION_THROW_BALL)
                 {
                     gActionsByTurnOrder[turnOrderId] = gChosenActionByBattler[gActiveBattler];
                     gBattlerByTurnOrder[turnOrderId] = gActiveBattler;
@@ -3633,11 +3638,15 @@ static void SetActionsAndBattlersTurnOrder(void)
                     u8 battler2 = gBattlerByTurnOrder[j];
 
                     if (gActionsByTurnOrder[i] != B_ACTION_USE_ITEM
-                     && gActionsByTurnOrder[j] != B_ACTION_USE_ITEM
-                     && gActionsByTurnOrder[i] != B_ACTION_SWITCH
-                     && gActionsByTurnOrder[j] != B_ACTION_SWITCH)
+                        && gActionsByTurnOrder[j] != B_ACTION_USE_ITEM
+                        && gActionsByTurnOrder[i] != B_ACTION_SWITCH
+                        && gActionsByTurnOrder[j] != B_ACTION_SWITCH
+                        && gActionsByTurnOrder[i] != B_ACTION_THROW_BALL
+                        && gActionsByTurnOrder[j] != B_ACTION_THROW_BALL)
+                    {
                         if (GetWhoStrikesFirst(battler1, battler2, FALSE))
                             SwapTurnOrder(i, j);
+                    }
                 }
             }
         }

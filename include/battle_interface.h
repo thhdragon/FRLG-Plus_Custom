@@ -77,6 +77,10 @@ u8 CreatePartyStatusSummarySprites(u8 battlerId, struct HpAndStatus *partyInfo, 
 void UpdateHealthboxAttribute(u8 healthboxSpriteId, struct Pokemon *mon, u8 elementId);
 u8 GetScaledHPFraction(s16 hp, s16 maxhp, u8 scale);
 u8 GetHPBarLevel(s16 hp, s16 maxhp);
+bool32 CanThrowLastUsedBall(void);
+void TryHideLastUsedBall(void);
+void TryRestoreLastUsedBall(void);
+void TryAddLastUsedBallItemSprites(void);
 void UpdateNickInHealthbox(u8 spriteId, struct Pokemon *mon);
 void TryAddPokeballIconToHealthbox(u8 spriteId, u8);
 s32 MoveBattleBar(u8 battler, u8 healthboxSpriteId, u8 whichBar, u8 arg3);
